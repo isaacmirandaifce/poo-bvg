@@ -1,5 +1,5 @@
 class Cliente {
-    
+    //adicionando os atritbutos da classe no constructor
     constructor(nome, idade, saldo) {
       this._nome = nome; 
       this._idade = idade; 
@@ -19,7 +19,7 @@ class Cliente {
       console.log(`Saldo atualizado! Novo saldo: R$${this._saldo.toFixed(2)}`);
     }
   
-    // os getters pra pode acessar os atributos privados 
+    // os getters pra poder acessar os atributos privados 
     get nome() {
       return this._nome;
     }
