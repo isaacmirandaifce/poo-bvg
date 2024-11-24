@@ -1,0 +1,27 @@
+import Cliente from "./cliente.js";
+
+const cliente = new Cliente("João Silva", 30, 1000.0);
+
+//mostrando as informacoes
+cliente.mostrarInformacoes();
+
+//atualizando o saldo
+cliente.atualizarSaldo(500); 
+cliente.atualizarSaldo(-200); 
+
+//mostrando de novo depois de atualizar
+cliente.mostrarInformacoes();
+
+//alterando usando os setters para acessar os atributos (no js esse _ pra deixar o atributo privado eh mais uma convencao)
+cliente.nome = "Maria Oliveira";
+cliente.idade = 28;
+cliente.saldo = 2000.0;
+
+//mostrando de novo depois de alterar
+cliente.mostrarInformacoes();
+
+
+// COMO RODAR: 
+//PRECISA TER O NODE INSTALADO
+// NO TERMINAL DENTRO DA PASTA PROJETO_1 DIGITE: node teste.js
+// ~/poo-bvg/Projeto_1$ node teste.js
