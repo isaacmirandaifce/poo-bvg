@@ -1,4 +1,4 @@
-import Cliente from "./cliente.js";
+import Cliente from "../src/cliente.js";
 
 // criando uma nova instancia da classe Cliente
 const cliente = new Cliente("João Silva", 30, 1000.0);
