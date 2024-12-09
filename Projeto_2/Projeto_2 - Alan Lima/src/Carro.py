@@ -11,7 +11,7 @@ class Carro:
     def exibir_detalhes(self):
         detalhes = (
             f"Detalhes do Carro:\n"
-            f"Ano: {self.__ano}\n"
+            f"Ano: {self.__ano}\n" 
             f"Marca: {self.__marca}\n"
             f"Modelo: {self.__modelo.get_nome()}\n"
             f"Cor: {self.__cor}\n"
