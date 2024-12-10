@@ -71,7 +71,7 @@ O sistema gerencia seguros de veículos para clientes, incluindo seguros de carr
 
 1. Clone o repositório:  
    ```bash
-   git clone https://github.com/seu_usuario/projeto-seguros.git
+   git clone https://github.com/MarioJamisson/poo-bvg.git
    ```
 2. Navegue até a pasta do projeto:  
    ```bash
