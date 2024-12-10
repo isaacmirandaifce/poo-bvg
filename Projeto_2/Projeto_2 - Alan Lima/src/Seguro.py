@@ -1,6 +1,6 @@
 from datetime import datetime
-from Carro import Carro 
-from Cliente import Cliente  
+from carro import Carro 
+from cliente import Cliente  
 
 class Seguro:
     def __init__(self, carro: Carro, cliente: Cliente, valor: float, vigencia: str):

@@ -1,0 +1,10 @@
+# Ignorar __pycache__ em qualquer lugar do projeto
+__pycache__/
+
+# Ignorar arquivos .pyc e .pyo
+*.pyc
+*.pyo
+
+# Ignorar logs e arquivos temporários
+*.log
+*.tmp

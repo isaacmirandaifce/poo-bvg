@@ -4,7 +4,7 @@ import os
 # Adiciona a pasta "src" ao caminho de busca do Python
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../src')
 
-from Cliente import Cliente
+from cliente import Cliente
 
 # Testando a classe Cliente
 cliente = Cliente('Alan', 20, 1412)
