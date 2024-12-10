@@ -1,0 +1,19 @@
+# Ignorar diretórios de cache do Python
+__pycache__/
+
+# Ignorar arquivos compilados do Python
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos de cache específicos do VSCode e IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Configurações e arquivos do sistema
+.env
+*.log
+.DS_Store
+Thumbs.db
