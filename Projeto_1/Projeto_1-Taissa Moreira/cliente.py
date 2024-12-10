@@ -6,7 +6,7 @@ class Cliente:
         self.__idade = idade
         self.__saldo = saldo
 
-# Retornar uma representação em string do cliente:
+# Retornar uma representação em string do cliente::
 
     def mostrar_informacoes (self):
         print(f"Cliente: {self.__nome}, Idade: {self.__idade}, Saldo: R$ {self.__saldo: .2f}")
