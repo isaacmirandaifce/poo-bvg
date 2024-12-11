@@ -1,0 +1,3 @@
+Exercício 4: Modelagem de Classes com Relações de Herança
+b) Explique o benefício de usar herança para representar esses diferentes tipos de seguro.
+O principal benefício de usar herança nesse caso é a reutilização de código. Ao colocar os atributos e métodos comuns na classe base SeguroVeiculo, como cliente, valor, vigência, e o método calcular_valor(), evitamos duplicação de código nas subclasses. Isso melhora a manutenção do código, já que qualquer modificação na lógica comum dos seguros (por exemplo, cálculo de valor) precisaria ser feita apenas na classe base. As subclasses, como SeguroCarro e SeguroMoto, podem então adicionar ou sobrescrever comportamentos específicos sem alterar o código comum.
