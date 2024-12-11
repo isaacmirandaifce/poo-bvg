@@ -1,0 +1,8 @@
+c) Explique a importância de encapsular informações sensíveis, como CPF e placa de veículos, em sistemas de seguros. 
+Encapsular informações sensíveis, como CPF e placa de veículos, em sistemas de seguros é crucial para garantir a segurança e privacidade dos dados dos clientes. Essas informações são pessoais e podem ser usadas de forma indevida se não forem protegidas adequadamente. Ao ocultar esses dados, permitindo seu acesso apenas por métodos controlados, reduzimos o risco de vazamento ou acessos não autorizados. Além disso, o encapsulamento assegura que regras de validação ou processamento sejam aplicadas corretamente, evitando manipulações indevidas desses dados e mantendo a integridade do sistema.
+
+
+
+
+
+

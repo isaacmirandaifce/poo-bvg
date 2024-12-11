@@ -1,0 +1,6 @@
+Função verificar_vigencia(data_atual):
+    se a data_atual for maior ou igual a data_inicio da vigência E
+       a data_atual for menor ou igual a data_fim da vigência:
+        retornar "Seguro válido"
+    senão:
+        retornar "Seguro expirado"

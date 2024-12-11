@@ -1,0 +1,4 @@
+Exercício 5 Criação de Diagramas UML de Objetos
+c) Explique como este diagrama ajuda a visualizar a estrutura do sistema para um cliente específico.
+O diagrama de objetos ajuda a visualizar a estrutura do sistema para um cliente específico, mostrando claramente como os diferentes elementos do sistema estão relacionados. No exemplo, vemos que o cliente João Silva está associado a um Carro Toyota Corolla, e esse carro tem um Seguro com atributos específicos como valor e vigência.
+Essa representação permite entender de forma prática como os dados de um cliente estão organizados dentro do sistema, destacando a relação entre as entidades e suas propriedades. Assim, ao observar o diagrama, fica evidente como as informações de um cliente, seu veículo e o seguro correspondente se conectam, facilitando a compreensão de como o sistema opera para cada cliente
