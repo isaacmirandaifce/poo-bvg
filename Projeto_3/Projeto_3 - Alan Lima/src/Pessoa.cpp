@@ -1,7 +1,7 @@
 #include "Pessoa.h"
 
-// Construtor padrão
-Pessoa::Pessoa() : nome(""), telefone("") {}
+// Construtor com valor padrão
+Pessoa::Pessoa() : nome("desconhecido"), telefone("não informado") {}
 
 // Construtor parametrizado
 Pessoa::Pessoa(const std::string& nome, const std::string& telefone) {
