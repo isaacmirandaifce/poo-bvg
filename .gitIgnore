@@ -1,0 +1,40 @@
+# Diretórios de build (gerados pelo CMake)
+build/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# Arquivos temporários de compilação
+*.o
+*.obj
+*.a
+*.lo
+*.la
+*.lib
+*.dll
+*.exe
+*.out
+
+# Arquivos do Visual Studio (se você estiver usando)
+.vs/
+.vscode/
+
+# Arquivos de backup e temporários do editor
+*~ 
+*.swp
+*.bak
+*.tmp
+
+# Arquivos do sistema (geralmente no Windows)
+Thumbs.db
+Desktop.ini
+
+# Arquivos do Mac
+.DS_Store
+
+# Arquivos do Linux
+*.dSYM/
+
+# CMake settings para IDEs (como o CLion)
+.idea/
