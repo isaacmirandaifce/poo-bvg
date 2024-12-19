@@ -1,7 +1,0 @@
-cmake_minimum_required(VERSION 3.10)
-
-project(introduction_cpp)
-
-set(CMAKE_CXX_STANDARD 11)
-
-add_executable(introduction_cpp src/main.cpp src/pessoa.cpp)
