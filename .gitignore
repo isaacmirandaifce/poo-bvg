@@ -1,0 +1,17 @@
+# Ignore Projeto_1 and Projeto_2 directories
+Projeto_1/
+Projeto_2/
+
+## Ignore executables in Projeto_3
+Projeto_3/programa
+
+# Ignore object files
+Projeto_3/*.o
+
+# Ignore temporary files
+Projeto_3/*.tmp
+Projeto_3/*.log
+
+# Ignore build directories
+Projeto_3/build/
+Projeto_3/dist/
