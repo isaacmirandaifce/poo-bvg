@@ -1,3 +1,0 @@
-C:/Users/Kaella/Downloads/estudos/introduction_cpp/build/CMakeFiles/introduction_cpp.dir
-C:/Users/Kaella/Downloads/estudos/introduction_cpp/build/CMakeFiles/edit_cache.dir
-C:/Users/Kaella/Downloads/estudos/introduction_cpp/build/CMakeFiles/rebuild_cache.dir
