@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-#include "Pessoa.h" // Declaração da classe Pessoa
+#include "Pessoa.h" 
 
 int main() {
-    // Vetor de ponteiros para armazenar objetos Pessoa alocados dinamicamente
+    
     std::vector<Pessoa*> lista;
 
     lista.push_back(new Pessoa("Joao Silva", "1234-5678"));
@@ -18,12 +18,11 @@ int main() {
         std::cout << "------------------" << std::endl;
     }
 
-    // Liberando a memória alocada com "delete"
+    
     for (auto& pessoa : lista) {
-        delete pessoa; // Chama o destrutor explicitamente
+        delete pessoa; // Chama o destrutor 
     }
 
-    // Limpando o vetor (não obrigatório, mas boa prática)
     lista.clear();
 
     return 0;
