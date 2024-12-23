@@ -5,23 +5,23 @@
 #include <iostream>
 
 class Pessoa {
-private:
-    std::string nome;
-    std::string telefone;
+    private:
+        std::string nome;
+        std::string telefone;
 
-public:
-    // Construtor padrão
-    Pessoa();
+    public:
+        // Construtor com valor padrão
+        Pessoa();
 
-    // Construtor parametrizado
-    Pessoa(const std::string& nome, const std::string& telefone);
+        // Construtor com parametros
+        Pessoa(const std::string& nome, const std::string& telefone);
 
-    // Destrutor
-    ~Pessoa();
+        // Destrutor
+        ~Pessoa();
 
-    // Métodos
-    void imprimirNome() const;
-    void imprimirTelefone() const;
+        // Métodos
+        void imprimirNome() const;
+        void imprimirTelefone() const;
 };
 
 #endif
