@@ -4,11 +4,11 @@
 
 int main() {
     // Criar objeto Aluno
-    Aluno aluno("João Silva", "20240123", "Engenharia de Software");
+    Aluno aluno("Alan Lima", "20240123", "Engenharia de Software");
 
     // Criar disciplinas
-    Disciplina disciplina1("Algoritmos", 60);
-    Disciplina disciplina2("Estruturas de Dados", 80);
+    Disciplina disciplina1("POO", 60);
+    Disciplina disciplina2("Engenharia de Software", 80);
 
     // Configurar notas
     disciplina1.setNota(7.5);
