@@ -24,4 +24,4 @@ class Pessoa {
         void imprimirTelefone() const;
 };
 
-#endif // PESSOA_H
+#endif
