@@ -1,0 +1,19 @@
+# Ignorar arquivos de compilação do GCC
+*.o
+*.out
+*.exe
+
+# Ignorar diretórios de compilação temporários
+/bin/
+/build/
+
+# Ignorar arquivos de configuração do IDE (se usar alguma)
+.vscode/
+.idea/
+
+# Ignorar arquivos de logs
+*.log
+
+# Ignorar arquivos temporários do sistema
+*~
+*.swp
