@@ -23,5 +23,3 @@ Para rodar o projeto, é necessário ter o Python instalado em seu computador. N
 
 1. Acesse o [site oficial do Python](https://www.python.org/downloads/).
 2. Baixe a versão mais recente e siga as instruções de instalação para o seu sistema operacional.
-
-## C
