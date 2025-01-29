@@ -20,3 +20,6 @@ std::string Disciplina::getNome() const {
 bool verificarAprovacao(const Disciplina& disciplina) {
     return disciplina.nota >= 6.0f;
 }
+
+
+//
