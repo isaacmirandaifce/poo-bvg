@@ -1,98 +1,98 @@
-# **Projeto Avaliativo 7: Métodos e Classes Genéricas - C++**
+# **Projeto Avaliativo 6: Classes Abstratas, Interfaces, Classes Enumeradas e Classes Internas**
 
 ## **Objetivo**
 
-Ampliar o sistema acadêmico existente com a introdução de métodos e classes genéricas, otimizando a manipulação de dados no sistema e reforçando conceitos importantes para o desenvolvimento de sistemas escaláveis e reutilizáveis. Este projeto busca aplicar conceitos fundamentais de generics de forma prática e contextualizada.
+Ampliar o sistema de gerenciamento acadêmico para incluir conceitos avançados de Programação Orientada a Objetos: Classes Abstratas, Interfaces, Classes Enumeradas e Classes Internas. Este projeto consolida o aprendizado da disciplina, integrando novas funcionalidades úteis para a vivência dos alunos de Análise e Desenvolvimento de Sistemas.
 
 ---
 
-## **Tema do Projeto: Sistema Genérico de Filtragem e Relatórios Acadêmicos**
+## **Tema do Projeto: Sistema Avançado de Gestão Acadêmica**
 
 ### **Descrição Geral**
 
-Os alunos devem expandir o sistema acadêmico para incluir um componente genérico que permita filtrar e manipular objetos relacionados ao sistema acadêmico (alunos, disciplinas, relatórios, etc.). Essa nova funcionalidade deve utilizar métodos e classes genéricas para fornecer uma maneira eficiente e reutilizável de realizar operações comuns, como busca, ordenação e filtragem de dados.
+Os alunos devem expandir o sistema acadêmico já desenvolvido para incluir funcionalidades como autenticação de usuários e geração de relatórios baseados em tipos de autenticação. Além disso, o sistema deve utilizar conceitos como classes enumeradas para categorizar usuários, classes internas para encapsular lógicas específicas e interfaces para padronizar comportamentos entre classes distintas.
 
 ---
 
 ### **Requisitos do Projeto**
 
-1. **Classes Genéricas:**
-   - Criar uma classe genérica `Filtro<T>` que forneça métodos genéricos para manipular coleções de objetos.
-     - Métodos genéricos:
-       - `adicionarElemento(T elemento)`: Adiciona um objeto ao filtro.
-       - `filtrarPorCondicao(std::function<bool(const T&)> condicao)`: Filtra os elementos com base em uma condição.
-       - `imprimirTodos(std::function<void(const T&)> acao)`: Aplica uma ação a cada elemento (como imprimir informações no console).
+1. **Classes Abstratas:**
+   - Criar uma classe abstrata `UsuarioAutenticavel`, que herda de `Usuario` e representa os usuários do sistema que podem realizar login.
+     - Método abstrato: `bool autenticar(std::string senha)`.
 
-2. **Aplicação de Métodos Genéricos:**
-   - Implementar métodos genéricos que funcionem sobre as classes do sistema, como `Aluno`, `Professor`, `FuncionarioAdministrativo`, ou até mesmo elementos do histórico disciplinar.
+2. **Interfaces:**
+   - Criar uma interface `Relatorio` com um método virtual puro `gerarRelatorio()`, que será implementada por classes como `Aluno`, `Professor` e `FuncionarioAdministrativo`.
 
-3. **Integração com o Sistema Acadêmico:**
-   - Adicionar funcionalidades que utilizem a classe `Filtro` para:
-     - Filtrar alunos com média acima de 7.0.
-     - Listar professores que ministram uma disciplina específica.
-     - Listar disciplinas cursadas por um aluno em um determinado ano.
+3. **Classes Enumeradas:**
+   - Criar uma enumeração `TipoUsuario` que define os tipos de usuários no sistema:
+     - `ALUNO`, `PROFESSOR`, `FUNCIONARIO_ADMINISTRATIVO`.
 
-4. **Funcionalidades Adicionais:**
-   - Implementar um sistema de ordenação genérica que permita ordenar listas de objetos com base em diferentes critérios (por exemplo, nome ou nota).
+4. **Classes Internas:**
+   - Adicionar uma classe interna à classe `Aluno` chamada `HistoricoDisciplinar`. 
+     - A classe interna deve conter informações sobre o histórico de disciplinas cursadas, incluindo:
+       - Nome da disciplina, ano cursado e nota.
 
-5. **Diagrama UML:**
-   - Criar um diagrama UML detalhando as classes existentes, incluindo a classe genérica `Filtro` e suas interações com as classes do sistema.
+5. **Funcionalidades do Sistema:**
+   - Implementar autenticação baseada em senha.
+   - Gerar relatórios detalhados para os diferentes tipos de usuários, com base na interface `Relatorio`.
+   - Exibir informações categorizadas utilizando a enumeração `TipoUsuario`.
 
 ---
 
 ## **Requisitos Técnicos**
 
-1. **Classes Genéricas:**
-   - Utilizar templates para criar uma classe genérica que opere com diferentes tipos de dados.
-   - Incorporar o uso de `std::function` para criar métodos altamente configuráveis e reutilizáveis.
+1. **Estrutura de Arquivos:**
+   - Modularizar o projeto em arquivos `.h` e `.cpp`:
+     - `UsuarioAutenticavel.h`, `Relatorio.h`, `Aluno.h`, `Professor.h`, `FuncionarioAdministrativo.h`, etc.
+     - `main.cpp` para a função principal.
 
-2. **Boas Práticas:**
-   - Garantir encapsulamento e modularidade.
-   - Utilizar métodos bem documentados e organizados.
+2. **Diagrama UML:**
+   - Incluir um diagrama UML detalhando a hierarquia do sistema, os métodos abstratos, a interface e os relacionamentos entre as classes.
 
-3. **Estrutura de Arquivos:**
-   - Modularizar o código, garantindo que cada classe genérica, método e funcionalidade esteja corretamente estruturada em arquivos `.h` e `.cpp`.
-
-4. **Documentação:**
-   - Adicionar comentários explicando a lógica de implementação e o uso de templates.
+3. **Encapsulamento e Segurança:**
+   - Garantir que todos os atributos estejam devidamente encapsulados.
+   - Proteger informações sensíveis como senhas, utilizando boas práticas de segurança no código.
 
 ---
 
 ## **Exemplo de Estrutura de Código**
 
-### Arquivo `Filtro.h`
+### Arquivo `UsuarioAutenticavel.h`
 ```cpp
-#ifndef FILTRO_H
-#define FILTRO_H
+#ifndef USUARIO_AUTENTICAVEL_H
+#define USUARIO_AUTENTICAVEL_H
 
-#include <vector>
-#include <functional>
-#include <algorithm>
-#include <iostream>
+#include <string>
 
-template <typename T>
-class Filtro {
-private:
-    
-public:
-    
-};
-
-#endif // FILTRO_H
+#endif // USUARIO_AUTENTICAVEL_H
 ```
 
-### Arquivo `main.cpp`
+### Arquivo `Relatorio.h`
 ```cpp
-#include <iostream>
+#ifndef RELATORIO_H
+#define RELATORIO_H
+
+class Relatorio {
+public:
+    virtual ~Relatorio() = default;
+
+    virtual void gerarRelatorio() const = 0; // Método virtual puro
+};
+
+#endif // RELATORIO_H
+```
+
+### Arquivo `Aluno.h`
+```cpp
+#ifndef ALUNO_H
+#define ALUNO_H
+
 #include <string>
-#include "Filtro.h"
-#include "Aluno.h" // Supondo que a classe Aluno já está implementada
+#include <vector>
+#include "UsuarioAutenticavel.h"
+#include "Relatorio.h"
 
-int main() {
-    Filtro<Aluno> filtroAlunos;
-
-    return 0;
-}
+#endif // ALUNO_H
 ```
 
 ---
@@ -100,25 +100,24 @@ int main() {
 ## **Critérios de Avaliação**
 
 1. **Implementação Técnica (6 pontos):**
-   - Correta implementação de templates e métodos genéricos.
-   - Integração funcional com o sistema acadêmico.
+   - Implementação correta de classes abstratas, interfaces, enums e classes internas.
 
-2. **Funcionalidades (2 pontos):**
-   - Uso de filtros e ordenação genéricos em diferentes tipos de objetos.
+2. **Uso de Funcionalidades (2 pontos):**
+   - Geração de relatórios, autenticação e uso de categorias com a enumeração.
 
 3. **Modelagem UML (1 ponto):**
-   - Diagrama UML detalhado e preciso.
+   - Diagrama UML completo e preciso.
 
-4. **Boas Práticas e Documentação (1 ponto):**
-   - Código modular, legível e bem documentado.
+4. **Boas Práticas de Programação (1 ponto):**
+   - Código modular e legível, seguindo os padrões de segurança e encapsulamento.
 
 ---
 
 ## **Entrega**
 
 1. **Formato:**
-   - Carregue os arquivos no repositório no diretório `/Projeto_7`.
-   - Inclua o diagrama UML no formato `.png` ou `.jpg`.
+   - Os arquivos devem ser enviados para o repositório da turma no diretório `/Projetos/Projeto_6`.
+   - O diagrama UML deve ser incluído no formato `.png` ou `.jpg`.
 
 2. **Prazo:**
-   - O projeto deve ser entregue até **02/02/2025**.
+   - O projeto deve ser entregue até **26/01/2025**.
