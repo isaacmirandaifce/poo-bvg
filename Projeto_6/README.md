@@ -1,123 +1,64 @@
-# **Projeto Avaliativo 6: Classes Abstratas, Interfaces, Classes Enumeradas e Classes Internas**
+# Sistema Avançado de Gestão Acadêmica
 
-## **Objetivo**
-
-Ampliar o sistema de gerenciamento acadêmico para incluir conceitos avançados de Programação Orientada a Objetos: Classes Abstratas, Interfaces, Classes Enumeradas e Classes Internas. Este projeto consolida o aprendizado da disciplina, integrando novas funcionalidades úteis para a vivência dos alunos de Análise e Desenvolvimento de Sistemas.
+Bem-vindo ao repositório do **Sistema Avançado de Gestão Acadêmica**! Este projeto é uma expansão do sistema acadêmico previamente desenvolvido, com o objetivo de incorporar novas funcionalidades e aprimorar a arquitetura do software.
 
 ---
 
-## **Tema do Projeto: Sistema Avançado de Gestão Acadêmica**
+## Sumário
 
-### **Descrição Geral**
-
-Os alunos devem expandir o sistema acadêmico já desenvolvido para incluir funcionalidades como autenticação de usuários e geração de relatórios baseados em tipos de autenticação. Além disso, o sistema deve utilizar conceitos como classes enumeradas para categorizar usuários, classes internas para encapsular lógicas específicas e interfaces para padronizar comportamentos entre classes distintas.
-
----
-
-### **Requisitos do Projeto**
-
-1. **Classes Abstratas:**
-   - Criar uma classe abstrata `UsuarioAutenticavel`, que herda de `Usuario` e representa os usuários do sistema que podem realizar login.
-     - Método abstrato: `bool autenticar(std::string senha)`.
-
-2. **Interfaces:**
-   - Criar uma interface `Relatorio` com um método virtual puro `gerarRelatorio()`, que será implementada por classes como `Aluno`, `Professor` e `FuncionarioAdministrativo`.
-
-3. **Classes Enumeradas:**
-   - Criar uma enumeração `TipoUsuario` que define os tipos de usuários no sistema:
-     - `ALUNO`, `PROFESSOR`, `FUNCIONARIO_ADMINISTRATIVO`.
-
-4. **Classes Internas:**
-   - Adicionar uma classe interna à classe `Aluno` chamada `HistoricoDisciplinar`. 
-     - A classe interna deve conter informações sobre o histórico de disciplinas cursadas, incluindo:
-       - Nome da disciplina, ano cursado e nota.
-
-5. **Funcionalidades do Sistema:**
-   - Implementar autenticação baseada em senha.
-   - Gerar relatórios detalhados para os diferentes tipos de usuários, com base na interface `Relatorio`.
-   - Exibir informações categorizadas utilizando a enumeração `TipoUsuario`.
+- [Descrição Geral](#descrição-geral)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Instalação](#instalação)
+- [Uso](#uso)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Contribuições](#contribuições)
+- [Licença](#licença)
+- [Contato](#contato)
 
 ---
 
-## **Requisitos Técnicos**
+## Descrição Geral
 
-1. **Estrutura de Arquivos:**
-   - Modularizar o projeto em arquivos `.h` e `.cpp`:
-     - `UsuarioAutenticavel.h`, `Relatorio.h`, `Aluno.h`, `Professor.h`, `FuncionarioAdministrativo.h`, etc.
-     - `main.cpp` para a função principal.
+Este projeto tem como foco principal a ampliação do sistema acadêmico já existente, adicionando funcionalidades que visam otimizar a gestão acadêmica. Entre as principais melhorias, destacam-se:
 
-2. **Diagrama UML:**
-   - Incluir um diagrama UML detalhando a hierarquia do sistema, os métodos abstratos, a interface e os relacionamentos entre as classes.
+- **Autenticação de Usuários:** Implementação de métodos de autenticação para garantir a segurança do acesso ao sistema.
+- **Geração de Relatórios:** Criação de relatórios customizados, baseados nos diferentes tipos de autenticação e perfis de usuários.
+- **Uso de Conceitos Avançados de Programação:**
+  - **Classes Enumeradas:** Para categorização e controle dos diferentes tipos de usuários.
+  - **Classes Internas:** Para encapsular lógicas específicas e promover uma melhor organização do código.
+  - **Interfaces:** Para padronizar os comportamentos e garantir a interoperabilidade entre classes distintas.
 
-3. **Encapsulamento e Segurança:**
-   - Garantir que todos os atributos estejam devidamente encapsulados.
-   - Proteger informações sensíveis como senhas, utilizando boas práticas de segurança no código.
-
----
-
-## **Exemplo de Estrutura de Código**
-
-### Arquivo `UsuarioAutenticavel.h`
-```cpp
-#ifndef USUARIO_AUTENTICAVEL_H
-#define USUARIO_AUTENTICAVEL_H
-
-#include <string>
-
-#endif // USUARIO_AUTENTICAVEL_H
-```
-
-### Arquivo `Relatorio.h`
-```cpp
-#ifndef RELATORIO_H
-#define RELATORIO_H
-
-class Relatorio {
-public:
-    virtual ~Relatorio() = default;
-
-    virtual void gerarRelatorio() const = 0; // Método virtual puro
-};
-
-#endif // RELATORIO_H
-```
-
-### Arquivo `Aluno.h`
-```cpp
-#ifndef ALUNO_H
-#define ALUNO_H
-
-#include <string>
-#include <vector>
-#include "UsuarioAutenticavel.h"
-#include "Relatorio.h"
-
-#endif // ALUNO_H
-```
+> **Nota:** O projeto foi desenvolvido utilizando a linguagem **Python**.
 
 ---
 
-## **Critérios de Avaliação**
+## Funcionalidades
 
-1. **Implementação Técnica (6 pontos):**
-   - Implementação correta de classes abstratas, interfaces, enums e classes internas.
+- **Autenticação Segura:** 
+  - Mecanismo robusto para autenticação de usuários.
+  - Validação de credenciais e gerenciamento de sessões.
 
-2. **Uso de Funcionalidades (2 pontos):**
-   - Geração de relatórios, autenticação e uso de categorias com a enumeração.
+- **Geração de Relatórios:**
+  - Relatórios customizados com base no tipo de autenticação.
+  - Exibição e exportação dos dados de forma organizada.
 
-3. **Modelagem UML (1 ponto):**
-   - Diagrama UML completo e preciso.
-
-4. **Boas Práticas de Programação (1 ponto):**
-   - Código modular e legível, seguindo os padrões de segurança e encapsulamento.
+- **Classificação de Usuários:**
+  - Uso de classes enumeradas para definir e diferenciar os tipos de usuários (por exemplo: administrador, professor, aluno).
+  
+- **Encapsulamento de Lógicas Específicas:**
+  - Utilização de classes internas para isolar funções críticas, melhorando a modularidade e manutenção do código.
+  
+- **Interfaces para Padronização:**
+  - Implementação de interfaces que garantem comportamentos consistentes entre as classes e facilitam a expansão futura do sistema.
 
 ---
 
-## **Entrega**
+## Tecnologias Utilizadas
 
-1. **Formato:**
-   - Os arquivos devem ser enviados para o repositório da turma no diretório `/Projetos/Projeto_6`.
-   - O diagrama UML deve ser incluído no formato `.png` ou `.jpg`.
+- **Linguagem:** Python  
+- **Paradigma de Programação:** Orientado a Objetos
+- **Conceitos Avançados:** Classes Enumeradas, Classes Internas, Interfaces
 
-2. **Prazo:**
-   - O projeto deve ser entregue até **26/01/2025**.
+## Execução
+- python3 main.py
