@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(SistemaAcademico)
+
+# Adicione um diretório para os arquivos de cabeçalho
+include_directories(${CMAKE_SOURCE_DIR})
+
+# Defina a versão do C++ que será usada
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Defina os arquivos fontes
+set(SOURCE_FILES
+    src/Aluno.cpp
+    src/FuncionarioAdministrativo.cpp
+    src/Professor.cpp
+    src/Relatorio.cpp
+    src/UsuarioAutenticavel.cpp
+    main.cpp
+)
+
+# Adiciona o executável do seu projeto
+add_executable(SistemaAcademico ${SOURCE_FILES})
