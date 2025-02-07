@@ -1,0 +1,3 @@
+{'nome': 'Zezim Baiao', 'email': 'ZezinhoBaiao@email.com', 'matricula': '202301', 'curso': 'ADS', 'historico': [{'nome': 'POO', 'carga_horaria': 60, 'nota': 8.5}]}
+{'nome': 'Jose Arruda', 'email': 'MacacoLouco477@email.com', 'matricula': '202302', 'curso': 'ADS', 'historico': [{'nome': 'POO', 'carga_horaria': 60, 'nota': 7.2}]}
+{'nome': 'Carla Perez', 'email': 'carlinhasantana@email.com', 'matricula': '202203', 'curso': 'ADS', 'historico': [{'nome': 'POO', 'carga_horaria': 60, 'nota': 6.5}]}
