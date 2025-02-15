@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\Projeto_7.dir/objects.a
-C:\MinGW\bin\ar.exe qc CMakeFiles\Projeto_7.dir/objects.a @CMakeFiles\Projeto_7.dir\objects1.rsp
-C:\MinGW\bin\c++.exe -Wl,--whole-archive CMakeFiles\Projeto_7.dir/objects.a -Wl,--no-whole-archive -o Projeto_7.exe -Wl,--out-implib,libProjeto_7.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Projeto_7.dir\linkLibs.rsp

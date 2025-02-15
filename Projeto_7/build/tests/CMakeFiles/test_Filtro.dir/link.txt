@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\test_Filtro.dir/objects.a
-C:\MinGW\bin\ar.exe qc CMakeFiles\test_Filtro.dir/objects.a @CMakeFiles\test_Filtro.dir\objects1.rsp
-C:\MinGW\bin\c++.exe -Wl,--whole-archive CMakeFiles\test_Filtro.dir/objects.a -Wl,--no-whole-archive -o test_Filtro.exe -Wl,--out-implib,libtest_Filtro.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\test_Filtro.dir\linkLibs.rsp

@@ -1,6 +1,0 @@
-C:/Users/Matheus/Documents/poo-bvg/Projeto_7/build/CMakeFiles/Projeto_7.dir
-C:/Users/Matheus/Documents/poo-bvg/Projeto_7/build/CMakeFiles/edit_cache.dir
-C:/Users/Matheus/Documents/poo-bvg/Projeto_7/build/CMakeFiles/rebuild_cache.dir
-C:/Users/Matheus/Documents/poo-bvg/Projeto_7/build/tests/CMakeFiles/test_Filtro.dir
-C:/Users/Matheus/Documents/poo-bvg/Projeto_7/build/tests/CMakeFiles/edit_cache.dir
-C:/Users/Matheus/Documents/poo-bvg/Projeto_7/build/tests/CMakeFiles/rebuild_cache.dir
