@@ -1,0 +1,7 @@
+Exercício 3: Modelagem de Relacionamentos e Associações
+
+Justificativa:
+O relacionamento entre Seguro e Carro é uma agregação, pois um Carro pode existir independentemente de um Seguro. Ou seja, a vida de um carro não depende do seguro que ele tenha. Mesmo que o seguro seja alterado ou cancelado, o carro continuará existindo, o que caracteriza uma relação de agregação (parte-tempo).
+Explicação:
+Para representar um cliente com múltiplos seguros, eu criaria uma lista de Seguros na classe Cliente, já que um cliente pode ter mais de um seguro. Cada Seguro pode cobrir vários carros, e a relação entre cliente e seguro seria uma associação de 1..*. Assim, o cliente teria acesso a todos os seguros que contratou, cada um com seus respectivos carros e condições.
+
