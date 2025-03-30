@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(modularizacao_cpp)
+
+# Definir o padrão do C++
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Garantir que o compilador está definido corretamente
+if(NOT CMAKE_CXX_COMPILER)
+    message(FATAL_ERROR "Compilador C++ não encontrado. Verifique sua instalação.")
+endif()
+
+# Incluir diretórios de cabeçalhos (se houver)
+include_directories(include)
+
+# Adicionar o executável
+add_executable(modularizacao_cpp 
+    src/main.cpp 
+    src/aluno.cpp 
+    src/disciplina.cpp
+)
