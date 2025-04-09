@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+{% load custom_filters %}
+<head>
+  <meta charset="UTF-8">
+  <title>{{ jogo.name }}</title>
+  <link rel="stylesheet" href="{% static 'css/detalhes.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <link rel="icon" href="{% static 'img/geeko.svg' %}" type="image/svg">
+</head>
+<body>
+  <div class="detalhes-container">
+    <div class="detalhes-topo">
+      {% if jogo.cover %}
+      <img class="detalhes-capa" src="https:{{ jogo.cover.url|replace:"t_thumb,t_cover_big" }}" alt="{{ jogo.name }}">
+      {% endif %}
+
+      <div class="detalhes-info">
+        <h1>{{ jogo.name }}</h1>
+        <p class="detalhes-resumo">{{ jogo.summary }}</p>
+        <div class="detalhes-linha"></div>
+        <p class="detalhes-extra">Gêneros: {{ jogo.genres|join:", " }}</p>
+        <p class="detalhes-extra">Desenvolvedor: {{ jogo.companies|join:", " }}</p>
+        <div class="detalhes-linha"></div>
+      </div>
+    </div>
+
+    <div class="review-box">
+      <h2>Reviews</h2>
+
+      {% if user.is_authenticated %}
+      <form method="post" class="form-review">
+        {% csrf_token %}
+        <div class="form-review-topo linha">
+          <img src="{% static 'img/geeko-review.svg' %}" alt="Avatar" class="avatar-review">
+          <input type="text" name="texto" placeholder="Adicione um comentário..." required>
+        </div>
+        <div class="botao-direita">
+          <button class="btn-enviar" type="submit">Enviar</button>
+        </div>
+      </form>
+      {% else %}
+        <p><a class="login-link" href="{% url 'account_login' %}">Faça login</a> para deixar uma review.</p>
+      {% endif %}
+
+      {% if reviews %}
+        {% for r in reviews %}
+        <div class="review-card">
+          <img class="review-avatar" src="{% static 'img/geeko-review.svg' %}" alt="Avatar">
+          <div class="review-content">
+            <div class="review-header">
+              <strong class="review-user">{{ r.user.username }}</strong>
+              <span class="review-date">({{ r.created_at|date:"d/m/Y H:i" }})</span>
+            </div>
+            <p class="review-text">{{ r.texto }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p class="sem-review">Sem reviews ainda.</p>
+      {% endif %}
+    </div>
+
+    <a class="voltar-link" href="/">← Voltar</a>
+  </div>
+</body>
+</html>

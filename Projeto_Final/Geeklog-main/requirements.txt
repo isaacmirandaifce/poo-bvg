@@ -1,0 +1,5 @@
+Django==5.1.7
+requests
+django-allauth
+pyjwt
+cryptography
