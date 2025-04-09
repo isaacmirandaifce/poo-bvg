@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25&display=swap');
+
+* {
+  font-family: 'Jersey 25', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #1e1e1e;
+  color: white;
+  display: flex;
+  height: 100vh;
+}
+
+.layout {
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  width: 70px;
+  background-color: #121212;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.sidebar .avatar {
+  width: 50px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 20px 0;
+}
+
+.sidebar ul img {
+  width: 30px;
+  height: 30px;
+}
+
+.sidebar a {
+  color: #e07b3c;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.content {
+  flex: 1;
+  padding: 30px 50px;
+  overflow-y: auto;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topo h1 {
+  font-size: 28px;
+}
+
+.topo a {
+  color: #e07b3c;
+  text-decoration: none;
+  font-size: 24px;
+}
+.ola-user{
+  font-size: 24px;
+}
+.barra-busca {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.barra-busca input {
+  padding: 10px;
+  width: 300px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.barra-busca button {
+  padding: 8px 10px;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.barra-busca button img {
+  width: 16px;
+  height: 16px;
+}
+
+.jogos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+
+.detalhes-btn {
+  margin-top: auto;
+  padding: 8px 12px;
+  background-color: #c46d3b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+
+}
+
+.jogos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+.capa-wrapper {
+  display: block;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.capa-wrapper img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+  image-rendering: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.capa-wrapper:hover {
+  box-shadow: 4px 10px 14px rgba(0, 0, 0, 0.4);
+  transform: scale(1.2);
+}

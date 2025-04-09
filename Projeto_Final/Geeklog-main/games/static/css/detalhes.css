@@ -1,0 +1,177 @@
+body {
+  margin: 0;
+  padding: 40px;
+  background-color: #1e1e1e;
+  color: white;
+  font-family: 'Jersey 25', sans-serif;
+}
+
+.detalhes-container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.detalhes-topo {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.detalhes-capa {
+  width: 250px;
+  box-shadow: 4px 4px 14px rgba(0,0,0,0.5);
+}
+
+.detalhes-info {
+  flex: 1;
+}
+
+.detalhes-info h1 {
+  font-size: 44px;
+  margin-bottom: 10px;
+}
+
+.detalhes-resumo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.detalhes-extra {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.detalhes-linha {
+  margin-top: 30px;
+  height: 2px;
+  background-color: #c46d3b;
+  width: 100%;
+  margin: 12px 0;
+}
+
+.review-box {
+  margin-top: 40px;
+}
+
+.review-box h2 {
+  font-size: 34px;
+  font-weight: normal;
+}
+
+.sem-review {
+  color: #ccc;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ========= FORM REVIEW ========= */
+.form-review {
+  margin-bottom: 30px;
+}
+
+.form-review-topo.linha {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+.form-review-topo.linha input[type="text"] {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  color: white;
+}
+
+.form-review-topo.linha input[type="text"]::placeholder {
+  color: #666;
+  font-size: 16px;
+}
+
+.avatar-review {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #fff;
+  padding: 2px;
+}
+
+.botao-direita {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ========= BOTÃO ========= */
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #c46d3b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+}
+.btn-enviar:hover{
+  background-color: #e07b3c;
+}
+/* ========= LOGIN & VOLTAR ========= */
+.login-link {
+  color: #e07b3c;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+.voltar-link {
+  display: inline-block;
+  margin-top: 30px;
+  color: #e07b3c;
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ========= REVIEW DISPLAY ========= */
+.review-card {
+  display: flex;
+  background-color: #2a2a2a;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.review-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.review-user {
+  font-weight: normal;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: bold;
+}
+
+.review-date {
+  font-weight: normal;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: bold;
+}
+
+.review-text {
+  font-weight: 400;
+  font-family: 'JetBrains Mono', monospace;
+}

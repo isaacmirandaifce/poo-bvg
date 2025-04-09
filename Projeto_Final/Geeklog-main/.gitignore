@@ -1,0 +1,19 @@
+# Ambientes virtuais
+.venv/
+venv/
+
+# Arquivos de sistema
+__pycache__/
+*.pyc
+*.pyo
+
+# Banco de dados local
+db.sqlite3
+
+# Configs do VSCode
+.vscode/
+
+# Arquivos temporários
+*.log
+*.tmp
+.DS_Store

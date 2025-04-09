@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro | Geeklog</title>
+  <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" rel="stylesheet">
+  <link rel="icon" href="{% static 'img/geeko.svg' %}" type="image/svg">
+</head>
+<body>
+  <div class="signup-container">
+    <img src="{% static 'img/geeko.svg' %}" alt="Mascote Geeklog" class="logo">
+
+    <h1>Preencha os dados abaixo para efetuar o <span>Cadastro</span></h1>
+
+    <form method="POST" action="{% url 'account_signup' %}">
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="form-errors">
+          {% for field in form %}
+            {% for error in field.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <input type="text" name="full_name" placeholder="Nome completo" pattern="[\p{L} ]+" title="Use apenas letras e espaços" required>
+      {{ form.username.as_widget }}
+      {{ form.email }}
+      {{ form.password1 }}
+      {{ form.password2 }}
+
+      <button type="submit" class="btn-signup">CADASTRAR</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>JÁ POSSUI UMA CONTA? <a href="{% url 'account_login' %}">ENTRAR</a></p>
+  </footer>
+</body>
+</html>

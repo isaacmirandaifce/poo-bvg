@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+{% load custom_filters %}
+
+<head>
+  <meta charset="UTF-8">
+  <title>Geeklog - Jogos</title>
+  <link rel="stylesheet" href="{% static 'css/igdb_teste.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" rel="stylesheet">
+  <link rel="icon" href="{% static 'img/geeko.svg' %}" type="image/svg">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <img src="{% static 'img/geeko.svg' %}" alt="Geeko" class="avatar">
+      <nav>
+        <ul>
+          <li><a href="#"><img src="{% static 'img/icon-home.svg' %}" alt="Início"></a></li>
+          <li><a href="#"><img src="{% static 'img/icon-search.svg' %}" alt="Buscar"></a></li>
+          <li><a href="#"><img src="{% static 'img/icon-coments.svg' %}" alt="Comentários"></a></li>
+          <li><a href="#"><img src="{% static 'img/icon-favs.svg' %}" alt="Favoritos"></a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="topo">
+        <h1>Geeklog</h1>
+        {% if user.is_authenticated %}
+          <p class="ola-user">Olá, {{ user.username }} | <a href="{% url 'account_logout' %}">Sair</a></p>
+        {% else %}
+          <a href="{% url 'account_login' %}">Entrar</a>
+        {% endif %}
+      </div>
+
+      <form method="get" action="/" class="barra-busca">
+        <input type="text" name="q" placeholder="Buscar jogos..." value="{{ busca|default:'' }}">
+        <button type="submit">
+          <img src="{% static 'img/icon-search.svg' %}" alt="Buscar" style="width: 16px;">
+        </button>
+      </form>
+
+      <div class="jogos">
+        {% for jogo in jogos %}
+          {% if jogo.cover %}
+            <a href="{% url 'igdb_detalhes' jogo.id %}" class="capa-wrapper">
+              <img src="https:{{ jogo.cover.url|replace:'t_thumb,t_cover_big' }}" alt="{{ jogo.name }}">
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+    </main>
+  </div>
+</body>
+</html>
