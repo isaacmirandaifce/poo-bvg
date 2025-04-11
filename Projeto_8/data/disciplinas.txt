@@ -1,0 +1,3 @@
+1001 Matemática 101
+1002 Física 102
+1003 Química 103
