@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}Home - FilmoTeca{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Cabeçalho da Home -->
+    <div class="text-center p-4 mb-5 rounded-3" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+        <h1 class="display-4 text-white"><i class="fas fa-film me-2"></i>Bem-vindo ao FilmoTeca!</h1>
+        <p class="lead text-white-50">A sua biblioteca de filmes favorita, com os melhores títulos e as últimas novidades.</p>
+    </div>
+
+    <!-- Seção de Filmes Favoritos -->
+    <div class="row mb-5">
+        <div class="col-12">   
+            <h2 class="text-center mb-4 text-dark"><i class="fas fa-heart me-2"></i>Meus Favoritos</h2>
+            <div id="favoritos-message" class="text-center"></div>
+        </div>
+        <div id="filmes-favoritos-container" class="row">
+            {% for filme in filmes_favoritos %}
+            <div class="col-md-4 mb-4" id="filme-fav-{{filme.id}}">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">{{filme.titulo}}</h5>
+                        <p class="card-text text-muted">{{filme.descricao}}</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <button onclick="removerFavorito({{filme.id}}, {{usuario_id}})" 
+                                class="btn btn-danger w-100">
+                            <i class="fas fa-trash-alt me-1"></i> Remover dos Favoritos
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    Você ainda não tem filmes favoritos. Adicione alguns abaixo!
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Seção de Todos os Filmes -->
+    <div class="row mb-5">
+        <div class="col-12">   
+            <h2 class="text-center mb-4 text-dark"><i class="fas fa-star me-2"></i>Filmes Disponíveis</h2>
+            <div id="disponiveis-message" class="text-center"></div>
+        </div>
+        {% for filme in filmes %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">{{filme.titulo}}</h5>
+                    <p class="card-text text-muted">{{filme.descricao}}</p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <button onclick="adicionarFavorito({{filme.id}}, {{usuario_id}})" 
+                            class="btn btn-success w-100">
+                        <i class="fas fa-heart me-1"></i> Adicionar aos Favoritos
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    async function adicionarFavorito(filmeId, usuarioId) {
+        try {
+            const response = await fetch(`/usuarios/${usuarioId}/favoritos/${filmeId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            const messageDiv = document.getElementById('disponiveis-message');
+            
+            if (response.ok) {
+                // Encontra o card do filme que foi favoritado
+                const filmeCard = document.querySelector(`[onclick*="adicionarFavorito(${filmeId}, ${usuarioId})"]`).closest('.col-md-4');
+                
+                if (!filmeCard) {
+                    throw new Error('Não foi possível encontrar o filme na lista');
+                }
+
+                const filmeData = {
+                    id: filmeId,
+                    titulo: filmeCard.querySelector('.card-title').textContent,
+                    descricao: filmeCard.querySelector('.card-text').textContent
+                };
+                
+                // Adiciona o novo filme à seção de favoritos
+                const favoritosContainer = document.getElementById('filmes-favoritos-container');
+                
+                if (favoritosContainer.querySelector('.alert')) {
+                    favoritosContainer.innerHTML = '';
+                }
+                
+                favoritosContainer.insertAdjacentHTML('beforeend', `
+                    <div class="col-md-4 mb-4" id="filme-fav-${filmeData.id}">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">${filmeData.titulo}</h5>
+                                <p class="card-text text-muted">${filmeData.descricao}</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <button onclick="removerFavorito(${filmeData.id}, ${usuarioId})" 
+                                        class="btn btn-danger w-100">
+                                    <i class="fas fa-trash-alt me-1"></i> Remover dos Favoritos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `);
+                
+                messageDiv.innerHTML = `<div class="alert alert-success">Filme adicionado aos favoritos com sucesso!</div>`;
+                setTimeout(() => messageDiv.innerHTML = '', 3000);
+            } else {
+                const error = await response.json();
+                messageDiv.innerHTML = `<div class="alert alert-danger">Erro: ${error.detail || 'Ocorreu um erro'}</div>`;
+                setTimeout(() => messageDiv.innerHTML = '', 3000);
+            }
+        } catch (error) {
+            document.getElementById('disponiveis-message').innerHTML = `
+                <div class="alert alert-danger">Erro ao adicionar filme: ${error.message}</div>
+            `;
+            setTimeout(() => document.getElementById('disponiveis-message').innerHTML = '', 3000);
+        }
+    }
+    // Função para remover filme dos favoritos
+    async function removerFavorito(filmeId, usuarioId) {
+        try {
+            const response = await fetch(`/usuarios/${usuarioId}/favoritos/${filmeId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            const messageDiv = document.getElementById('favoritos-message');
+            
+            if (response.ok) {
+                // Remove o filme da lista de favoritos
+                document.getElementById(`filme-fav-${filmeId}`).remove();
+                
+                // Se não houver mais favoritos, mostra a mensagem
+                if (document.getElementById('filmes-favoritos-container').children.length === 0) {
+                    document.getElementById('filmes-favoritos-container').innerHTML = `
+                        <div class="col-12 text-center">
+                            <div class="alert alert-info">
+                                Você ainda não tem filmes favoritos. Adicione alguns abaixo!
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                messageDiv.innerHTML = `<div class="alert alert-success">Filme removido dos favoritos com sucesso!</div>`;
+                setTimeout(() => messageDiv.innerHTML = '', 3000);
+            } else {
+                const error = await response.json();
+                messageDiv.innerHTML = `<div class="alert alert-danger">Erro: ${error.detail || 'Ocorreu um erro'}</div>`;
+                setTimeout(() => messageDiv.innerHTML = '', 3000);
+            }
+        } catch (error) {
+            document.getElementById('favoritos-message').innerHTML = `
+                <div class="alert alert-danger">Erro ao remover filme: ${error.message}</div>
+            `;
+            setTimeout(() => document.getElementById('favoritos-message').innerHTML = '', 3000);
+        }
+    }
+</script>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .btn-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+    }
+    .btn-danger {
+        background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+        border: none;
+    }
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}
