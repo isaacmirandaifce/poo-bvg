@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento de Sirene</title>
+    <link rel="shortcut icon" href="/static/img/sino.svg" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar bg-success borda px-5">
+        <div class="container-fluid">
+            <div class="d-flex gap-2 align-items-center text-light">
+                <img src="/static/img/sino.svg" width="50px" alt="">
+                <h4>Agendamento de Sirene</h4>
+            </div>
+            <div class="d-flex h-100 gap-2 align-items-center">
+                <p class="text-light m-0">Bem-vindo(a), {{ username }}</p>
+                <a href="{{ url_for('auth.logout') }}"
+                    class="btn-light text-decoration-none btn px-3 text-success gap-3"><i
+                        class="fa-solid fa-right-from-bracket"></i>
+                    Sair</a>
+            </div>
+        </div>
+    </nav>
+
+    {% set dias_exibicao = {
+    'segunda': 'Segunda',
+    'terca': 'Terça',
+    'quarta': 'Quarta',
+    'quinta': 'Quinta',
+    'sexta': 'Sexta'
+    } %}
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-4 ps-0">
+                <div class="input-group w-100">
+                    <span
+                        class="input-group-text text-light p-4 borda fs-1 w-25 d-flex justify-content-center bg-success">
+                        <i class="fa-solid fa-clock"></i>
+                    </span>
+                    <button class="btn borda p-4 fs-5 w-75" data-bs-toggle="modal" data-bs-target="#adicionarHorarioModal">
+                        Adicionar horário
+                    </button>
+                </div>
+            </div>
+            <div class="col-4">
+                <form method="post" action="{{ url_for('sirene.ativar_sirene') }}" class="input-group w-100">
+                    <span
+                        class="input-group-text text-light p-4 borda fs-1 w-25 d-flex justify-content-center bg-success">
+                        <i class="fa-solid fa-bell"></i>
+                    </span>
+                    <button class="btn borda p-4 fs-5 w-75" type="submit">Acionar Sirene</button>
+                </form>
+            </div>
+            <div class="col-4 pe-0">
+                <div class="input-group w-100">
+                    <span
+                        class="input-group-text text-light p-4 borda fs-1 w-25 d-flex justify-content-center bg-success">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </span>
+                    <a href="{{ url_for('auth.register') }}" class="btn borda m-0 p-4 fs-5 w-75 d-flex align-items-center justify-content-center">Cadastrar Usuário</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container border my-3 p-0 pb-2 rounded-4 borda">
+        <h3 class="m-0 py-2 text-center">Agenda semanal</h3>
+        <table cellpadding="8" class="table rounded-4 text-center">
+            <thead>
+                <tr>
+                    <th>Horário</th>
+                    {% for dia in dias_exibicao %}
+                    <th>{{ dias_exibicao[dia] }}</th>
+                    {% endfor %}
+                    <th>Editar</th>
+                    <th>Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for horario, dias in agenda.items() %}
+                <tr>
+                    <td class="fw-light text-muted">{{ horario }}</td>
+                    {% for dia in dias_exibicao %}
+                    {% if dias[dia] %}
+                    <td class="text-center bg-table p-0 m-0 align-items-center">
+                        <i class="fa-solid fa-bell text-table fs-5 p-3 m-0"></i>
+                    </td>
+                    {% else %}
+                    <td class="text-center">
+                        —
+                    </td>
+                    {% endif %}
+                    {% endfor %}
+                    <td class="p-0 bg-warning">
+                        <!-- Botão de editar -->
+                        <button class="btn btn-sm btn-warning text-light fs-5 p-2 w-100 h-100" data-bs-toggle="modal"
+                            data-bs-target="#modalEditar" data-horario="{{ horario }}"
+                            data-dias="{{ dias | tojson | safe }}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                    </td>
+                    <td class="p-0 bg-danger">
+                        <!-- Botão de excluir -->
+                        <button class="btn btn-sm btn-danger p-2 w-100 h-100 fs-5" data-bs-toggle="modal"
+                            data-bs-target="#excluirModal" data-horario="{{ horario }}">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container p-0 mb-5">
+        <!-- Mensagens -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show m-0" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" action="/horarios/editar" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Horário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body d-flex w-100">
+                    <div class="w-50">
+                        <label>Dias da Semana:</label><br>
+                        {% for dia_valor, dia_label in dias_exibicao.items() %}
+                        <div class="form-check form-check-inline d-flex">
+                            <input class="form-check-input" type="checkbox" name="dias" value="{{ dia_valor }}"
+                            id="editar-{{ dia_valor }}" style="width: 1.5rem; height: 1.5rem;"> 
+                            <label class="form-check-label ms-3" for="editar-{{ dia_valor }}">{{ dia_label }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="d-flex flex-column w-50">
+                        <input type="hidden" name="horario_antigo" id="editar-horario-antigo">
+                        <label for="editar-novo-horario">Novo Horário:</label>
+                        <input type="time" name="novo_horario" id="editar-novo-horario" class="form-control mb-2 w-100" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="w-100 d-flex gap-4">
+                        <button type="button" class="btn btn-secondary m-0 p-2 w-50" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success m-0 p-2 w-50">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Modal de Exclusão -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" aria-labelledby="excluirModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="POST" action="{{ url_for('horarios.excluir_horario') }}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="excluirModalLabel">Horário: <span id="horarioExclusaoTexto"></span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Você tem certeza que deseja excluir este horário?</p>
+                        <input type="hidden" name="horario" id="excluirHorarioInput">
+                    </div>
+                    <div class="modal-footer">
+                        <div class="w-100 d-flex gap-4">
+                            <button type="button" data-bs-dismiss="modal"
+                                class="btn btn-secondary m-0 w-50 p-2">Cancelar</button>
+                            <button type="submit" class="btn btn-danger w-50 p-2">Excluir</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="adicionarHorarioModal" tabindex="-1" aria-labelledby="adicionarHorarioModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" action="/inicio" class="form-schedule">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="adicionarHorarioModalLabel">Adicionar Horário</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <label for="horario" class="form-label me-2">Horário:</label>
+                            <input type="time" id="horario" name="horario" class="form-control" required>
+                        </div>
+    
+                        <label class="form-label">Dias da Semana:</label>
+                        <div class="mb-3">
+                            {% for dia_valor, dia_label in dias_exibicao.items() %}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="dias" id="{{ dia_valor }}"
+                                    value="{{ dia_valor }}">
+                                <label class="form-check-label" for="{{ dia_valor }}">{{ dia_label }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
