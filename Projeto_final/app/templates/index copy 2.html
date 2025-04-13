@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Home - FilmoTeca{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Cabeçalho da Home -->
+    <div class="text-center p-4 mb-5 rounded-3" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+        <h1 class="display-4 text-white"><i class="fas fa-film me-2"></i>Bem-vindo ao FilmoTeca!</h1>
+        <p class="lead text-white-50">A sua biblioteca de filmes favorita, com os melhores títulos e as últimas novidades.</p>
+        <a class="btn btn-light btn-lg px-4" href="/tela_listar_filmes" role="button">
+            <i class="fas fa-list me-2"></i>Ver Filmes
+        </a>
+    </div>
+
+    <!-- Seção de Filmes em Destaque -->
+    <div class="row mb-5">
+        <div class="col-12">   
+            <h2 class="text-center mb-4 text-dark"><i class="fas fa-star me-2"></i>Filmes Favoritos</h2>
+        </div>
+        {% for filme in filmes_favoritos %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">{{filme.titulo}}</h5>
+                    <p class="card-text text-muted">{{filme.descricao}}</p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="#" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-info-circle me-2"></i>Saiba mais
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Seção de Filmes em Destaque -->
+    <div class="row mb-5">
+        <div class="col-12">   
+            <h2 class="text-center mb-4 text-dark"><i class="fas fa-star me-2"></i>Filmes em Destaque</h2>
+        </div>
+        {% for filme in filmes %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">{{filme.titulo}}</h5>
+                    <p class="card-text text-muted">{{filme.descricao}}</p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="#" class="btn btn-outline-primary w-100">
+                        <!-- <i class="fas fa-info-circle me-2"></i>Saiba mais -->
+                        <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="adicionarFilmeFavorito()">Adicionar Filme</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Seção de Comentários -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4 text-dark"><i class="fas fa-comments me-2"></i>O que nossos usuários dizem</h2>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-dark"><i class="fas fa-quote-left text-primary me-2"></i>A melhor plataforma de filmes!</h5>
+                    <p class="card-text text-muted">"Adoro a variedade de filmes disponíveis e a interface é super intuitiva. Me sinto no cinema!"</p>
+                    <footer class="blockquote-footer mt-3">Ana Silva, Usuária</footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-dark"><i class="fas fa-quote-left text-primary me-2"></i>Cinema no conforto da minha casa!</h5>
+                    <p class="card-text text-muted">"Com a plataforma, posso assistir aos meus filmes favoritos em qualquer lugar e a qualquer momento!"</p>
+                    <footer class="blockquote-footer mt-3">Carlos Souza, Usuário</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const usuarioId = "{{ usuario_id_int }}"; // Obtém o ID do usuário do template
+
+    // Função para adicionar um filme aos favoritos via API
+    async function adicionarFilmeFavorito() {
+        const select = document.getElementById('filmes-disponiveis');
+        const filmeId = select.value;
+        const filmeTitulo = select.options[select.selectedIndex].text;
+
+        if (!filmeId) {
+            alert("Selecione um filme válido.");
+            return;
+        }
+
+        // Verifica se o filme já está na lista de favoritos
+        if (document.getElementById(`filme-${filmeId}`)) {
+            alert("Este filme já está na lista de favoritos.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/usuarios/${usuarioId}/favoritos/${filmeId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert(`Erro ao adicionar filme: ${errorData.detail}`);
+                return;
+            }
+
+            // Adiciona o filme na interface após sucesso
+            const container = document.getElementById('filmes-favoritos-container');
+            const novoFilme = `
+                <div class="filme-favorito mb-2" id="filme-${filmeId}">
+                    <input type="hidden" name="favoritos[]" value="${filmeId}">
+                    <span>${filmeTitulo}</span>
+                    <button type="button" class="btn btn-danger btn-sm ms-2" onclick="removerFilmeFavorito('${filmeId}')">Remover</button>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', novoFilme);
+        } catch (error) {
+            alert(`Erro ao adicionar filme: ${error.message}`);
+        }
+    }
+</script>
+<!-- Adicione isso no seu base.html ou aqui no final -->
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .btn-outline-primary {
+        color: #6a11cb;
+        border-color: #6a11cb;
+    }
+    .btn-outline-primary:hover {
+        background-color: #6a11cb;
+        color: white;
+    }
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}

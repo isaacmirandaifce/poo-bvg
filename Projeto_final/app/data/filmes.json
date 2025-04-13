@@ -1,0 +1,26 @@
+[
+    {
+        "id": 8,
+        "titulo": "Gladiador 2",
+        "genero": "Outro",
+        "descricao": "Filme de muita a\u00e7\u00e3o passado na roma antiga.",
+        "ano": 2024,
+        "avaliacao": 5.5
+    },
+    {
+        "id": 9,
+        "titulo": "Mad Max",
+        "genero": "Outro",
+        "descricao": "Filme que se passa em um planeta devastado",
+        "ano": 2018,
+        "avaliacao": 4.5
+    },
+    {
+        "id": 10,
+        "titulo": "The Flash",
+        "genero": "Outro",
+        "descricao": "Filme estrelado por ",
+        "ano": 2023,
+        "avaliacao": 4.0
+    }
+]

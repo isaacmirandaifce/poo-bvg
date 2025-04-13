@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Lista de Usuários</h2>
+        <a type="button" class="btn btn-primary" href="/tela_form_usuario">+ Adicionar</a>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Filmes Favoritos</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr id="usuario{{ usuario.id }}">
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.nome }}</td>
+                <td>
+                    <ul>
+                        {% if usuario.favoritos %}
+                            {% for filme in usuario.favoritos %}
+                                <li>{{ filme.titulo }} ({{ filme.ano }})</li>
+                            {% endfor %}
+                        {% else %}
+                            <li>Nenhum filme favorito.</li>
+                        {% endif %}
+                    </ul>
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="/tela_editar_usuario/{{ usuario.id }}" class="btn btn-warning btn-sm">Editar</a>
+                        <button class="btn btn-danger btn-sm" onclick="deletarUsuario({{ usuario.id }})">Deletar</button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    async function deletarUsuario(usuario_id) {
+        const confirmacao = confirm("Tem certeza que deseja deletar este usuário?");
+        if (!confirmacao) return;
+
+        const button = document.querySelector(`#usuario${usuario_id} .btn-danger`);
+        button.disabled = true;
+        button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Deletando...';
+
+        try {
+            const response = await fetch(`/usuarios/${usuario_id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                document.getElementById(`usuario${usuario_id}`).remove();
+            } else {
+                try {
+                    const errorData = await response.json();
+                    alert(`Erro ao deletar o usuário: ${errorData.detail}`);
+                } catch (error) {
+                    alert("Erro ao deletar o usuário. Tente novamente.");
+                }
+            }
+        } catch (error) {
+            console.error("Erro ao deletar usuário:", error);
+            alert("Erro inesperado ao deletar o usuário.");
+        } finally {
+            button.disabled = false;
+            button.innerHTML = 'Deletar';
+        }
+    }
+</script>
+{% endblock %}

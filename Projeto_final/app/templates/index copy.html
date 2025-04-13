@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Home - FilmoTeca{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Cabeçalho da Home -->
+    <div class="jumbotron text-center bg-dark text-white">
+        <h1 class="display-4">Bem-vindo ao FilmoTeca!</h1>
+        <p class="lead">A sua biblioteca de filmes favorita, com os melhores títulos e as últimas novidades.</p>
+        <a class="btn btn-primary btn-lg" href="/tela_listar_filmes" role="button">
+            Ver Filmes
+        </a>
+    </div>
+
+    <!-- Seção de Filmes em Destaque -->
+    <div class="row">
+        <div class="col-12">   
+            <h2 class="text-center mb-4">Filmes em Destaque</h2>
+        </div>
+        {% for filme in filmes %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{filme.titulo}}</h5>
+                    <p class="card-text">{{filme.descricao}}</p>
+                    <a href="#" class="btn btn-info btn-block">Saiba mais</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Seção de Comentários -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">O que nossos usuários dizem</h2>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">"A melhor plataforma de filmes!"</h5>
+                    <p class="card-text">"Adoro a variedade de filmes disponíveis e a interface é super intuitiva. Me sinto no cinema!"</p>
+                    <footer class="blockquote-footer">Ana Silva, Usuária</footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">"Cinema no conforto da minha casa!"</h5>
+                    <p class="card-text">"Com a plataforma, posso assistir aos meus filmes favoritos em qualquer lugar e a qualquer momento!"</p>
+                    <footer class="blockquote-footer">Carlos Souza, Usuário</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
