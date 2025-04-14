@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel de Senhas</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #003366;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .painel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .box {
+            background: #002244;
+            padding: 20px 40px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 0 10px #0005;
+        }
+
+        h1, h2 {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            color: white;
+            border-spacing: 10px;
+            text-align: center;
+        }
+
+        table thead tr {
+            border-bottom: 1px solid #ffffff50;
+        }
+
+        .info-painel {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            flex: 1 1 200px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .mensagem-vazia {
+            text-align: center;
+            font-size: 1.2em;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="painel">
+
+    <div class="box">
+        <h2>SENHA ATUAL</h2>
+        <div class="info-painel">
+            <div class="info-item">
+                <h2>SENHA</h2>
+                <h1 id="senha">---</h1>
+            </div>
+            <div class="info-item">
+                <h2>GUICHÊ</h2>
+                <h1 id="guiche">---</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <h2>HISTÓRICO DE CHAMADAS</h2>
+        <table>
+            <thead>
+                <tr><th>Senha</th><th>Guichê</th></tr>
+            </thead>
+            <tbody id="tabela-historico">
+                {% for item in historico %}
+                    <tr>
+                        <td>{{ item.codigo }}</td>
+                        <td>{{ item.guiche }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p id="sem-historico" class="mensagem-vazia" style="display: none;">Sem chamadas ainda.</p>
+    </div>
+</div>
+
+<script>
+    function atualizarPainel() {
+        fetch("/api/senha_atual")
+            .then(res => res.json())
+            .then(data => {
+                const senha = data.codigo || "---";
+                const guiche = data.guiche || "---";
+
+                document.getElementById("senha").innerText = senha;
+                document.getElementById("guiche").innerText = guiche;
+            })
+            .catch(err => {
+                // Em caso de erro (tipo backend fora do ar), evita travar a interface
+                document.getElementById("senha").innerText = "---";
+                document.getElementById("guiche").innerText = "---";
+            });
+
+        fetch("/api/historico")
+            .then(res => res.json())
+            .then(data => {
+                let html = "";
+                data.forEach(item => {
+                    html += `<tr><td>${item.codigo}</td><td>${item.guiche}</td></tr>`;
+                });
+
+                const tabela = document.getElementById("tabela-historico");
+                const aviso = document.getElementById("sem-historico");
+
+                tabela.innerHTML = html;
+
+                if (data.length === 0) {
+                    aviso.style.display = "block";
+                } else {
+                    aviso.style.display = "none";
+                }
+            });
+    }
+
+    setInterval(atualizarPainel, 5000);
+    atualizarPainel(); // chama logo que a página carrega
+</script>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+:root {
+    --primary-color: #3498db;
+    --danger-color: #e74c3c;
+    --success-color: #2ecc71;
+    --text-color: #2c3e50;
+    --border-radius: 8px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f7fa;
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.painel {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 30px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.senha-container {
+    margin: 25px 0;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    background-color: #f8f9fa;
+}
+
+.senha {
+    font-size: 72px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 10px 0;
+}
+
+.senha-prioritaria {
+    color: var(--danger-color);
+}
+
+.info {
+    font-size: 18px;
+    margin: 15px 0;
+}
+
+.botao {
+    margin: 25px 0;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.botao button, .botao a {
+    padding: 12px 24px;
+    font-size: 18px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.botao button:hover, .botao a:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+
+.ocupado {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.livre {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: var(--border-radius);
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+        margin: 20px auto;
+    }
+
+    .painel {
+        padding: 20px;
+    }
+
+    .senha {
+        font-size: 48px;
+    }
+
+    .botao button, .botao a {
+        font-size: 16px;
+        padding: 10px 18px;
+    }
+}

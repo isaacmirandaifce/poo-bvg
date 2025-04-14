@@ -1,0 +1,237 @@
+{
+    "emitidas": [
+        {
+            "numero": "P007",
+            "tipo": "P",
+            "status": "aguardando",
+            "data": "2025-04-13 19:20:07",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "00000000000",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "P007",
+            "tipo": "P",
+            "status": "aguardando",
+            "data": "2025-04-13 21:03:11",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "000.000.000-00",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "P001",
+            "tipo": "P",
+            "status": "aguardando",
+            "data": "2025-04-14 18:45:18",
+            "cliente": {
+                "nome": "Matheus",
+                "cpf": "123.456.789-10",
+                "tipo": "P"
+            }
+        }
+    ],
+    "atendidas": [
+        {
+            "numero": "N001",
+            "tipo": "N",
+            "status": "finalizado",
+            "data": "2025-04-13 18:59:39",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "00000000000",
+                "tipo": "N"
+            }
+        },
+        {
+            "numero": "P001",
+            "tipo": "P",
+            "status": "finalizado",
+            "data": "2025-04-13 19:00:09",
+            "cliente": {
+                "nome": "aaaa",
+                "cpf": "00000000000",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "P002",
+            "tipo": "P",
+            "status": "finalizado",
+            "data": "2025-04-13 19:05:01",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "00000000000",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "P001",
+            "tipo": "P",
+            "status": "finalizado",
+            "data": "2025-04-13 19:25:07",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "00000000000",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "P002",
+            "tipo": "P",
+            "status": "finalizado",
+            "data": "2025-04-13 19:32:59",
+            "cliente": {
+                "nome": "aaaa",
+                "cpf": "999.999.999-99",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "N001",
+            "tipo": "N",
+            "status": "finalizado",
+            "data": "2025-04-13 19:32:09",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "999.999.999-99",
+                "tipo": "N"
+            }
+        },
+        {
+            "numero": "N003",
+            "tipo": "N",
+            "status": "finalizado",
+            "data": "2025-04-13 19:34:29",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "000.000.000-00",
+                "tipo": "N"
+            }
+        },
+        {
+            "numero": "P003",
+            "tipo": "P",
+            "status": "finalizado",
+            "data": "2025-04-13 19:34:58",
+            "cliente": {
+                "nome": "ghgfh",
+                "cpf": "000.000.000-00",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "N004",
+            "tipo": "N",
+            "status": "finalizado",
+            "data": "2025-04-13 19:35:30",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "000.000.000-00",
+                "tipo": "N"
+            }
+        },
+        {
+            "numero": "N002",
+            "tipo": "N",
+            "status": "finalizado",
+            "data": "2025-04-13 19:34:06",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "000.000.000-00",
+                "tipo": "N"
+            }
+        },
+        {
+            "numero": "P004",
+            "tipo": "P",
+            "status": "finalizado",
+            "data": "2025-04-13 19:36:30",
+            "cliente": {
+                "nome": "aaaa",
+                "cpf": "000.000.000-00",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "N005",
+            "tipo": "N",
+            "status": "finalizado",
+            "data": "2025-04-13 19:37:18",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "000.000.000-00",
+                "tipo": "N"
+            }
+        },
+        {
+            "numero": "P005",
+            "tipo": "P",
+            "status": "finalizado",
+            "data": "2025-04-13 19:52:55",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "555.555.555-55",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "P006",
+            "tipo": "P",
+            "status": "finalizado",
+            "data": "2025-04-13 19:56:16",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "000.000.000-00",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "N006",
+            "tipo": "N",
+            "status": "finalizado",
+            "data": "2025-04-13 19:55:56",
+            "cliente": {
+                "nome": "jhonata",
+                "cpf": "000.000.000-00",
+                "tipo": "N"
+            }
+        },
+        {
+            "numero": "N007",
+            "tipo": "N",
+            "status": "finalizado",
+            "data": "2025-04-13 19:56:03",
+            "cliente": {
+                "nome": "aaaa",
+                "cpf": "000.000.000-00",
+                "tipo": "N"
+            }
+        },
+        {
+            "numero": "P001",
+            "tipo": "P",
+            "status": "finalizado",
+            "data": "2025-04-14 00:11:24",
+            "cliente": {
+                "nome": "Matheus",
+                "cpf": "400.289.22",
+                "tipo": "P"
+            }
+        },
+        {
+            "numero": "N001",
+            "tipo": "N",
+            "status": "finalizado",
+            "data": "2025-04-14 00:11:12",
+            "cliente": {
+                "nome": "S\u00e3o Bernardo",
+                "cpf": "072.580.603-67",
+                "tipo": "N"
+            }
+        }
+    ]
+}

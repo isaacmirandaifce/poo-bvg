@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Emissão de Senhas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/emitir.css') }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cpf = document.getElementById('cpf');
+            if (cpf) {
+                cpf.addEventListener('input', () => {
+                    cpf.value = cpf.value
+                        .replace(/\D/g, '') // Remove caracteres não numéricos
+                        .slice(0, 11) // Limita a 11 dígitos
+                        .replace(/(\d{3})(\d)/, '$1.$2')
+                        .replace(/(\d{3})(\d)/, '$1.$2')
+                        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                });
+            }
+
+            // Bloquear clique duplo e alterar texto do botão
+            const form = document.querySelector("form");
+            const botao = document.getElementById("botaoEmitir");
+            form.addEventListener("submit", function (event) {
+                // Verifica se o CPF tem 11 dígitos
+                const cpfValue = document.getElementById('cpf').value.replace(/\D/g, '');
+                if (cpfValue.length !== 11) {
+                    alert("Por favor, insira um CPF completo com 11 dígitos.");
+                    event.preventDefault(); // Impede o envio do formulário
+                } else {
+                    botao.innerText = "Emitindo...";
+                    botao.disabled = true;
+                }
+            });
+        });
+
+        // Confirmação para atendimento prioritário
+        function verificarTipo() {
+            const tipo = document.querySelector('select[name="tipo"]').value;
+            if (tipo === 'P') {
+                return confirm("Este atendimento é exclusivo para:\n\n- Idosos\n- Gestantes\n- Pessoas com deficiência\n- Pessoas com criança de colo\n\nVocê se encaixa nesse perfil?");
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>Emitir Senha</h1>
+
+    {% if mensagem %}
+        <p style="color: green; font-size: 1.1em;">✅ {{ mensagem }}<br><small>Aguarde ser chamado no painel.</small></p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('senha.emitir') }}" onsubmit="return verificarTipo();">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" required>
+
+        <label for="cpf">CPF:</label>
+        <input type="text" name="cpf" id="cpf" required>
+
+        <label for="tipo">Tipo de Atendimento:</label>
+        <select name="tipo">
+            <option value="N">🧍 Atendimento Normal</option>
+            <option value="P">♿ Atendimento Prioritário</option>
+        </select>
+
+        <small style="color: #777; margin-bottom: 10px;">
+            Prioritário: idosos, gestantes, PCDs e pessoas com criança de colo.
+        </small>
+
+        <button type="submit" id="botaoEmitir">Emitir Senha</button>
+    </form>
+</body>
+</html>

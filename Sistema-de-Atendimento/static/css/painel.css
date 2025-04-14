@@ -1,0 +1,31 @@
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    background: #f7f7f7;
+}
+
+.painel {
+    display: flex;
+    gap: 30px;
+}
+
+.coluna {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #ccc;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
