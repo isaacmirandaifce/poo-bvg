@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guichê {{ guiche.numero }} - Sistema de Atendimento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/guiche.css') }}">
+</head>
+<body>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="painel">
+            <h1>Guichê {{ guiche.numero }}</h1>
+            
+            {% if guiche.cliente_atual %}
+            <div class="senha-container">
+                <div class="senha {{ 'senha-prioritaria' if guiche.cliente_atual.tipo == 'P' }}">
+                    {{ guiche.cliente_atual.numero }}
+                </div>
+                <div class="info">
+                    <p>Tipo: {{ 'Prioritário' if guiche.cliente_atual.tipo == 'P' else 'Normal' }}</p>
+                </div>
+            </div>
+        
+            <div class="botao">
+                <a href="{{ url_for('guiche.liberar', numero=guiche.numero) }}" class="btn-danger">Liberar Guichê</a>
+            </div>
+        {% else %}
+            <div class="senha-container">
+                <p>Nenhuma senha em atendimento</p>
+            </div>
+        
+            <div class="botao">
+                <form action="{{ url_for('guiche.chamar_proxima', numero=guiche.numero) }}" method="get">
+                    <button type="submit" class="btn-primary">Chamar Próxima Senha</button>
+                </form>
+            </div>
+        {% endif %}
+        
+        </div>
+        </div>
+    </div>
+</body>
+</html>
