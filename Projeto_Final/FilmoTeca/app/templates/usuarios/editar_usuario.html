@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+    <div class="container mt-4">
+        <h2 class="mb-4">Atualizar informações de usuário</h2>
+        <form id="EditarUsuarioForm">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="nome" name="nome" value="{{ usuario.nome }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ usuario.email }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="senha" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="senha" name="senha" value="{{ usuario.senha }}" required>
+            </div>
+
+            <!-- Lista de Filmes Favoritos -->
+            <div class="mb-3">
+                <label class="form-label">Filmes Favoritos</label>
+                <div id="filmes-favoritos-container">
+                    {% for filme in usuario.favoritos %}
+                        <div class="filme-favorito mb-2" id="filme-{{ filme.id }}">
+                            <input type="hidden" name="favoritos[]" value="{{ filme.id }}">
+                            <span>{{ filme.titulo }} ({{ filme.ano }})</span>
+                            <button type="button" class="btn btn-danger btn-sm ms-2" onclick="removerFilmeFavorito('{{ filme.id }}')">Remover</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Lista de Filmes Disponíveis -->
+            <div class="mb-3">
+                <label class="form-label">Adicionar Filmes</label>
+                <select id="filmes-disponiveis" class="form-select">
+                    <option value="">Selecione um filme...</option>
+                    {% for filme in filmes %}
+                        <option value="{{ filme.id }}">{{ filme.titulo }} ({{ filme.ano }})</option>
+                    {% endfor %}
+                </select>
+                <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="adicionarFilmeFavorito()">Adicionar Filme</button>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            <a href="/tela_listar_usuarios" class="btn btn-secondary">Voltar</a>
+        </form>
+        <div id="responseMessage" class="mt-3"></div>
+    </div>
+
+    <script>
+        const usuarioId = "{{ usuario.id }}"; // Obtém o ID do usuário do template
+
+        // Função para adicionar um filme aos favoritos via API
+        async function adicionarFilmeFavorito() {
+            const select = document.getElementById('filmes-disponiveis');
+            const filmeId = select.value;
+            const filmeTitulo = select.options[select.selectedIndex].text;
+
+            if (!filmeId) {
+                alert("Selecione um filme válido.");
+                return;
+            }
+
+            // Verifica se o filme já está na lista de favoritos
+            if (document.getElementById(`filme-${filmeId}`)) {
+                alert("Este filme já está na lista de favoritos.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/usuarios/${usuarioId}/favoritos/${filmeId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert(`Erro ao adicionar filme: ${errorData.detail}`);
+                    return;
+                }
+
+                // Adiciona o filme na interface após sucesso
+                const container = document.getElementById('filmes-favoritos-container');
+                const novoFilme = `
+                    <div class="filme-favorito mb-2" id="filme-${filmeId}">
+                        <input type="hidden" name="favoritos[]" value="${filmeId}">
+                        <span>${filmeTitulo}</span>
+                        <button type="button" class="btn btn-danger btn-sm ms-2" onclick="removerFilmeFavorito('${filmeId}')">Remover</button>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', novoFilme);
+            } catch (error) {
+                alert(`Erro ao adicionar filme: ${error.message}`);
+            }
+        }
+
+        // Função para remover um filme dos favoritos via API
+        async function removerFilmeFavorito(filmeId) {
+            try {
+                const response = await fetch(`/usuarios/${usuarioId}/favoritos/${filmeId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert(`Erro ao remover filme: ${errorData.detail}`);
+                    return;
+                }
+
+                // Remove da interface após sucesso
+                document.getElementById(`filme-${filmeId}`).remove();
+            } catch (error) {
+                alert(`Erro ao remover filme: ${error.message}`);
+            }
+        }
+
+        // Envio do formulário
+        document.getElementById('EditarUsuarioForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // Coleta os dados do formulário (nome, email e senha)
+            const formData = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                senha: document.getElementById('senha').value
+            };
+
+            // Coleta os filmes favoritos adicionados, incluindo todos os detalhes
+            const filmesFavoritos = [];
+            const filmesFavoritosInputs = document.querySelectorAll('input[name="favoritos[]"]');
+            filmesFavoritosInputs.forEach(input => {
+                const filme = {
+                    id: input.value,
+                    titulo: input.closest('.filme-favorito').querySelector('span').textContent.split(' (')[0],
+                    ano: input.closest('.filme-favorito').querySelector('span').textContent.split('(')[1].split(')')[0],
+                    genero: input.closest('.filme-favorito').querySelector('span').textContent.split('(')[1].split(')')[0], // Este valor precisa vir do seu modelo de filme
+                    descricao: input.closest('.filme-favorito').querySelector('span').textContent.split('(')[1].split(')')[0], // Este valor precisa vir do seu modelo de filme
+                    avaliacao: "5" // Ajuste de acordo com seu modelo de filme
+                };
+                filmesFavoritos.push(filme);
+            });
+
+            // Adiciona os filmes favoritos ao formData
+            formData.favoritos = filmesFavoritos;
+
+            try {
+                const response = await fetch(`/usuarios/${usuarioId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData),
+                });
+
+                const responseMessage = document.getElementById('responseMessage');
+                if (response.ok) {
+                    responseMessage.innerHTML = `<div class="alert alert-success">Usuário atualizado com sucesso!</div>`;
+                } else {
+                    const errorData = await response.json();
+                    responseMessage.innerHTML = `<div class="alert alert-danger">Erro: ${JSON.stringify(errorData)}</div>`;
+                }
+            } catch (error) {
+                const responseMessage = document.getElementById('responseMessage');
+                responseMessage.innerHTML = `<div class="alert alert-danger">Erro ao atualizar usuário: ${error.message}</div>`;
+            }
+        });
+    </script>
+</body>
+{% endblock %}
