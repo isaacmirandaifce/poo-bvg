@@ -1,0 +1,58 @@
+[
+    {
+        "id": 3,
+        "nome": "Alan Lima ",
+        "email": "alan@gmail.com",
+        "senha": "1234",
+        "favoritos": [
+            {
+                "id": 8,
+                "titulo": "Gladiador 2",
+                "genero": "Outro",
+                "descricao": "Descri\u00e7\u00e3o n\u00e3o dispon\u00edvel",
+                "ano": 2024,
+                "avaliacao": 5.0
+            },
+            {
+                "id": 9,
+                "titulo": "Mad Max",
+                "genero": "Outro",
+                "descricao": "Filme que se passa em um planeta devastado",
+                "ano": 2018,
+                "avaliacao": 4.5
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "nome": "Fernanda",
+        "email": "teste@gmail.com",
+        "senha": "123",
+        "favoritos": [
+            {
+                "id": 8,
+                "titulo": "Gladiador 2",
+                "genero": "Outro",
+                "descricao": "Filme de muita a\u00e7\u00e3o passado na roma antiga.",
+                "ano": 2024,
+                "avaliacao": 5.5
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "nome": "Pablo",
+        "email": "lima@gmail.com",
+        "senha": "123",
+        "favoritos": [
+            {
+                "id": 10,
+                "titulo": "The Flash",
+                "genero": "Outro",
+                "descricao": "Filme estrelado por ",
+                "ano": 2023,
+                "avaliacao": 4.0
+            }
+        ]
+    }
+]

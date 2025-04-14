@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Lista de Filmes</h2>
+        <!-- Botão para abrir o modal -->
+        <a type="button" class="btn btn-primary" href="/tela_form">+ Adicionar</a>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Gênero</th>
+                <th>Descrição</th>
+                <th>Ano de Lançamento</th>
+                <th>Avaliação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for filme in filmes %}
+            <tr id="filme-{{ filme.id }}">
+                <td>{{ filme.id }}</td>
+                <td>{{ filme.titulo }}</td>
+                <td>{{ filme.genero }}</td>
+                <td>{{ filme.descricao }}</td>
+                <td>{{ filme.ano }}</td>
+                <td>{{ filme.avaliacao }}</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="/editar/{{ filme.id }}" class="btn btn-warning btn-sm">Editar</a>
+                        <button class="btn btn-danger btn-sm" onclick="deletarFilme({{ filme.id }})">Deletar</button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    async function deletarFilme(filme_id) {
+        const confirmacao = confirm("Tem certeza que deseja deletar este filme?");
+        if (!confirmacao) return;
+
+        const button = document.querySelector(`#filme-${filme_id} .btn-danger`);
+        button.disabled = true; 
+        button.textContent = "Deletando...";
+
+        try {
+            const response = await fetch(`/filmes/${filme_id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                document.getElementById(`filme-${filme_id}`).remove();
+            } else {
+                const errorData = await response.json();
+                alert(`Erro ao deletar o filme: ${errorData.detail}`);
+            }
+        } catch (error) {
+            console.error("Erro ao deletar filme:", error);
+            alert("Erro inesperado ao deletar o filme.");
+        } finally {
+            button.disabled = false;
+            button.textContent = "Deletar";
+        }
+}
+
+</script>
+
+{% endblock %}
