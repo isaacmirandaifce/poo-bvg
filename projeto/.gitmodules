@@ -1,0 +1,3 @@
+[submodule "poo-bvg"]
+	path = poo-bvg
+	url = https://github.com/isaacmirandaifce/poo-bvg.git
