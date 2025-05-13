@@ -1,3 +1,7 @@
+Autor: Lauro Luiz Gomes Magalhães Pontes
+Turma: S3 ADS
+IFCE
+
 # Projeto 1 - Refatoração Estruturada para POO
 
 Este projeto tem como objetivo refatorar um código originalmente estruturado em um código orientado a objetos, utilizando a linguagem **TypeScript**. A classe criada representa um cliente de uma loja, contendo informações como nome, idade e saldo.
