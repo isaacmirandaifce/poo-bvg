@@ -1,0 +1,17 @@
+#from 'C:\Users\ivaan\Downloads\POO1 - IVAN\src.py' import Cliente 
+from src import Cliente  # Importa a classe Cliente do módulo src
+
+# Criação de um objeto da classe Cliente
+cliente1 = Cliente("Ivan Magalhães", 19, 15000.0)
+
+cliente1.mostrar_informacoes()  # Exibe os dados do cliente (nome, idade, saldo)
+
+cliente1.atualizar_saldo(500.0)  # Adiciona R$500,00 ao saldo
+
+cliente1.mostrar_informacoes()  # Mostra o saldo atualizado
+
+cliente1.atualizar_saldo(-3000.0)  # Subtrai R$3000,00 do saldo (saque)
+
+cliente1.atualizar_saldo(-100.0)  # Subtrai mais R$100,00 do saldo
+
+cliente1.mostrar_informacoes()  # Exibe o saldo final após as operações
