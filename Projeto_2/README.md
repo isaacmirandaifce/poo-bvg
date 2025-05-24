@@ -1,109 +1,120 @@
-# Projeto Avaliativo 2 - Paradigma de Orientação a Objetos e UML 
+# Projeto Avaliativo 2 - Paradigma de Orientação a Objetos e UML
 
-## Exercício 1: Modelagem de Domínio - Seguro de Carro 
-*Descrição do Contexto*
+## ✅ Exercício 1: Modelagem de Domínio - Seguro de Carro
 
-Uma empresa de seguros deseja criar um sistema para gerenciar seguros de carros. Cada seguro envolve informações sobre o cliente e o carro, além de dados específicos do seguro. Com base nas informações abaixo, modele as classes necessárias para esse sistema.
+### 📄 Contexto
+O projeto tem objetivo é construir um sistema de seguros de veículos, aplicando conceitos como associação, agregação, herança, encapsulamento e abstração.
+A empresa de seguros deseja criar um sistema para gerenciar seguros de carros. Cada seguro envolve informações sobre o cliente e o carro, além de dados específicos do seguro.
 
-**Classes e Atributos**
+### 🧱 Classes e Atributos
 
-- `Carro`: ano, marca, modelo, cor, placa
-- `Modelo` (atributo em Carro): nome
-- `Seguro`: carro, cliente, valor, vigência
-- `Cliente`: nome, cpf
-  
-**Tarefas**
-- a) Crie um diagrama de classes UML para representar as classes, incluindo seus atributos.
-- b) Indique as relações entre as classes (ex: associação ou agregação).
-- c) Identifique e justifique os tipos de relacionamento entre Seguro e Carro e entre Seguro e Cliente.
+- **Carro**: ano, marca, modelo, cor, placa  
+- **Modelo** (dentro de Carro): nome  
+- **Seguro**: carro, cliente, valor, vigência  
+- **Cliente**: nome, cpf
 
-## Exercício 2: Detalhamento de Atributos e Métodos
-*Descrição do Contexto*
+### ✍️ Tarefas
 
-Para ampliar o modelo, adicione métodos e funções nas classes para fornecer operações básicas de um sistema de seguros.
+- Criar o diagrama de classes UML com os atributos.
+- Indicar os relacionamentos:
+  - **Seguro ↔ Carro**: associação.
+  - **Seguro ↔ Cliente**: associação.
+- Justificar:
+  - **Seguro e Carro** têm associação (carro pode existir fora do seguro).
+  - **Seguro e Cliente** também é associação.
 
-Classe `Carro`
+---
 
-Atributos: ano, marca, modelo, cor, placa.
+## ✅ Exercício 2: Atributos e Métodos
 
-Métodos: exibir_detalhes() (exibe as informações do carro), atualizar_cor(nova_cor) (modifica a cor do carro).
+### 🧱 Métodos por classe
 
-Classe `Cliente`
+- **Carro**  
+  - Métodos: exibir detalhes, atualizar cor
 
-Atributos: nome, cpf.
+- **Cliente**  
+  - Métodos: exibir informações
 
-Métodos: exibir_informacoes() (exibe o nome e o CPF do cliente).
+- **Seguro**  
+  - Métodos: calcular valor com base e taxa, verificar validade da vigência
 
-Classe `Seguro`
+### ✍️ Tarefas
 
-Atributos: carro, cliente, valor, vigência.
+- Atualizar o diagrama UML incluindo os métodos.
+- Criar uma estrutura básica do código das classes com esses métodos e atributos.
 
-Métodos: calcular_valor(base_valor, taxa) (calcula o valor do seguro com base em um valor base e uma taxa), verificar_vigencia() (retorna se o seguro ainda está válido).
+---
 
-**Tarefas**
-- a) Escreva um diagrama de classes UML que inclua os métodos listados.
-- b) Implemente uma estrutura básica de código para cada classe usando os atributos e métodos descritos.
+## ✅ Exercício 3: Relacionamentos e Associações
 
-## Exercício 3: Modelagem de Relacionamentos e Associações
-*Descrição do Contexto*
+### 📌 Atualização do modelo
 
-O sistema de seguros agora inclui apólices de seguros para múltiplos carros de um cliente e múltiplos seguros de diferentes clientes. Cada cliente pode ter mais de um carro segurado.
+Agora, o sistema precisa lidar com clientes que possuem mais de um carro e vários seguros.
 
-**Tarefas**
-- a) Atualize o diagrama de classes UML para mostrar que a classe Seguro pode ter uma associação com múltiplos objetos da classe Carro.
-- b) Justifique o tipo de relacionamento (agregação ou composição) entre Seguro e Carro.
-- c) Escreva uma breve explicação sobre como você representaria um cliente com múltiplos seguros em seu modelo.
+### ✍️ Tarefas
 
-## Exercício 4: Modelagem de Classes com Relações de Herança
-*Descrição do Contexto*
+- Atualizar o diagrama UML para mostrar que um **Seguro** pode ter mais de um **Carro**.
+- Justificar que o relacionamento entre **Seguro e Carro** é **agregação** (carro existe fora do seguro).
+- Mostrar que um **Cliente** pode ter vários seguros e carros.
 
-A empresa deseja expandir o sistema de seguros para incluir outros tipos de seguros, como seguro de moto, com características específicas.
+---
 
-Novas Classes
+## ✅ Exercício 4: Herança
 
-`SeguroVeiculo`: uma classe base para todos os seguros de veículos.
+### 🧱 Novas Classes
 
-`SeguroCarro`: herda de SeguroVeiculo e possui atributos específicos de seguro de carro.
+- **SeguroVeiculo** (classe base)
+- **SeguroCarro** (herda de SeguroVeiculo)
+- **SeguroMoto** (herda de SeguroVeiculo)
 
-`SeguroMoto`: herda de SeguroVeiculo e possui atributos específicos de seguro de moto.
+### ✍️ Tarefas
 
-**Tarefas**
+- Criar o diagrama UML mostrando a herança.
+- Justificar o uso de herança:
+  - Evita repetição de código.
+  - Deixa o sistema mais organizado e fácil de expandir.
+- Explicar como o método `calcular_valor()` pode ser genérico em **SeguroVeiculo** e específico em **SeguroCarro** ou **SeguroMoto**.
 
-- a) Crie um diagrama de classes UML que represente as relações de herança entre SeguroVeiculo, SeguroCarro e SeguroMoto.
-- b) Explique o benefício de usar herança para representar esses diferentes tipos de seguro.
-- c) Dê um exemplo de como um método calcular_valor() poderia ser implementado na classe SeguroVeiculo e sobrescrito nas classes SeguroCarro e SeguroMoto para incluir cálculos específicos.
+---
 
-## Exercício 5: Criação de Diagramas UML de Objetos
-*Descrição do Contexto*
+## ✅ Exercício 5: Diagrama de Objetos UML
 
-Com o modelo finalizado, deseja-se criar uma representação UML de objetos específicos para ilustrar o funcionamento do sistema com dados reais.
+### 🧾 Exemplo de dados
 
-Exemplo de Dados:
+- **Cliente**: João Silva, CPF 123.456.789-00  
+- **Carro**: Toyota Corolla, 2020, Branco, Placa XYZ-1234  
+- **Seguro**: R$ 1.500,00 – Vigência de 01/01/2024 até 01/01/2025
 
-`Cliente`: João Silva, CPF 123.456.789-00
+### ✍️ Tarefas
 
-`Carro`: Marca Toyota, Modelo Corolla, Ano 2020, Cor Branco, Placa XYZ-1234
+- Criar um diagrama de objetos UML com os dados reais.
+- Mostrar os valores dos atributos no diagrama.
+- Explicar que esse tipo de diagrama ajuda a visualizar o sistema funcionando com dados reais.
 
-`Seguro`: Valor de R$ 1.500,00, Vigência 01/01/2024 a 01/01/2025
+---
 
-**Tarefas**
+## ✅ Exercício 6: Abstração e Encapsulamento
 
-- a) Desenhe um diagrama de objetos UML que represente a relação entre João Silva, seu Carro, e o Seguro correspondente.
-- b) Identifique no diagrama os valores de atributos para cada objeto.
-- c) Explique como este diagrama ajuda a visualizar a estrutura do sistema para um cliente específico.
+### ✍️ Tarefas
 
-## Exercício 6: Exercício de Abstração e Encapsulamento
-*Descrição do Contexto*
+- Aplicar **encapsulamento** nas classes:
+  - Esconder atributos sensíveis como **cpf** e **placa**.
+  - Criar métodos públicos para acessá-los.
+- Criar um pseudocódigo de um método na classe **Seguro** que verifica se o seguro ainda é válido (com base na data de vigência).
+- Explicar a importância do encapsulamento:
+  - Protege os dados dos usuários.
+  - Garante acesso controlado e seguro.
 
-A empresa de seguros quer garantir que as informações dos clientes e veículos sejam seguras e somente acessíveis por métodos específicos, usando o conceito de encapsulamento.
+---
 
-**Tarefas**
+## 📁 Entrega
 
-- a) Em uma implementação fictícia das classes Cliente e Carro, faça uso de encapsulamento, ocultando atributos como cpf e placa e expondo apenas métodos públicos para acessá-los.
-- b) Escreva uma função em pseudocódigo para a classe Seguro que verifique a validade da apólice (por exemplo, se a vigência ainda é válida).
-- c) Explique a importância de encapsular informações sensíveis, como CPF e placa de veículos, em sistemas de seguros.
+- Subir todos os arquivos no repositório da turma no GitHub.
+- Usar a pasta: `Projeto_2`.
+- Incluir:
+  - Diagramas UML
+  - Código das classes
+  - Código de teste
+- **Prazo de Entrega**: 7 dias a partir da data de envio do projeto.
 
-## Entrega
-
-- **Formato**: A entrega deverá ser feita no repositório da turma no GitHub, na pasta `Projeto_2`, com os arquivos desenvolvidos e um código de teste.
-- **Prazo de Entrega**: Sete dias
+---
