@@ -1,21 +1,59 @@
-# Domínio de Seguros de Carro
+# Sistema de Gerenciamento de Seguros de Veículos
 
-Este projeto modela um domínio simples para seguros de carros, contendo as seguintes classes:
+Esse projeto simula um sistema orientado a objetos para gerenciamento de seguros de veículos, com foco em carros e motos. Ele foi desenvolvido como parte da atividade avaliativa sobre modelagem orientada a objetos.
 
-- **Modelo**: Representa o modelo do carro (ex: Fusca, Corolla).
-- **Carro**: Representa um carro com atributos como ano, marca, modelo, cor e placa.
-- **Cliente**: Representa um cliente com nome e CPF.
-- **Seguro**: Representa um seguro com um carro, cliente, valor e vigência.
 
-## Como usar
+## Estrutura do Projeto
 
-- Defina os modelos e crie os carros associados.
-- Crie clientes.
-- Crie apólices de seguro associando o carro e cliente, informando valor e vigência.
-- O arquivo `teste.py` contém um exemplo básico de uso.
+Projeto_2 - Leticia Carvalho/ 
+├── src/ # código-fonte
+│ ├── carro.py
+│ ├── cliente.py
+│ ├── modelo.py
+│ ├── seguro.py
 
-## Arquivos
+├── tests/ # arquivo de teste
+│ └── teste_seguro.py
 
-- `main.py`: contém as definições das classes.
-- `teste.py`: exemplo de criação e uso das classes.
+├── docs/ # documentação e diagrama UML
+│ ├── UML_class.png
+│ └── README.md
 
+
+## Funcionalidades
+
+- Criação e gerenciamento de clientes e veículos.
+- Associações entre seguros e múltiplos carros.
+- Herança entre diferentes tipos de seguros.
+- Verificação de vigência de apólices com `datetime`.
+- Encapsulamento de dados sensíveis como CPF e placa.
+- Cálculo de valor de seguro com base em taxa personalizada.
+
+
+## Classes Principais
+
+### `Modelo`
+- Representa o modelo de um carro.
+- Atributo: `nome`.
+
+### `Carro`
+- Atributos: ano, marca, modelo (`Modelo`), cor, placa.
+- Métodos:
+  - `exibir_detalhes()`
+  - `atualizar_cor(nova_cor)`
+
+### `Cliente`
+- Atributos: nome, CPF (encapsulado).
+- Métodos:
+  - `exibir_informacoes()`
+
+### `SeguroVeiculo` (classe base)
+- Atributos: cliente, valor, vigência.
+- Métodos:
+  - `calcular_valor(base_valor, taxa)`
+  - `verificar_vigencia()`
+
+### `SeguroCarro` / `SeguroMoto`
+- Herança de `SeguroVeiculo`
+- `SeguroCarro`: pode associar múltiplos carros.
+- `SeguroMoto`: pode ter dados específicos de motos.
