@@ -1,99 +1,80 @@
-# Repositório da Disciplina de Programação Orientada a Objetos (POO)
+# Projeto Avaliativo 2 – Paradigma de Orientação a Objetos e UML
 
-Bem-vindo ao repositório oficial da disciplina de **Programação Orientada a Objetos (POO)**! Este espaço será utilizado para a submissão e revisão dos projetos desenvolvidos ao longo do curso. Aqui você encontrará as diretrizes de contribuição, regras de submissão e informações importantes para o desenvolvimento dos projetos.
+## Descrição Geral
+Este projeto consiste na modelagem e implementação de um sistema de seguros para carros, utilizando o paradigma da Programação Orientada a Objetos (POO). Foram desenvolvidas classes em Python com base em um cenário proposto, bem como um diagrama UML para representar visualmente as estruturas do sistema. A proposta inclui criação de atributos, métodos, definição de relacionamentos entre as classes e testes automatizados.
 
-## Estrutura do Repositório
+---
 
-O repositório está organizado por projetos, cada um em uma pasta própria:
-```
-Projeto_X/
-│
-├── src/               # Código-fonte
-├── docs/              # Documentação do projeto
-└── tests/             # Testes automatizados (quando aplicável)
-```
-Os projetos devem ser submetidos em Pull Requests (PRs) para o repositório principal seguindo as diretrizes estabelecidas.
+## Exercício 1 – Modelagem de Domínio
 
-## Como Submeter um Projeto
+### a) Diagrama de Classes UML  
+O diagrama de classes abaixo representa as três principais entidades do sistema: Carro, Cliente e Seguro. Cada classe possui seus respectivos atributos e os relacionamentos foram definidos com base na lógica do domínio.
 
-Para submeter seu projeto, você deverá criar uma **Pull Request (PR)** no repositório principal. Cada PR deve conter:
+![alt text](docs/image-1.png)
 
-- **Título da PR** no formato: `Projeto_X - [Nome do Aluno]` (ex., `Projeto_1 - João Silva`);
-- **Descrição** resumida do que foi implementado, mencionando as principais funcionalidades e classes desenvolvidas.
+### b) Relações entre as Classes  
+- **Seguro - Carro:**  
+  Relação de agregação. Um seguro depende de um carro para existir, mas o carro pode existir independentemente de estar segurado. O seguro apenas faz referência a um carro existente.
 
-### Requisitos para Aprovação
+- **Seguro - Cliente:**  
+  Também se trata de uma relação de agregação. Um seguro está vinculado a um cliente, mas o cliente pode existir no sistema mesmo sem possuir um seguro.
 
-Todas as PRs passam por uma revisão de código antes de serem aceitas. As PRs serão aprovadas apenas se cumprirem os requisitos a seguir:
+### c) Justificativa dos Relacionamentos  
+A escolha por agregação nos dois relacionamentos se justifica pelo fato de que as classes Carro e Cliente não dependem da existência da classe Seguro para serem criadas ou utilizadas. Elas representam entidades independentes que podem ser referenciadas por diferentes instâncias de seguro. Além disso, um mesmo cliente pode contratar vários seguros para diferentes carros, reforçando a natureza da agregação.
 
-- **Padrões de Código**: O código deve seguir as diretrizes de formatação e estilo descritas no arquivo [`CONTRIBUTING.md`](CONTRIBUTING.md).
-- **Funcionalidades Completa**: O projeto deve implementar todas as funcionalidades solicitadas.
-- **Documentação e Comentários**: O código deve incluir documentação Javadoc em classes e métodos, bem como comentários explicativos.
-- **Boas Práticas de POO**: O código deve aplicar corretamente os princípios de Programação Orientada a Objetos (encapsulamento, herança, polimorfismo, entre outros).
+---
 
-Caso a PR não atenda a esses critérios, ela será marcada para correção, e o aluno deverá realizar as mudanças e reenviar a PR para revisão.
+## Exercício 2 – Detalhamento de Atributos e Métodos
 
-## Diretrizes de Contribuição
+### Classe Carro  
+**Atributos:**  
+- ano  
+- marca  
+- modelo  
+- cor  
+- placa  
 
-Consulte o arquivo [`CONTRIBUTING.md`](CONTRIBUTING.md) para orientações detalhadas sobre como contribuir com o repositório. Ele inclui:
+**Métodos:**  
+- `exibir_detalhes()`: exibe as informações principais do carro.  
+- `atualizar_cor(nova_cor)`: altera a cor do carro.
 
-- **Regras para Nomeação de Arquivos e Métodos**: Como nomear classes, métodos e variáveis.
-- **Padrões de Organização de Código**: Formatação, indentação e estrutura de classes.
-- **Boas Práticas de POO**: Instruções para encapsulamento, herança e outras práticas orientadas a objetos.
-- **Regras de Envio de PRs**: Detalhes sobre como estruturar uma PR para que ela seja aprovada.
+### Classe Cliente  
+**Atributos:**  
+- nome  
+- cpf  
 
-## Fluxo de Trabalho para Pull Requests (PRs)
+**Método:**  
+- `exibir_informacoes()`: exibe o nome e o CPF do cliente.
 
-1. **Criar uma PR**: Ao concluir um projeto, crie uma PR com o título `Projeto_X - [Nome do Aluno]` e uma descrição breve do que foi implementado.
-2. **Aguardar Revisão**: O professor revisará o código, adicionando comentários e sugestões de melhorias.
-3. **Fazer Ajustes**: Se necessário, faça os ajustes indicados e atualize a PR com os commits de correção.
-4. **Aprovação da PR**: Após atender aos requisitos, a PR será aprovada e integrada ao repositório.
+### Classe Seguro  
+**Atributos:**  
+- carro  
+- cliente  
+- valor  
+- vigencia  
 
-Para mais detalhes, consulte as [Regras para o Workflow](WORKFLOW.md) e o arquivo `CONTRIBUTING.md`.
+**Métodos:**  
+- `calcular_valor(base_valor, taxa)`: calcula o valor final do seguro a partir de um valor base e uma taxa.  
+- `verificar_vigencia()`: verifica se a data atual está dentro da vigência do seguro, retornando True ou False.
 
-## Boas Práticas de Programação Orientada a Objetos (POO)
+---
 
-Durante o desenvolvimento dos projetos, lembre-se de aplicar os conceitos de POO abordados em aula. Aqui estão algumas práticas importantes:
+## Estrutura dos Arquivos
 
-- **Encapsulamento**: Mantenha as variáveis de instância como `private`, utilizando `getters` e `setters` conforme necessário.
-- **Coesão e Responsabilidade Única**: Cada classe deve ter uma única responsabilidade clara.
-- **Polimorfismo e Herança**: Utilize herança e polimorfismo para estender classes e métodos, quando necessário.
-- **Interface e Abstração**: Prefira o uso de interfaces para definir contratos de comportamento.
+- **carro.py:** define a classe Carro com seus atributos e métodos.  
+- **cliente.py:** define a classe Cliente com seus atributos e método.  
+- **seguro.py:** define a classe Seguro, seus atributos e operações.  
+- **test_carro.py:** arquivo de testes com funções para validar os métodos da classe Carro.
 
-Essas práticas são essenciais para uma codificação limpa e organizada e serão criteriosamente avaliadas nas revisões de PR.
+---
 
-## Exemplo de Estrutura de Classe
+## Testes Automatizados
 
-```java
-/**
- * Classe de exemplo para representar um usuário no sistema.
- */
-public class Usuario {
-    private String nome;
-    private String email;
+Foi criado um arquivo de teste `test_carro.py` com exemplos de funções para garantir o funcionamento correto dos métodos implementados.
 
-    public Usuario(String nome, String email) {
-        this.nome = nome;
-        this.email = email;
-    }
+**Exemplo de teste para `exibir_detalhes()`:**
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void autenticar(String senha) {
-        // Método de autenticação
-    }
-}
-```
-
-## Dúvidas e Suporte
-
-Para quaisquer dúvidas, entre em contato com o professor ou use o fórum de discussão no Google Classroom.
+```python
+def test_exibir_detalhes():
+    carro = Carro(2020, "Toyota", "Corolla", "Prata", "ABC1234")
+    assert carro.exibir_detalhes() == "2020 Toyota Corolla - Cor: Prata, Placa: ABC1234"

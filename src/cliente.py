@@ -1,16 +1,17 @@
 class Cliente:
-    # classe Cliente criada
-
-    def __init__(self, nome, idade, saldo):
-        # encapsulamento
+    def __init__(self, nome, idade, saldo, cpf):
         self.nome = nome
         self.idade = idade
         self.saldo = saldo
+        self.cpf = cpf
 
     def mostrar_informacoes(self):
-        # modularidade
-        print(f"Cliente: {self.nome}, Idade: {self.idade}, Saldo: R${self.saldo:.2f}")
+        print(f"Cliente: {self.nome}, Idade: {self.idade}, CPF: {self.cpf}, Saldo: R${self.saldo:.2f}")
 
     def atualizar_saldo(self, valor):
-        # Atualização dos saldos
         self.saldo += valor
+
+    def exibir_informacoes(self):
+        info = f"Nome: {self.nome} | CPF: {self.cpf}"
+        print(info)
+        return info
