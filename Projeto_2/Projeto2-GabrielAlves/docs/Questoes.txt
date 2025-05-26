@@ -1,0 +1,21 @@
+Exer 1
+
+b)	* Seguro -> Cliente : associação* Seguro -> Carro : associação
+*	Carro -> Modelo : composição
+c)	* Seguro e Carro: associação, pois o seguro usa um carro já existente. 
+*	Seguro e Cliente: associação, pois o seguro pertence a um cliente já existente.
+
+Exer 3
+
+b)	* Seguro -> Carros : agregação, pois os carros vão existir independente dos seguros, mas o seguro irá agrupa-los
+c)	Seria necessário apenas criar uma lista de seguros dentro da classe Cliente
+
+Exer 4
+
+b) Será benéfico pois possibilitará a reutilização do código comum e a especialização em subclasses pararegras especificas
+
+Exer 5
+
+c) Ajuda a visualizar um caso real com o uso de objetos reais, dessa maneira facilitando o entendimento do sistema
+ 
+
