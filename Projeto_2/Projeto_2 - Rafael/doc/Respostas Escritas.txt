@@ -1,0 +1,50 @@
+Respostas Escritas
+
+───────────────────────────────────────────────
+Exercício 1 – c) Identifique e justifique os tipos de relacionamento entre Seguro e Carro e entre Seguro e Cliente.
+───────────────────────────────────────────────
+Seguro-Carro e Seguro-Cliente: Associação, pois tanto um carro quanto um cliente podem existir independentemente de um Seguro.
+
+───────────────────────────────────────────────
+Exercício 3
+───────────────────────────────────────────────
+
+b) Justifique o tipo de relacionamento (agregação ou composição) entre Seguro e Carro:
+O relacionamento é de agregação, pois os carros não são dependem do seguro para existir e os seguros podem agregar mais de um carro
+
+c) Escreva uma breve explicação sobre como você representaria um cliente com múltiplos seguros em seu modelo:
+Poderia ser com uma lista de objetos Seguro associados ao CPF ou ID do cliente, consultada por meio de um repositório ou banco de dados.
+
+───────────────────────────────────────────────
+Exercício 4 – b) Explique o benefício de usar herança para representar esses diferentes tipos de seguro:
+───────────────────────────────────────────────
+As principais vantagens são:
+
+Reutilização de código.
+Tratamento de regras específicas para cada subclasse.
+Extensibilidade.
+
+───────────────────────────────────────────────
+Exercício 5 – c) Explique como este diagrama ajuda a visualizar a estrutura do sistema para um cliente específico:
+───────────────────────────────────────────────
+O diagrama de objetos nos ajuda a visualizar uma situação concreta do sistema com dados reais. Aumentando o nível de abstração ao focar em apenas um objeto de cada classe representada.
+
+───────────────────────────────────────────────
+Exercício 6
+───────────────────────────────────────────────
+
+b) Escreva uma função em pseudocódigo para a classe Seguro que verifique a validade da apólice (por exemplo, se a vigência ainda é válida).
+
+função verificar_vigencia(vigencia: string) -> booleano
+hoje ← data_atual()
+[inicio, fim] ← dividir_string(vigencia, " a ")
+fim_data ← converter_para_data(fim)
+se hoje <= fim_data então
+retornar verdadeiro
+senão
+retornar falso
+fim função
+
+c) Explique a importância de encapsular informações sensíveis, como CPF e placa de veículos, em sistemas de seguros.
+
+Encapsular informações sensíveis, como CPF e placa de veículo, é fundamental para garantir a segurança e a privacidade dos dados dos clientes. Isso impede o acesso direto e não autorizado aos atributos, forçando o uso de métodos controlados (getters/setters). O encapsulamento também permite aplicar validações e formatos adequados, além de promover uma arquitetura mais robusta e sustentável.
