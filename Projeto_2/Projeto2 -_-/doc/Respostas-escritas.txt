@@ -1,0 +1,50 @@
+───────────────────────────────────────────────
+Exercício 1 – c) Justifique os tipos de relacionamento
+───────────────────────────────────────────────
+Relacionamento entre Seguro e Carro: composição.
+Justificativa: um seguro depende diretamente do(s) carro(s) associado(s). Sem o carro, o seguro não faz sentido. A vida do objeto Seguro está ligada ao objeto Carro no contexto da apólice.
+
+Relacionamento entre Seguro e Cliente: associação.
+Justificativa: o seguro está relacionado a um cliente, mas o cliente pode existir no sistema sem possuir um seguro ativo. O vínculo é lógico, mas não implica dependência de vida útil entre os objetos.
+
+───────────────────────────────────────────────
+Exercício 3
+───────────────────────────────────────────────
+
+b) Justifique o tipo de relacionamento entre Seguro e Carro:
+O relacionamento é de agregação. O seguro "possui" um ou mais carros, mas esses carros também podem existir independentemente no sistema (ou podem estar associados a outros seguros). A vida do Carro não depende diretamente da existência do Seguro, e por isso não é uma composição.
+
+c) Como representar um cliente com múltiplos seguros:
+Para representar um cliente com múltiplos seguros, podemos modelar a classe Cliente com uma lista de objetos do tipo Seguro. Assim, Cliente terá um atributo como seguros: List<SeguroVeiculo>. Isso permite que um cliente seja associado a várias apólices (de carro, moto, etc.), mantendo um relacionamento 1:N (um cliente para muitos seguros).
+
+───────────────────────────────────────────────
+Exercício 4 – b) Benefício do uso de herança
+───────────────────────────────────────────────
+O uso de herança permite reutilizar atributos e comportamentos comuns a todos os tipos de seguros de veículos na superclasse abstrata SeguroVeiculo. Isso evita duplicação de código e facilita a manutenção. As subclasses (SeguroCarro, SeguroMoto) podem estender e especializar funcionalidades específicas, como o cálculo de valor do seguro com base em critérios distintos para cada tipo de veículo.
+
+───────────────────────────────────────────────
+Exercício 5 – c) Importância do Diagrama de Objetos
+───────────────────────────────────────────────
+O diagrama de objetos permite visualizar uma situação concreta do sistema com dados reais. Ele mostra como os objetos (como um cliente, seu carro e o seguro) estão instanciados e interligados em tempo de execução. Isso ajuda na validação do modelo e facilita a comunicação entre analistas, desenvolvedores e clientes.
+
+───────────────────────────────────────────────
+Exercício 6
+───────────────────────────────────────────────
+
+b) Pseudocódigo para verificar a validade da apólice:
+
+função verificar_vigencia(vigencia: string) -> booleano
+hoje ← data_atual()
+[inicio, fim] ← dividir_string(vigencia, " a ")
+fim_data ← converter_para_data(fim)
+se hoje <= fim_data então
+retornar verdadeiro
+senão
+retornar falso
+fim função
+
+c) Importância de encapsular informações sensíveis:
+
+Encapsular informações sensíveis, como CPF e placa de veículo, é fundamental para garantir a segurança e a privacidade dos dados dos clientes. Isso impede o acesso direto e não autorizado aos atributos, forçando o uso de métodos controlados (getters/setters). O encapsulamento também permite aplicar validações e formatos adequados, além de promover uma arquitetura mais robusta e sustentável.
+
+—
