@@ -1,0 +1,43 @@
+Exercício 1:
+
+c)Identifique e justifique os tipos de relacionamento entre Seguro e Carro e entre Seguro e Cliente
+
+R:O seguro agrega o carro, pois existe uma relação de dependência entre os dois porém um existe mesmo sem o outro. O seguro e o cliente são associados, pois eles não tem nenhuma relação de dependência.
+
+Exercício 3:
+
+b)Justifique o tipo de relacionamento (agregação ou composição) entre Seguro e Carro.
+R:Agregação, pois existe uma relação de dependência entre os dois porém um existe mesmo sem o outro.
+
+c) Escreva uma breve explicação sobre como você representaria um cliente com múltiplos seguros em seu modelo.
+R:pode ser feito armazenando os seguros feitos pelo cliente atraves de um vetor de seguros
+
+Exercício 4:
+
+b) Explique o benefício de usar herança para representar esses diferentes tipos de seguro.
+R:Serve pra especificar sub-classes, e deixa o diagrama mais simples e compreensível.
+
+c) Dê um exemplo de como um método calcular_valor() poderia ser implementado na classe SeguroVeiculo e sobrescrito nas classes SeguroCarro e SeguroMoto para incluir cálculos específicos.
+R:Haveria uma taxa diferente no caulculo dependendo se o veículo solicitado for um carro ou uma moto.
+
+Exercício 5:
+
+c) Explique como este diagrama ajuda a visualizar a estrutura do sistema para um cliente específico.
+R:Ajuda dando informações mais específicas.
+
+Exercício 6:
+
+b) Escreva uma função em pseudocódigo para a classe Seguro que verifique a validade da apólice (por exemplo, se a vigência ainda é válida).
+
+função verificar_vigencia(vigencia: string) -> booleano
+hoje ← data_atual()
+[inicio, fim] ← dividir_string(vigencia, " a ")
+fim_data ← converter_para_data(fim)
+se hoje <= fim_data então
+retornar verdadeiro
+senão
+retornar falso
+fim função
+
+c) Explique a importância de encapsular informações sensíveis, como CPF e placa de veículos, em sistemas de seguros.
+R:Entrega maior confiabilidade e segurança aos usuários do sistema e ajuda a seguir as normas da LGPD.
