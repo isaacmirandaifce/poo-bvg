@@ -17,12 +17,12 @@ Pessoa::~Pessoa() {
     cout << "Destruindo objeto Pessoa: " << this->nome << endl;
 }
 
-// Método para imprimir o nome da pessoa
+//imprimir o nome da pessoa
 void Pessoa::imprimirNome() {
     cout << "Nome: " << this->nome << endl;
 }
 
-// Método para imprimir o telefone da pessoa
+//imprimir o telefone da pessoa
 void Pessoa::imprimirTelefone() {
     cout << "Telefone: " << this->telefone << endl;
 }
