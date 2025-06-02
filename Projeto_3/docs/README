@@ -1,0 +1,45 @@
+# Projeto 3 - C++
+
+## Aluno: Kaique do Vale Soares
+
+## Objetivo
+Este projeto tem como foco praticar os conceitos iniciais da linguagem C++, como:
+
+Criação de classes
+Métodos e construtores
+Uso de std::vector
+Manipulação de string
+Separação de arquivos (.h, .cpp)
+Uso de namespace std
+
+## Estrutura
+
+Projeto_3
+
+docs/
+-readme             //documentação
+─ UML_Projeto_3       // Diagrama UML da classe Pessoa
+src/
+─Pessoa.h             // Declaração da classe Pessoa
+─ Pessoa.cpp           // Implementação da classe Pessoa
+─ main.cpp             // Função principal: cria e exibe objetos Pessoa
+teste/
+─ teste.cpp        // Arquivo de teste simples para validar os métodos
+
+##  classe Pessoa
+
+possui os seguintes atributos privados:
+
+nome (string)
+telefone (string)
+E os seguintes métodos públicos:
+Construtor padrão
+Construtor parametrizado
+Destrutor (exibe mensagem)
+imprimirNome()
+imprimirTelefone()
+
+## Diagrama UML
+
+A imagem UML_Projeto_3  mostra a estrutura da classe, seus atributos e métodos, seguindo o padrão UML.
+
