@@ -12,8 +12,8 @@ class TestSeguroCarro(unittest.TestCase):
             cliente=self.cliente,
             carros=[self.carro],
             valor=0,
-            vigencia_inicio=date(2024, 1, 1),
-            vigencia_fim=date(2025, 1, 1)
+            vigencia_inicio=date(2025, 1, 1),
+            vigencia_fim=date(2026, 1, 1)
         )
 
     def test_valor_seguro(self):
