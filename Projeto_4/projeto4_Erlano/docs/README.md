@@ -12,11 +12,9 @@
 - `Aluno.cpp`: Implementação da classe Aluno.
 - `Disciplina.h`: Declaração da classe Disciplina e função amiga.
 - `Disciplina.cpp`: Implementação da classe Disciplina.
-- `main.cpp`: Função principal que utiliza as classes.
 
 ## docs
-- `Aluno_UML.png`: Diagrama UML da classe Aluno.
-- `Disciplina_UML.png`: Diagrama UML da classe Disciplina.
+- `Aluno_DisciplinaUML.png`: Diagrama UML das classes Aluno e Disciplina.
 
-## tests
-- `teste.cpp`: Arquivo com testes usando assert para Disciplina e Aluno.
+## testes
+- `main.cpp`: Função principal que utiliza as classes.
