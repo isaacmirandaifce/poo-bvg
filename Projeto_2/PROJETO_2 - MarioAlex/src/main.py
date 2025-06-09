@@ -13,8 +13,8 @@ if __name__ == "__main__":
         cliente=cliente,
         carros=[carro],
         valor=0,
-        vigencia_inicio=date(2024, 1, 1),
-        vigencia_fim=date(2025, 1, 1)
+        vigencia_inicio=date(2025, 1, 1),
+        vigencia_fim=date(2026, 1, 1)
     )
 
     seguro.calcular_valor(base_valor=1500, taxa=1.0)
