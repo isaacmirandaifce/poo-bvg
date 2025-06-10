@@ -1,0 +1,11 @@
+função verificar_vigencia(dia_inicio, mes_inicio, ano_inicio, dia_fim, mes_fim, ano_fim, dia_hoje, mes_hoje, ano_hoje):
+
+    data_inicio = ano_inicio * 10000 + mes_inicio * 100 + dia_inicio
+    data_fim = ano_fim * 10000 + mes_fim * 100 + dia_fim
+    data_hoje = ano_hoje * 10000 + mes_hoje * 100 + dia_hoje
+
+    se data_inicio <= data_hoje e data_hoje <= data_fim então
+        retorne Verdadeiro
+    senão
+        retorne Falso
+fim função
