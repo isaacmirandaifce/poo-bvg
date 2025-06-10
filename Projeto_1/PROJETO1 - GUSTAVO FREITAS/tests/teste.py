@@ -1,5 +1,5 @@
 # Teste da classe Cliente
-if __name__ == "__main__":
+from cliente.py import Cliente
     # Criando uma instância de Cliente
     cliente1 = Cliente("João Silva", 30, 1000.0)
     
