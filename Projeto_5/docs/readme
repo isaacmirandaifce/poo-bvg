@@ -1,0 +1,102 @@
+# Projeto 5 - C++
+
+## Aluno: Kaique do Vale Soares
+
+## Objetivo
+Este projeto tem como foco praticar os conceitos de Programação Orientada a Objetos em C++, incluindo:
+
+Criação de classes e herança múltipla
+Métodos, construtores e destrutores
+Uso de modificadores de acesso (público, privado, protegido)
+Separação de arquivos (.hpp, .cpp)
+Modularização do código
+Uso do namespace std
+
+## Estrutura
+
+Projeto_5/
+
+docs/                        Documentação do projeto e diagramas UML  
+─ README.md                   Documentação do projeto  
+─ UML                       UML do projeto
+
+src/                         Código-fonte do projeto  
+─ Aluno.hpp               Declaração da classe Aluno  
+─ Aluno.cpp               Implementação da classe Aluno  
+─ Professor.hpp           Declaração da classe Professor  
+─ Professor.cpp           Implementação da classe Professor  
+─ FuncionarioAdministrativo.hpp  
+─ FuncionarioAdministrativo.cpp  
+─ Monitor.hpp             Declaração da classe Monitor (herança múltipla)  
+─ Monitor.cpp             Implementação da classe Monitor  
+─ Usuario.hpp             Classe base para usuários (se houver)  
+─ Usuario.cpp  
+
+teste/                     Arquivos para testes e execução  
+─ teste.cpp              Arquivo com a função main para testes  
+
+## Classes Principais
+
+- Aluno
+Atributos privados:
+nome (string)
+email (string)
+matricula (string)
+curso (string)
+lista de disciplinas
+notas
+
+Métodos públicos:
+Construtores
+Métodos para adicionar disciplinas e notas
+Gerar relatório
+Exibir informações
+
+- Professor
+Atributos privados:
+nome (string)
+email (string)
+área de atuação (string)
+lista de disciplinas
+
+Métodos públicos:
+Construtores
+Adicionar disciplinas
+Gerar relatório
+
+- Funcionário Administrativo
+Atributos privados:
+nome (string)
+email (string)
+setor (string)
+cargo (string)
+
+Métodos públicos:
+Construtores
+Gerar relatório
+
+- Monitor
+Herda de Aluno e Professor (herança múltipla)
+Atributos adicionais:
+disciplinas monitoradas
+Métodos adicionais:
+Adicionar disciplinas específicas para aluno, professor e monitor
+Gerar relatório consolidado 
+
+## Como Compilar e Executar
+No terminal, na raiz do projeto, compile com:
+
+bash
+g++ -I src src/*.cpp teste/teste.cpp -o teste.exe
+
+Windows PowerShell:
+powershell
+.\teste.exe
+
+Linux/macOS:
+bash
+./teste.exe
+
+## Diagrama UML
+
+O diagrama UML apresentado mostra a estrutura das classes que compõem o sistema, ilustrando as relações entre elas, seus atributos, métodos e modificadores de acesso.
