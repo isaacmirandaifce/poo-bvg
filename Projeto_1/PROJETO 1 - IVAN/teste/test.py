@@ -1,5 +1,10 @@
 #from 'C:\Users\ivaan\Downloads\POO1 - IVAN\src.py' import Cliente 
-from src import Cliente  # Importa a classe Cliente do módulo src
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+
+from src import Cliente
+
 
 # Criação de um objeto da classe Cliente
 cliente1 = Cliente("Ivan Magalhães", 19, 15000.0)

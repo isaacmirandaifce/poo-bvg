@@ -1,0 +1,3 @@
+## PROJETO AVALIATIVO 1
+Este projeto consistiu na refatoração de um código originalmente estruturado, desenvolvido em Python, para o paradigma de programação orientada a objetos, mantendo a linguagem utilizada. A classe Cliente foi implementada no arquivo src.py, encapsulando os principais atributos e métodos associados à entidade. Essa classe foi posteriormente importada no arquivo teste.py, onde foi realizada a simulação de uso por meio da criação de instâncias e aplicação de métodos. No arquivo de teste, foi atribuído um valor de incremento ao atributo saldo por meio do método atualizar_saldo. Em seguida, o método mostrar_informacoes foi utilizado para exibir os dados atualizados do objeto, validando assim a funcionalidade e integridade da refatoração proposta.
+
