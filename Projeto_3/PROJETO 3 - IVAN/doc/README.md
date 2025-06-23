@@ -1,0 +1,3 @@
+## PROJETO 3 - IVAN
+
+Para esse projeto, desenvolvi uma classe chamada Pessoa em C++, aplicando os princípios da programação orientada a objetos. A classe foi declarada no arquivo `Pessoa.h` e implementada em `Pessoa.cpp`, contendo atributos privados (`nome` e `telefone`) e métodos públicos para exibir essas informações. Também incluí construtores, destrutor e o uso do ponteiro `this` como boa prática. No arquivo `main.cpp`, utilizei um `std::vector` para armazenar e manipular múltiplos objetos da classe `Pessoa`. Foram adicionadas três pessoas ao vetor, e um laço percorreu essa lista, imprimindo os dados de cada uma na tela. O objetivo foi demonstrar, de forma prática, como organizar e reutilizar código em C++ usando classes e containers.
