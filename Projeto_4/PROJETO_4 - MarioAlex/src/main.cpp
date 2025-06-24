@@ -1,9 +1,9 @@
 #include <iostream>
-#include "Aluno.h"
-#include "Disciplina.h"
+#include "aluno.h"
+#include "disciplina.h"
 
 int main() {
-    Aluno aluno1("Maru Teste", "20251234", "Análise e Desenvolvimento de Sistemas");
+    Aluno aluno1("Mario Teste", "20251234", "Análise e Desenvolvimento de Sistemas");
 
     Disciplina d1("Programação", 60, 7.5);
     Disciplina d2("Banco de Dados", 60, 5.9);

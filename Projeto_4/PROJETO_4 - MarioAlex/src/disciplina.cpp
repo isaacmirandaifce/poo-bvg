@@ -1,4 +1,4 @@
-#include "Disciplina.h"
+#include "disciplina.h"
 
 // Construtor padrão
 Disciplina::Disciplina() {
