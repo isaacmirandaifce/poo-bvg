@@ -52,6 +52,8 @@ O sistema implementa funcionalidades como:
 │ ├── FuncionarioAdministrativo.cpp
 │ ├── FuncionarioAdministrativo.h
 │ ├── main.cpp
+│ ├── Usuario.cpp
+│ ├── Usuario.h
 │ ├── Professor.cpp
 │ ├── Professor.h
 │ ├── Relatorio.h
