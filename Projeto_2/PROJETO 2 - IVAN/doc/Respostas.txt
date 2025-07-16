@@ -1,0 +1,54 @@
+Exercício 1 – c)  
+Identifique e justifique os tipos de relacionamento entre Seguro e Carro e entre Seguro e Cliente.
+
+O relacionamento entre Seguro-Carro e Seguro-Cliente é do tipo associação, pois tanto o carro quanto o cliente podem existir de forma independente, sem estarem necessariamente vinculados a um seguro.
+
+───────────────────────────────────────────────
+
+Exercício 3 – b)  
+Justifique o tipo de relacionamento (agregação ou composição) entre Seguro e Carro:
+
+Trata-se de uma agregação, já que os carros não dependem do seguro para existir, ou seja, continuam existindo mesmo sem estarem associados a um seguro. Além disso, um mesmo seguro pode estar ligado a mais de um carro.
+
+Exercício 3 – c)  
+Explique como você representaria um cliente com múltiplos seguros em seu modelo:
+
+Isso pode ser representado através de uma lista de instâncias da classe Seguro associadas ao identificador único do cliente, como CPF ou ID, sendo possível consultar essas informações por meio de um banco de dados ou repositório.
+
+───────────────────────────────────────────────
+
+Exercício 4 – b)  
+Explique o benefício de usar herança para representar diferentes tipos de seguro:
+
+Os principais benefícios do uso da herança incluem:
+
+- Reaproveitamento de código comum entre os tipos de seguro.  
+- Organização das regras específicas em subclasses, facilitando a manutenção.  
+- Facilidade para adicionar novos tipos de seguro no futuro, sem impactar a estrutura existente.
+
+───────────────────────────────────────────────
+
+Exercício 5 – c)  
+Explique como este diagrama ajuda a visualizar a estrutura do sistema para um cliente específico:
+
+O diagrama de objetos permite compreender uma situação real do sistema, mostrando instâncias concretas com dados reais. Ele facilita a análise ao apresentar apenas um objeto de cada classe envolvida, tornando a visualização mais clara e objetiva.
+
+───────────────────────────────────────────────
+
+Exercício 6 – b)  
+Função em pseudocódigo para verificar a vigência da apólice:
+
+função verificar_vigencia(vigencia: texto) -> lógico  
+  hoje ← obter_data_atual()  
+  [inicio, fim] ← separar_texto(vigencia, " a ")  
+  data_fim ← converter_para_data(fim)  
+  se hoje for menor ou igual a data_fim então  
+    retorne verdadeiro  
+  senão  
+    retorne falso  
+fim função
+
+Exercício 6 – c)  
+Explique a importância de encapsular informações sensíveis, como CPF e placa de veículos, em sistemas de seguros:
+
+O encapsulamento de dados sensíveis, como CPF e placa, é essencial para proteger a privacidade dos usuários e evitar acessos não autorizados. Essa abordagem obriga o uso de métodos intermediários (getters e setters), permitindo que sejam feitas validações, formatações e mantendo o sistema mais seguro e estruturado.
