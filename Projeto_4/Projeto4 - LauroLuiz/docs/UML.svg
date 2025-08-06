@@ -1,0 +1,130 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .class-box { fill: #f0f8ff; stroke: #4682b4; stroke-width: 2; }
+      .class-header { fill: #4682b4; }
+      .text-header { fill: white; font-family: Arial, sans-serif; font-weight: bold; font-size: 14px; text-anchor: middle; }
+      .text-attribute { fill: #333; font-family: Arial, sans-serif; font-size: 12px; }
+      .text-method { fill: #333; font-family: Arial, sans-serif; font-size: 12px; }
+      .separator { stroke: #4682b4; stroke-width: 1; }
+      .friend-box { fill: #ffe4e1; stroke: #dc143c; stroke-width: 2; }
+      .friend-header { fill: #dc143c; }
+      .association-line { stroke: #333; stroke-width: 2; marker-end: url(#arrowhead); }
+      .friend-line { stroke: #dc143c; stroke-width: 2; stroke-dasharray: 5,5; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="30" class="text-header" font-size="18">Sistema de Gerenciamento de Notas - Diagrama UML</text>
+
+  <!-- Classe Aluno -->
+  <g id="aluno-class">
+    <rect x="50" y="80" width="250" height="200" class="class-box"/>
+    <rect x="50" y="80" width="250" height="30" class="class-header"/>
+    <text x="175" y="100" class="text-header">Aluno</text>
+    
+    <!-- Separador -->
+    <line x1="50" y1="110" x2="300" y2="110" class="separator"/>
+    
+    <!-- Atributos -->
+    <text x="60" y="130" class="text-attribute">- nome: string</text>
+    <text x="60" y="145" class="text-attribute">- matricula: string</text>
+    <text x="60" y="160" class="text-attribute">- curso: string</text>
+    
+    <!-- Separador -->
+    <line x1="50" y1="170" x2="300" y2="170" class="separator"/>
+    
+    <!-- Métodos -->
+    <text x="60" y="190" class="text-method">+ Aluno()</text>
+    <text x="60" y="205" class="text-method">+ Aluno(nome, matricula, curso)</text>
+    <text x="60" y="220" class="text-method">+ getNome(): string</text>
+    <text x="60" y="235" class="text-method">+ getMatricula(): string</text>
+    <text x="60" y="250" class="text-method">+ getCurso(): string</text>
+    <text x="60" y="265" class="text-method">+ exibirInformacoes(): void</text>
+  </g>
+
+  <!-- Classe Disciplina -->
+  <g id="disciplina-class">
+    <rect x="450" y="80" width="280" height="240" class="class-box"/>
+    <rect x="450" y="80" width="280" height="30" class="class-header"/>
+    <text x="590" y="100" class="text-header">Disciplina</text>
+    
+    <!-- Separador -->
+    <line x1="450" y1="110" x2="730" y2="110" class="separator"/>
+    
+    <!-- Atributos -->
+    <text x="460" y="130" class="text-attribute">- nome: string</text>
+    <text x="460" y="145" class="text-attribute">- cargaHoraria: int</text>
+    <text x="460" y="160" class="text-attribute">- nota: float</text>
+    
+    <!-- Separador -->
+    <line x1="450" y1="170" x2="730" y2="170" class="separator"/>
+    
+    <!-- Métodos -->
+    <text x="460" y="190" class="text-method">+ Disciplina()</text>
+    <text x="460" y="205" class="text-method">+ Disciplina(nome, cargaHoraria)</text>
+    <text x="460" y="220" class="text-method">+ Disciplina(nome, carga, nota)</text>
+    <text x="460" y="235" class="text-method">+ getNome(): string</text>
+    <text x="460" y="250" class="text-method">+ getCargaHoraria(): int</text>
+    <text x="460" y="265" class="text-method">+ getNota(): float</text>
+    <text x="460" y="280" class="text-method">+ setNota(nota): void</text>
+    <text x="460" y="295" class="text-method">+ exibirInformacoes(): void</text>
+  </g>
+
+  <!-- Funções Amigas -->
+  <g id="friend-functions">
+    <rect x="450" y="380" width="280" height="120" class="friend-box"/>
+    <rect x="450" y="380" width="280" height="30" class="friend-header"/>
+    <text x="590" y="400" class="text-header" fill="white">&lt;&lt;friend functions&gt;&gt;</text>
+    
+    <!-- Separador -->
+    <line x1="450" y1="410" x2="730" y2="410" class="separator"/>
+    
+    <!-- Funções -->
+    <text x="460" y="430" class="text-method">+ verificarAprovacao(disciplina): bool</text>
+    <text x="460" y="450" class="text-method">+ validarCriteriosAprovacao(</text>
+    <text x="470" y="465" class="text-method">  disciplina, notaMinima): bool</text>
+    <text x="460" y="485" class="text-method" font-style="italic">Critério: nota >= 6.0</text>
+  </g>
+
+  <!-- Relacionamentos -->
+  <!-- Associação entre Aluno e Disciplinas -->
+  <line x1="300" y1="180" x2="450" y2="180" class="association-line"/>
+  <text x="375" y="175" class="text-attribute" text-anchor="middle">1</text>
+  <text x="375" y="195" class="text-attribute" text-anchor="middle">cursa</text>
+  <text x="430" y="175" class="text-attribute" text-anchor="middle">0..*</text>
+
+  <!-- Linha pontilhada para funções amigas -->
+  <line x1="590" y1="320" x2="590" y2="380" class="friend-line"/>
+  <text x="610" y="350" class="text-attribute" fill="#dc143c">&lt;&lt;friend&gt;&gt;</text>
+
+  <!-- Legenda -->
+  <g id="legend">
+    <rect x="50" y="400" width="300" height="150" fill="#f9f9f9" stroke="#666" stroke-width="1"/>
+    <text x="200" y="420" class="text-header" font-size="12">Legenda</text>
+    
+    <line x1="60" y1="430" x2="90" y2="430" class="separator"/>
+    <text x="100" y="435" class="text-attribute" font-size="11">- Atributo privado</text>
+    
+    <line x1="60" y1="445" x2="90" y2="445" class="separator"/>
+    <text x="100" y="450" class="text-attribute" font-size="11">+ Método público</text>
+    
+    <line x1="60" y1="460" x2="90" y2="460" class="association-line"/>
+    <text x="100" y="465" class="text-attribute" font-size="11">Associação</text>
+    
+    <line x1="60" y1="475" x2="90" y2="475" class="friend-line"/>
+    <text x="100" y="480" class="text-attribute" font-size="11">Função amiga</text>
+    
+    <text x="60" y="500" class="text-attribute" font-size="10">Modificadores de acesso:</text>
+    <text x="60" y="515" class="text-attribute" font-size="10">• Private (-): Acesso restrito à classe</text>
+    <text x="60" y="530" class="text-attribute" font-size="10">• Public (+): Acesso livre</text>
+    <text x="60" y="545" class="text-attribute" font-size="10">• Friend: Acesso privilegiado externo</text>
+  </g>
+
+  <!-- Notas adicionais -->
+  <text x="400" y="580" class="text-attribute" text-anchor="middle" font-size="10">
+    Implementa conceitos de Modularização, Encapsulamento e Funções Amigas
+  </text>
