@@ -1,0 +1,96 @@
+# Projeto 6 - Sistema Avançado de Gestão Acadêmica (Python)
+Aluno: Kaique do Vale Soares
+
+# Objetivo
+Este projeto tem como foco praticar conceitos avançados de Programação Orientada a Objetos em Python, incluindo:
+
+1. Classes Abstratas e Interfaces
+2. Classes Enumeradas e Classes Internas
+3. Herança e Polimorfismo
+4. Encapsulamento e Modificadores de Acesso (convenção)
+5. Modularização do código em arquivos (.py)
+6. Estruturação do projeto (src, docs, tests)
+
+# Estrutura
+Projeto_6/
+
+docs/                                  Documentação do projeto
+─ README.md                            Documentação principal com diagrama UML
+
+src/                                   Código-fonte do projeto
+─ tipo_usuario.py                      Define a enumeração TipoUsuario
+─ relatorio.py                         Define a interface (Classe Abstrata) Relatorio
+─ usuario.py                           Declaração e implementação da classe base Usuario
+─ usuario_autenticavel.py              Declaração da classe abstrata UsuarioAutenticavel
+─ aluno.py                             Implementação da classe Aluno
+─ professor.py                         Implementação da classe Professor
+─ funcionario_administrativo.py        Implementação da classe FuncionarioAdministrativo
+
+tests/                                 Arquivos para testes automatizados
+─ test_autenticacao.py                 Arquivo com testes unitários
+
+main.py                                Ponto de entrada principal da aplicação
+
+# Classes Principais
+Usuario
+Atributos privados:
+_nome (str)
+_id_usuario (int)
+_tipo (TipoUsuario)
+
+Métodos públicos:
+Construtor
+Propriedades (getters) para nome, id_usuario e tipo
+
+UsuarioAutenticavel
+Atributos privados:
+_senha (str)
+
+Métodos públicos:
+Construtor
+autenticar (método abstrato)
+
+Aluno
+Atributos privados:
+_curso (str)
+_historico (lista de objetos HistoricoDisciplinar)
+
+Métodos públicos:
+Construtor
+adicionar_disciplina_historico
+autenticar
+gerar_relatorio
+
+Professor
+Atributos privados:
+_departamento (str)
+
+Métodos públicos:
+Construtor
+autenticar
+gerar_relatorio
+
+FuncionarioAdministrativo
+Atributos privados:
+_cargo (str)
+
+Métodos públicos:
+Construtor
+autenticar
+gerar_relatorio
+
+# Como Executar o Projeto
+No terminal, na raiz do projeto, execute:
+
+Para rodar a aplicação principal:
+
+- Bash
+python main.py
+
+Para rodar os testes:
+
+- Bash
+python -m unittest discover tests
+
+# Diagrama UML
+O diagrama UML apresentado mostra a estrutura das classes que compõem o sistema, ilustrando as relações entre elas, seus atributos, métodos e conceitos como herança e interfaces.
