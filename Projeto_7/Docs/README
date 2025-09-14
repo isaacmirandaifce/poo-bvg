@@ -1,0 +1,86 @@
+# Projeto 7 - Sistema Genérico de Filtragem e Relatórios Acadêmicos (Python)
+
+## Aluno: Kaique do Vale Soares
+
+## Objetivo
+- Este projeto expande o Sistema de Gestão Acadêmica anterior com a introdução de métodos e classes genéricas, reforçando conceitos importantes para o desenvolvimento de sistemas escaláveis e reutilizáveis. Os objetivos principais são:
+
+- Classes e Métodos Genéricos: Implementar uma classe Filtro capaz de operar sobre diferentes tipos de objetos (Aluno, Professor, etc.).
+
+- Funções como Argumento: Utilizar funções de alta ordem (especificamente lambda) para injetar lógicas de negócio (condições de filtro e critérios de ordenação) de forma dinâmica.
+
+- Desacoplamento de Código: Criar um componente de filtragem que não tenha conhecimento direto sobre as regras de negócio das classes que ele manipula, promovendo alta reusabilidade.
+
+- Consolidar Conceitos Anteriores: Continuar aplicando os conceitos de Herança, Polimorfismo e Classes Abstratas do projeto anterior.
+
+## Estrutura
+A estrutura de arquivos foi expandida para incluir o novo componente de filtro e seus respectivos testes.
+
+Projeto_7/
+├── docs/                                     # Documentação do projeto
+│   ├── README.md                             # Documentação principal com diagrama UML
+│   └── Diagrama_UML.md                       # Arquivo separado para o diagrama, se preferir
+│
+├── src/                                      # Código-fonte do projeto
+│   ├── __init__.py
+│   ├── tipo_usuario.py                       # Define a enumeração TipoUsuario
+│   ├── relatorio.py                          # Define a interface (Classe Abstrata) Relatorio
+│   ├── usuario.py                            # Implementação da classe base Usuario
+│   ├── usuario_autenticavel.py               # Declaração da classe abstrata UsuarioAutenticavel
+│   ├── aluno.py                              # Implementação da classe Aluno (modificada)
+│   ├── professor.py                          # Implementação da classe Professor (modificada)
+│   ├── funcionario_administrativo.py         # Implementação da classe FuncionarioAdministrativo
+│   └── filtro.py                             # (NOVO) Define a classe genérica Filtro
+│
+├── tests/                                    # Arquivos para testes automatizados
+│   ├── __init__.py
+│   ├── test_autenticacao.py                  # Testes unitários de autenticação (modificado)
+│   └── test_funcionalidades.py               # (NOVO) Testes para as novas funcionalidades (média, filtros)
+│
+└── main.py                                   # Ponto de entrada da aplicação
+
+## Classes Principais e Modificações
+
+*Nova Classe Genérica*
+
+- Filtro
+Classe genérica reutilizável para manipular coleções de objetos.
+
+- Métodos públicos:
+adicionar_elemento(elemento: T): Adiciona um objeto à coleção interna.
+filtrar_por_condicao(condicao: Callable): Filtra os elementos com base em uma condição (lambda) e retorna uma nova lista.
+ordenar(chave: Callable, reverso: bool): Ordena a coleção interna com base em um critério (lambda).
+
+*Classes Modificadas*
+
+- Aluno
+Atributos privados:
+_curso (str)
+_historico (lista de objetos HistoricoDisciplinar)
+
+- Novos métodos e propriedades públicas:
+calcular_media() -> float: Calcula e retorna a média das notas do aluno.
+historico: Propriedade para acessar o histórico de disciplinas.
+
+- Professor
+Novos atributos e propriedades:
+_disciplinas_ministradas (list): Lista de disciplinas que o professor leciona.
+disciplinas_ministradas: Propriedade para acessar a lista de disciplinas.
+(As classes Usuario, UsuarioAutenticavel, FuncionarioAdministrativo e as interfaces permanecem com a mesma estrutura do projeto anterior.)
+
+## Como Executar o Projeto
+No terminal, na raiz do projeto (Projeto_7/), execute:
+
+- Para rodar a demonstração principal:
+
+Bash
+python main.py
+
+- Para rodar todos os testes:
+
+Bash
+python -m unittest discover tests
+
+## Diagrama UML 
+
+O diagrama UML foi atualizado para incluir a classe genérica Filtro e sua relação de dependência com as outras classes do sistema. Ele agora ilustra uma arquitetura mais desacoplada, onde o Filtro atua como uma ferramenta reutilizável e independente, um dos principais objetivos deste projeto.
