@@ -1,0 +1,90 @@
+# Projeto 8 - Gerenciamento Acadêmico Resiliente (Python)
+
+## Aluno: Kaique do Vale Soares
+
+##Objetivo
+- Este projeto aprimora o sistema acadêmico, integrando conceitos avançados de tratamento de exceções e sinais para tornar a aplicação mais robusta e tolerante a falhas. Os objetivos principais são:
+
+- Persistência de Dados: Implementar o carregamento e salvamento automático de dados (alunos, professores) a partir de arquivos .csv, garantindo que o estado da aplicação seja preservado entre as execuções.
+
+- Tratamento de Exceções: Lidar de forma segura com erros de leitura e escrita de arquivos, utilizando exceções personalizadas para diferentes cenários, como arquivos não encontrados ou permissões negadas.
+
+- Manipulação de Sinais: Garantir que o sistema responda de maneira controlada a interrupções externas (como Ctrl+C), salvando os dados antes de encerrar para prevenir perdas.
+
+- Robustez e Resiliência: Tornar a aplicação capaz de iniciar com dados pré-existentes e garantir que alterações relevantes sejam salvas automaticamente.
+
+##Estrutura
+A arquitetura do projeto foi expandida para incluir módulos de persistência, tratamento de sinais e um gerenciador central do sistema.
+
+Projeto_8/
+├── dados/                                    # (NOVO) Armazena os arquivos de dados .csv
+│
+├── docs/                                     # Documentação do projeto
+│   └── README.md                             # Documentação principal com diagrama UML
+│
+├── src/                                      # Código-fonte do projeto
+│   ├── __init__.py
+│   ├── excecoes.py                           # (NOVO) Define as classes de exceção personalizadas
+│   ├── persistencia.py                       # (NOVO) Módulo para ler e escrever dados em arquivos
+│   ├── sinal_handler.py                      # (NOVO) Módulo para configurar a resposta a sinais do SO
+│   ├── sistema_academico.py                  # (NOVO) Classe central que gerencia os dados da aplicação
+│   ├── aluno.py                              # Implementação da classe Aluno
+│   ├── professor.py                          # Implementação da classe Professor
+│   └── ... (demais arquivos do projeto anterior)
+│
+├── tests/                                    # Arquivos para testes automatizados
+│   ├── __init__.py
+│   ├── test_autenticacao.py                  # Testes unitários de autenticação
+│   └── test_funcionalidades.py               # Testes para as novas funcionalidades
+│
+└── main.py                                   # Ponto de entrada que inicializa e executa o menu interativo
+
+##Classes Principais e Modificações
+**Novos Módulos e Classes**
+
+-- SistemaAcademico
+Classe central que gerencia os dados da aplicação em memória (usando o padrão Singleton).
+
+- Métodos públicos:
+carregar_dados_iniciais(): Carrega dados dos arquivos na inicialização.
+salvar_todos_os_dados(): Salva o estado atual do sistema nos arquivos.
+adicionar_aluno(...): Adiciona um novo aluno e aciona o auto-save.
+adicionar_professor(...): Adiciona um novo professor e aciona o auto-save.
+
+-- Persistencia
+Módulo que lida com toda a lógica de leitura e escrita de arquivos CSV.
+
+- Métodos públicos:
+salvar_dados(alunos, professores): Escreve as listas de objetos nos arquivos .csv.
+carregar_dados(): Lê os arquivos .csv e recria as listas de objetos.
+SinalHandler
+Módulo que configura "ouvintes" para sinais do sistema operacional.
+
+- Métodos públicos:
+inicializar(): Registra os tratadores de sinais (como SIGINT).
+Exceções Personalizadas
+Conjunto de classes de erro para um tratamento mais específico de falhas.
+ErroPersistencia, ArquivoNaoEncontradoError, PermissaoNegadaError, ErroConversaoDadosError.
+(As classes Aluno e Professor foram mantidas, com suas lógicas internas sendo agora gerenciadas pelo SistemaAcademico e persistidas pelo módulo Persistencia.)
+
+## Como Executar o Projeto
+No terminal, na raiz do projeto (Projeto_8/), execute:
+
+Preparação do Ambiente (passo único):
+Crie a pasta dados para que o programa possa salvar os arquivos.
+
+Bash
+mkdir dados
+
+Para rodar a aplicação principal:
+
+Bash
+python main.py
+
+Para rodar todos os testes:
+
+Bash
+python -m unittest discover tests
+
+## Diagrama UML
+O diagrama UML foi atualizado para refletir a nova arquitetura em camadas. Ele agora mostra como os módulos de Persistencia e SinalHandler interagem com a classe central SistemaAcademico para criar uma aplicação mais robusta e desacoplada, capaz de lidar com I/O de arquivos e interrupções do sistema.
