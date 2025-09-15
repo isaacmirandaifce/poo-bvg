@@ -39,22 +39,19 @@ Cada equipe deverá escolher um tema para o projeto entre as sugestões abaixo o
 2. **Aplicativo de Delivery para Supermercados**  
    Uma solução para supermercados oferecerem delivery, com gerenciamento de pedidos, rastreamento de entregas, integração com sistemas de pagamento e controle de estoque.
 
-3. **Sistema de Agendamento de Sirene Escolar**  
-   Um sistema para agendar e automatizar o acionamento de sirenes escolares, com configurações de horários, notificações e integração com sistemas de segurança.
-
-4. **Sistema de Controle de Acesso com Reconhecimento Facial**  
+3. **Sistema de Controle de Acesso com Reconhecimento Facial**  
    Um sistema que utiliza tecnologia de reconhecimento facial para gerenciar a quantidade de pessoas ingressantes em um abiente, com logs de entrada e de saida, alertas e relatórios de presença.
 
-5. **Sistema de Gerenciamento de Reservas em Restaurantes**  
+4. **Sistema de Gerenciamento de Reservas em Restaurantes**  
    Uma plataforma que permita aos clientes reservar mesas online, visualizar cardápios, e que forneça relatórios gerenciais sobre a ocupação e preferências dos clientes.
 
-6. **Aplicativo de Monitoramento de Saúde para Pacientes Crônicos**
+5. **Aplicativo de Monitoramento de Saúde para Pacientes Crônicos**
    Um sistema que permita o monitoramento remoto de sinais vitais e saúde, com alertas automáticos para profissionais e relatórios detalhados para acompanhamento do paciente.
 
-7. **Plataforma de Gestão de Eventos e Ingressos Online**
+6. **Plataforma de Gestão de Eventos e Ingressos Online**
    Uma solução para organizar eventos, gerenciar a venda de ingressos, controle de acesso e geração de relatórios financeiros e estatísticos.
 
-8. **Aplicativo para Gerenciamento de Filas e Senhas:** 
+7. **Aplicativo para Gerenciamento de Filas e Senhas:**
   Um sistema para estabelecimentos (bancos, consultórios, etc.) que otimize o atendimento por meio da gestão de filas e emissão de senhas com previsão de tempo de espera.
 
 ---
