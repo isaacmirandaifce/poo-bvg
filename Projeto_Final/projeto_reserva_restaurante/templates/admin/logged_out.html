@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Sessão Encerrada{% endblock %}
+
+{% block content %}
+    <div id="content-main">
+        <h1>Sessão encerrada com sucesso!</h1>
+        <p>Obrigado por utilizar o sistema "Mesa do Chef".</p>
+        <br>
+        <form action="{% url 'admin:login' %}">
+            <button type="submit" class="button">Acessar Novamente</button>
+        </form>
+    </div>
+{% endblock %}

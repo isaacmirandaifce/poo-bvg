@@ -1,0 +1,98 @@
+/* custom_admin.css - Versão 5.0 (Solução Final de Contraste) */
+
+/* Importa as mesmas fontes da página do cliente */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500&display=swap');
+
+/* --- Estilo Geral e Fundo --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../imagens/background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#container {
+    background: transparent;
+}
+
+/* --- Cabeçalho Principal --- */
+#header {
+    background: #2c3e50;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+#branding h1, #branding h1 a, #branding h1 a:link, #branding h1 a:visited {
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+}
+
+
+.module, #changelist-filter, #content-main, .login-form {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border: none;
+    padding: 20px;
+
+    color: #333;
+}
+
+
+#content-main h1, #content-main p, #content-main label,
+.login-form h1, .login-form p, .login-form label,
+.module p, .module label {
+    color: #333;
+    text-shadow: none;
+}
+.help, .form-row .help {
+    color: #666;
+}
+
+/* --- Links e Botões --- */
+a, a:link, a:visited {
+    color: #c0392b;
+}
+
+.button, input[type=submit], input[type=button] {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: #fff !important;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: none;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: linear-gradient(45deg, #c0392b, #e74c3c);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+/* --- Título Principal na Página Inicial --- */
+#content > h1 {
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* --- Tabela de Modelos na Página Inicial --- */
+.module table th a {
+    color: #c0392b;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* --- Remove o Seletor de Tema (Modo Escuro) --- */
+#header .theme-toggle {
+    display: none;
+}
+
+/* --- Correção Específica para a Tela de Logout --- */
+body.logout #content {
+    margin: 40px auto;
+    max-width: 600px;
+}

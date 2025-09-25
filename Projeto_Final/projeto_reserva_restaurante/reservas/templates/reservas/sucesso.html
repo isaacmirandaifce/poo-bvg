@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva Confirmada - Mesa do Chef</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("{% static 'reservas/images/background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header-logo {
+            max-width: 180px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border-top: 5px solid #28a745; 
+            text-align: center; 
+        }
+
+        .container h1 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+        
+        .container p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #3498db, #2980b9); 
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <img src="{% static 'reservas/imagens/logo_chef.jpeg' %}" alt="Logo Mesa do Chef" class="header-logo">
+    </header>
+
+    <main class="container">
+        <h1>Reserva Confirmada! ✅</h1>
+        
+        {% if reserva %}
+            <p>Obrigado, <strong>{{ reserva.nome_cliente }}</strong>!</p>
+            <p>Sua reserva na <strong>Mesa {{ reserva.mesa.numero }}</strong> foi agendada com sucesso.</p>
+            <p><strong>Data:</strong> {{ reserva.data|date:"d/m/Y" }}<br>
+               <strong>Hora:</strong> {{ reserva.hora }}</p>
+        {% else %}
+            <p>Sua reserva foi confirmada com sucesso!</p>
+        {% endif %}
+        
+        <a href="{% url 'criar_reserva' %}" class="btn btn-primary">Fazer Outra Reserva</a>
+    </main>
+
+</body>
+</html>

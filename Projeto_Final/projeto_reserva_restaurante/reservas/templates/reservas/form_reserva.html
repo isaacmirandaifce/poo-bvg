@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva - Mesa do Chef</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+      
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+      
+        body {
+            font-family: 'Poppins', sans-serif;
+
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("{% static 'reservas/imagens/background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+       
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header-logo {
+            max-width: 180px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%; 
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+       
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.95); 
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border-top: 5px solid #c0392b;
+        }
+
+        .container h1 {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+
+        form p {
+            margin-bottom: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        form input, form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        form input:focus, form select:focus {
+            outline: none;
+            border-color: #c0392b;
+            box-shadow: 0 0 8px rgba(192, 57, 43, 0.4);
+        }
+        
+        .errorlist {
+            color: #c0392b;
+            list-style: none;
+            padding: 10px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            background-color: rgba(231, 76, 60, 0.1);
+            border-radius: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: #fff;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px); 
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: #fff;
+            color: #2c3e50;
+            margin-top: 25px;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f4f4f9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); }
+        .modal-content { background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 90%; max-width: 800px; border-radius: 8px; position: relative; }
+        .modal-content img { width: 100%; height: auto; }
+        .close-btn { color: #aaa; position: absolute; top: 10px; right: 25px; font-size: 35px; font-weight: bold; cursor: pointer; }
+        .close-btn:hover, .close-btn:focus { color: black; }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <img src="{% static 'reservas/imagens/logo_chef.jpeg' %}" alt="Logo Mesa do Chef" class="header-logo">
+    </header>
+
+    <main class="container">
+        <h1>Faça sua Reserva</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Confirmar Reserva</button>
+        </form>
+
+        <button id="openMenuBtn" class="btn btn-secondary">Visualizar Cardápio</button>
+    </main>
+    
+    <div id="menuModal" class="modal">
+        <div class="modal-content">
+            <span id="closeMenuBtn" class="close-btn">&times;</span>
+            <img src="{% static 'reservas/imagens/cardapio-foto.png' %}" alt="Foto do Cardápio">
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById("menuModal");
+        const openBtn = document.getElementById("openMenuBtn");
+        const closeBtn = document.getElementById("closeMenuBtn");
+
+        openBtn.onclick = function() { modal.style.display = "block"; }
+        closeBtn.onclick = function() { modal.style.display = "none"; }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
