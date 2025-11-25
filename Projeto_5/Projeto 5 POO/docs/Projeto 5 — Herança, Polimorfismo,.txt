@@ -1,0 +1,60 @@
+Projeto 5 — Herança, Polimorfismo, Sobrecarga e Sobrescrita (C++)
+
+Objetivo: Desenvolver um sistema acadêmico em C++ utilizando os conceitos de herança, polimorfismo, herança múltipla, sobrecarga e sobrescrita. O trabalho parte de uma hierarquia de usuários de uma instituição de ensino.
+
+Descrição curta:
+
+O sistema representa diferentes tipos de Usuario (Aluno, Professor e FuncionarioAdministrativo), além de um Monitor, que reúne características de Aluno e Professor (herança múltipla).
+
+O projeto demonstra na prática:
+
+sobrescrita de métodos virtuais (gerarRelatorio());
+
+sobrecarga no método exibirInformacoes() de Aluno;
+
+polimorfismo com ponteiros para Usuario;
+
+herança múltipla aplicada de forma funcional.
+
+Principais classes e responsabilidades
+
+Usuario: classe base abstrata com atributos (nome, email, tipo) e método virtual puro gerarRelatorio().
+
+Aluno: herda de Usuario, possui matricula, curso e disciplinas. Implementa gerarRelatorio() e sobrecarga exibirInformacoes() com e sem exibição de notas.
+
+Professor: herda de Usuario, possui areaDeAtuacao e disciplinasMinistradas, reescrevendo gerarRelatorio().
+
+FuncionarioAdministrativo: herda de Usuario, possui departamento e cargo, com sua própria versão de gerarRelatorio().
+
+Monitor: combina Aluno e Professor (herança múltipla), incluindo também lista de disciplinas monitoradas.
+
+Disciplina: classe auxiliar com nome, cargaHoraria e nota, contendo função amiga para verificar aprovação.
+
+Estrutura do projeto
+O código foi organizado em módulos com arquivos .h e .cpp:
+
+Usuario.h / Usuario.cpp
+
+Aluno.h / Aluno.cpp
+
+Professor.h / Professor.cpp
+
+FuncionarioAdministrativo.h / FuncionarioAdministrativo.cpp
+
+Monitor.h / Monitor.cpp
+
+Disciplina.h / Disciplina.cpp
+
+main.cpp
+
+O que acontece na execução
+
+O programa cria um Aluno com disciplinas e notas, um Professor, um Funcionário Administrativo e um Monitor.
+
+Todos os objetos são adicionados a um vetor de ponteiros de Usuario, e gerarRelatorio() é chamado para cada um — demonstrando polimorfismo.
+
+O método exibirInformacoes() do Aluno é chamado nas duas versões (com e sem exibir notas), mostrando a sobrecarga.
+
+O Monitor exibe as disciplinas que acompanha, reforçando o uso de herança múltipla.
+
+A função amiga da classe Disciplina determina automaticamente a aprovação ou reprovação do aluno.
