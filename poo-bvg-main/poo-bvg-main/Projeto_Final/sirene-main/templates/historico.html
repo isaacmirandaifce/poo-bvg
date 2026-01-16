@@ -1,0 +1,24 @@
+<h2>Status do Sistema: {{ "Ativo" if ativo else "Inativo" }}</h2>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Horário</th>
+      <th>Status</th>
+      <th>Registrado em</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in historico %}
+    <tr>
+      <td>{{ item.id }}</td>
+      <td>{{ item.horario }}</td>
+      <td>{{ item.status }}</td>
+      <td>{{ item.registrado_em }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{{ url_for('historico.ativar_sistema') }}" class="btn btn-success">Ativar Sistema</a>

@@ -1,0 +1,140 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+.body {
+    background-color: #2c6e49 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #1b4332;
+    background-color: #40916c;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+}
+
+.logo i, .user-icon i {
+    font-size: 24px;
+    color: white;
+}
+
+h2 {
+    margin: 20px 0;
+    color: #1b4332;
+}
+
+.time-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+time-picker label {
+    font-size: 14px;
+    color: #333;
+}
+
+input[type="time"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #1b4332;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    transition: background 0.3s;
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: #52b788;
+}
+
+.btn-primary:hover {
+    background-color: #40916c;
+}
+
+.btn-secondary {
+    background-color: #1b4332;
+    margin-top: 15px;
+}
+
+.btn-secondary:hover {
+    background-color: #0b2522;
+}
+
+.schedule {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.schedule-list {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.schedule-item {
+    background: #74c69d;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: #1b4332;
+}
+
+.delete {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: red;
+}
+
+.borda{
+    border-color: #52b788 !important;
+}
+
+.bg-verde{
+    background-color: #52b788 !important;;
+}
+
+.bg-table{
+    background-color: #bbdfc9 !important;
+}
+
+.fundo{
+    background-image: url("../img/background.png");
+}
+
+.text-table{
+    color: #193b2e !important;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #28a745; /* verde do Bootstrap */
+    border-color: #28a745;
+}
