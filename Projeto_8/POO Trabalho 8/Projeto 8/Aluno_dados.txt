@@ -1,0 +1,3 @@
+Maria de Sousa;maria@example.com;2025001;Engenharia
+Maria de Sousa;maria@example.com;2025001;Engenharia
+Maria de Sousa;maria@example.com;2025001;Engenharia
