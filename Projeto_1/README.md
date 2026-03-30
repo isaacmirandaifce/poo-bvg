@@ -12,96 +12,134 @@ Transformar um código estruturado em um código orientado a objetos, implementa
 
 ---
 
-## Contexto do Projeto
+#  Ticket #402: Refatoração do Sistema de Gestão de Clientes (Legado)
 
-No código original estruturado, temos uma aplicação simples para armazenar e manipular dados de clientes em uma loja. Este código possui variáveis e funções soltas para armazenar o nome, idade e saldo de um cliente, bem como funções para mostrar informações e atualizar o saldo. Essa abordagem pode gerar um código menos modular e escalável.
+**De:** Tech Lead (Professor)  
+**Para:** Equipe de Engenharia (Alunos)  
+**Projeto:** Core Bancário  
+**Status:** `To Do` | **Prioridade:** `Alta`
 
-### Código Estruturado Original
+## Contexto
+Olá, equipe! 
+Nosso sistema atual de gerenciamento de clientes foi escrito anos atrás utilizando um paradigma procedural em Python. Com o crescimento da base de usuários, o código tornou-se um "código espaguete" (complexo, acoplado e difícil de manter). O sistema atual usa **listas paralelas e escopo global** para gerenciar o estado, o que está causando inconsistências graves, como clientes com saldo negativo e dificuldades de escalabilidade.
+
+Sua atividade é atuar na **refatoração** desse código, migrando-o para a **Programação Orientada a Objetos (POO)**. 
+
+### O Código Legado:
+Este é o script atual que roda em produção. Vejam como os dados estão separados da lógica e dependem de variáveis globais:
 
 ```python
-# Variáveis globais
-nome_cliente = "João Silva"
-idade_cliente = 30
-saldo_cliente = 1000.0
+# Sistema Legado (Procedural com variáveis globais e listas paralelas)
+nomes_clientes = []
+idades_clientes = []
+saldos_clientes = []
+status_ativo = []
+total_clientes = 0
 
-# Função para exibir as informações do cliente
-def mostrar_informacoes():
-    print(f"Cliente: {nome_cliente}, Idade: {idade_cliente}, Saldo: {saldo_cliente}")
+def cadastrar_cliente(nome, idade, saldo_inicial):
+    global total_clientes
+    if total_clientes < 100:
+        nomes_clientes.append(nome)
+        idades_clientes.append(idade)
+        saldos_clientes.append(saldo_inicial)
+        status_ativo.append(True)
+        total_clientes += 1
+        print(f"Sucesso: Cliente {nome} cadastrado com ID {total_clientes - 1}")
+    else:
+        print("Erro Crítico: Limite de memória atingido.")
 
-# Função para atualizar o saldo do cliente
-def atualizar_saldo(valor):
-    global saldo_cliente
-    saldo_cliente += valor
+def movimentar_conta(id_cliente, valor, is_saque):
+    if 0 <= id_cliente < total_clientes:
+        if status_ativo[id_cliente]:
+            if is_saque:
+                # BUG EM PRODUÇÃO: Nenhuma validação de saldo negativo ocorre aqui!
+                saldos_clientes[id_cliente] -= valor
+                print(f"Saque de R${valor:.2f} realizado. Novo saldo: R${saldos_clientes[id_cliente]:.2f}")
+            else:
+                saldos_clientes[id_cliente] += valor
+                print(f"Depósito de R${valor:.2f} realizado. Novo saldo: R${saldos_clientes[id_cliente]:.2f}")
+        else:
+            print("Erro: Conta inativa.")
+    else:
+        print("Erro: Cliente não encontrado no sistema.")
+
+def exibir_relatorio():
+    print("--- RELATÓRIO GERAL ---")
+    for i in range(total_clientes):
+        print(f"ID: {i} | Nome: {nomes_clientes[i]} | Idade: {idades_clientes[i]} | Saldo: R${saldos_clientes[i]:.2f} | Ativo: {status_ativo[i]}")
+
+if __name__ == "__main__":
+    # Simulando o uso do sistema
+    cadastrar_cliente("João Silva", 30, 1000.0)
+    cadastrar_cliente("Maria Souza", 25, 500.0)
+    
+    # Operação perigosa que o sistema atual permite:
+    movimentar_conta(0, 1500.0, True) # Deixa o João com saldo de -500.0!
+    
+    exibir_relatorio()
 ```
 
-### Tarefa
+---
 
-Refatore o código acima para uma estrutura orientada a objetos, implementando uma classe `Cliente` com os atributos e métodos que representem as funcionalidades originais. A nova classe deve adotar os princípios de POO, incluindo encapsulamento e abstração.
+## Critérios de Aceitação
+
+Para que sua **Pull Request (PR)** seja aprovada no *Code Review*, a refatoração deve cumprir:
+
+1. **Fim das Listas Paralelas:** Criar uma classe `Cliente`. As informações do cliente devem pertencer ao objeto instanciado, eliminando o uso de `global` e listas separadas.
+2. **Encapsulamento Restrito:** Todos os atributos (`nome`, `idade`, `saldo`, `status`) devem ser **privados** (utilizando o prefixo `__` em Python). O acesso de leitura deve ser feito via métodos *getters* ou *properties* (`@property`).
+3. **Regra de Negócio:** O método responsável pelo saque **deve impedir saldo negativo**. Caso ocorra, a transação deve ser recusada e uma mensagem de erro (`ValueError` ou `print` amigável) deve ser gerada.
+4. **Documentação:** O código deve conter **Docstrings** (`"""..."""`) nas classes e métodos detalhando suas responsabilidades, entradas e saídas.
 
 ---
 
-## Especificações do Projeto
+## Estrutura de Arquivos Exigida
 
-1. **Nome da Classe**: `Cliente`
+O repositório oficial da disciplina segue um padrão estrito. O seu projeto deverá ser organizado dentro da pasta `Projeto_1` com a seguinte árvore estrutural:
 
-2. **Atributos**:
-   - `nome` (str): Nome do cliente.
-   - `idade` (int): Idade do cliente.
-   - `saldo` (float): Saldo do cliente.
-
-3. **Métodos**:
-   - `__init__(self, nome, idade, saldo)`: Construtor para inicializar os atributos do cliente.
-   - `mostrar_informacoes(self)`: Método para exibir as informações do cliente (similar à função `mostrar_informacoes`).
-   - `atualizar_saldo(self, valor)`: Método para atualizar o saldo do cliente (similar à função `atualizar_saldo`).
-
-4. **Conceitos de POO aplicados**:
-   - **Encapsulamento**: Os atributos `nome`, `idade` e `saldo` devem ser privados, acessíveis apenas por meio dos métodos da classe.
-   - **Abstração**: A lógica de atualização e exibição de informações deve estar dentro da classe, simplificando o uso para quem interage com a classe `Cliente`.
-   - **Facilidade de manutenção**: Ao isolar os dados e a lógica do cliente na estrutura de uma classe, o código se torna mais fácil de expandir no futuro.
+```text
+Projeto_1/
+│
+├── src/               
+│   ├── models/
+│   │   └── cliente.py       # Modelagem da entidade (responsabilidade única)
+│   │
+│   └── main.py              # Script de inicialização (importa o cliente e testa)
+│
+├── docs/                    # (Opcional) Diagramas ou anotações
+└── tests/                   # (Opcional para esta etapa)
+```
 
 ---
 
-## Instruções de Desenvolvimento
+## Como Entregar
 
-1. **Desenvolvimento da Classe**  
-   Escreva o código para a classe `Cliente` de acordo com as especificações. 
+A entrega simula o *Workflow* oficial da disciplina no repositório `isaacmirandaifce/poo-bvg`. Siga os passos:
 
-2. **Implementação dos Conceitos de POO**  
-   Ao desenvolver a classe, garanta:
-   - Implementação correta do **encapsulamento** utilizando atributos privados (`__atributo`).
-   - Manter uma **estrutura modular e organizada** para facilitar futuras manutenções.
-
-3. **Teste da Classe**  
-   Escreva um código simples para criar instâncias de `Cliente`, exibir suas informações e atualizar o saldo. Exemplo de uso:
-
-   ```python
-   cliente1 = Cliente("João Silva", 30, 1000.0)
-   cliente1.mostrar_informacoes()
-   cliente1.atualizar_saldo(500.0)
-   cliente1.mostrar_informacoes()
-   ```
+1. Faça um **Fork** do repositório `isaacmirandaifce/poo-bvg` para a sua conta pessoal.
+2. Clone o seu fork na sua máquina.
+3. Crie os arquivos respeitando a estrutura de pastas indicada (`Projeto_1/src/...`).
+4. Faça *commits* semânticos e organizados evidenciando seu progresso (Ex: `feat: cria classe Cliente`, `fix: valida saldo negativo`).
+5. Realize o **Push** para o seu fork.
+6. Abra uma **Pull Request (PR)** para o repositório original com os seguintes dados:
+   * **Título da PR:** `Projeto_1 - [Seu Nome Completo]` *(Ex: Projeto_1 - João Silva)*.
+   * **Descrição da PR:** Escreva um resumo evidenciando quais princípios de POO foram aplicados e como o bug do saldo negativo foi resolvido.
 
 ---
 
-## Critérios de Avaliação
+## Rubrica de Avaliação no Code Review
 
-1. **Implementação da Classe** (3 pontos)  
-   - A classe deve estar de acordo com as especificações e incluir os atributos e métodos necessários.
+Sua PR será revisada e só será "Mergeada" (Aprovada) se cumprir a rubrica abaixo:
 
-2. **Aplicação dos Conceitos de POO** (4 pontos)  
-   - Uso correto de encapsulamento e abstração.
-   - Clareza e modularidade do código.
+| Critério | Descrição 
+| :--- | :--- |
+| **Padrões de Código e Workflow** | A PR seguiu o padrão de nomenclatura? A pasta `Projeto_1` tem os arquivos `.py` nos locais corretos e documentação via Docstrings? 
+| **Modelagem e Coesão** | O antipadrão de variáveis globais foi removido em favor da classe `Cliente` e do método construtor `__init__`? 
+| **Encapsulamento** | Os atributos são estritamente privados (`__atributo`) e protegidos contra modificações indevidas no arquivo `main.py`? 
+| **Lógica de Negócio** | O método de saque barra transações que resultariam em saldo negativo, protegendo o domínio? 
 
-3. **Testes e Funcionamento** (2 pontos)  
-   - A classe e seus métodos devem funcionar corretamente, com os valores exibidos e atualizados conforme o esperado.
-
-4. **Organização e Documentação** (1 ponto)  
-   - Código organizado e, se possível, com comentários explicativos.
-
----
+>  Lembrem-se que no arquivo `main.py` vocês precisarão importar a classe criada (`from models.cliente import Cliente`). Uma PR mal formatada ou um código sem encapsulamento será retornada com a tag *`changes requested`*. Mostrem que vocês dominam a teoria criando um código limpo e seguro. Boa sprint!
 
 ## Entrega
 
-- **Formato**: A entrega deverá ser feita no repositório da turma no GitHub, na pasta `Projeto_1`, com um arquivo contendo a classe `Cliente` e um código de teste.
 - **Prazo de Entrega**: Sete dias
 
