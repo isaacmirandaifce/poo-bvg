@@ -1,7 +1,0 @@
-sistema_seguros/
-|-- __init__.py
-|-- carro.py
-|-- cliente.py
-|-- seguro.py
-|-- seguro_veiculo.py
-|-- main.py
