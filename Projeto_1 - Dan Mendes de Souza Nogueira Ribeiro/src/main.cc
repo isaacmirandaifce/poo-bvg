@@ -1,8 +1,20 @@
+/**
+* @file RefatoraçãoCódigoBancario.cpp
+* @brief Refatoração de Código Estruturado para Programação Orientada a Objetos.
+* Este arquivo contém a Refatoração de um código legacy em python para agora em c++, além disso, ajuste foram feitos no código para corrigir BUGS da versão legacy
+ */
+
 #include <iostream>
 #include <string>
 
 // criando a classe cliente.
 
+/**
+ * @class clientes
+ * @brief Classe que representa um cliente do banco.
+ * * Gerencia as informações pessoais e o estado financeiro de um cliente individual.
+ * Fornece métodos de acesso (getters e setters) e operações diretas no saldo.
+ */
 class clientes
 {
 private:
@@ -17,25 +29,81 @@ public:
     
     // Definido os setters para podemos alterar os dados privados fora da classe.
 
+    /**
+     * @brief Define o nome do cliente.
+     * @param nome String contendo o nome do cliente.
+     */
     void setNome(std::string nome) { nome_cliente = nome; };
+    
+    /**
+     * @brief Define a idade do cliente.
+     * @param idade Inteiro representando a idade do cliente.
+     */
     void setIdade(int idade) { idade_cliente = idade; };
+
+    /**
+     * @brief Define o saldo atual da conta do cliente.
+     * @param saldo Valor de ponto flutuante representando o saldo.
+     */
     void setSaldo(double saldo) { saldo_cliente = saldo; };
+
+    /**
+     * @brief Define o status da conta do cliente.
+     * @param status Booleano onde true = ativo e false = inativo.
+     */
     void setStatus(bool status) { status_ativo = status; };
 
     // Definido os getters para podermos acessar informações privadas fora da classe.
+
+    /**
+     * @brief Retorna o nome do cliente.
+     * @return std::string Nome do cliente.
+     */
     std::string getNome() { return nome_cliente; };
+
+    /**
+     * @brief Retorna a idade do cliente.
+     * @return int Idade do cliente.
+     */
     int getIdade() { return idade_cliente; };
+
+    /**
+     * @brief Retorna o saldo da conta do cliente.
+     * @return double Valor atual do saldo.
+     */
     double getSaldo() { return saldo_cliente; };
+
+    /**
+     * @brief Retorna o status de atividade da conta.
+     * @return true se a conta estiver ativa, false caso contrário.
+     */
     bool getStatus() { return status_ativo; };
 
     // Definido a operação de saque e deposito das contas.
 
+    /**
+     * @brief Realiza um saque na conta do cliente (sem validação interna).
+     * @param valor Valor a ser subtraído do saldo.
+     * @return double Novo saldo após a operação.
+     */
     double saqueConta(double valor) { return saldo_cliente -= valor; };
+
+    /**
+     * @brief Realiza um depósito na conta do cliente.
+     * @param valor Valor a ser adicionado ao saldo.
+     * @return double Novo saldo após a operação.
+     */
     double depositoConta(double valor) { return saldo_cliente += valor; };
 };
 
 // Criando a classe Banco.
 
+/**
+ * @class Banco
+ * @brief Classe que gerencia o sistema do banco e a lista de clientes.
+ * * Permite cadastrar até 100 clientes, movimentar contas (com validação
+ * de segurança para evitar saldos negativos) e emitir relatórios.
+ */
 class Banco
 {
 private:
@@ -47,6 +115,15 @@ private:
 
 public:
     // A função de cadastrar clientes.
+
+    /**
+     * @brief Cadastra um novo cliente no sistema do banco.
+     * * Verifica se há espaço no vetor de clientes. Em caso positivo,
+     * inicializa os dados do cliente e o define como ativo.
+     * * @param nome Nome do novo cliente.
+     * @param idade Idade do novo cliente.
+     * @param saldo_inicial Saldo inicial da conta.
+     */
 
     void cadastrar_cliente(std::string nome, int idade, double saldo_inicial)
     {
@@ -68,6 +145,16 @@ public:
     }
 
     // A função de movimentar o saldo das contas. No código legacy, tem um BUG envolvendo o saque, ele foi corrigido nesse codigo.
+
+    /**
+     * @brief Realiza uma movimentação (saque ou depósito) na conta de um cliente.
+     * * Valida se o ID do cliente existe, se a conta está ativa e, em caso de saque,
+     * impede a operação se o cliente não tiver saldo suficiente, prevenindo o BUG
+     * de saldo negativo do sistema legado.
+     * * @param id_cliente O ID gerado no momento do cadastro do cliente.
+     * @param valor O montante financeiro da operação.
+     * @param is_saque Se true, realiza um saque; se false, realiza um depósito.
+     */
 
     void movimentar_conta(int id_cliente, double valor, bool is_saque)
     {
@@ -115,6 +202,12 @@ public:
         }
     }
 
+    /**
+     * @brief Exibe o relatório de todos os clientes cadastrados.
+     * * Imprime no terminal o ID, Nome, Saldo e Status (Ativo ou Inativo)
+     * de todos os clientes atualmente registrados no banco.
+     */
+
     void exibir_relatorio(){
     std::cout << std::endl << "--- RELATÓRIO GERAL ---" << std::endl;
 
@@ -125,18 +218,26 @@ public:
 
 };
 
+/**
+ * @brief Função principal responsável por simular a execução do sistema bancário.
+ * @return int Retorna 0 em caso de execução bem-sucedida.
+ */
+
 int main(){ 
 
 // Simulando o uso do sistema
 
+    // Instanciação do sistema do Banco
     Banco rodarBanco;
 
+    // Cadastro de usuários
    rodarBanco.cadastrar_cliente("João Silva", 30, 1000.0);
    rodarBanco.cadastrar_cliente("Maria Souza", 25, 500.0);
 
 // A Operação perigosa.
     rodarBanco.movimentar_conta(0, 1500.0, true); // No sistema atual ela vai ser previnida.
     
+    // Geração do relatório final
     rodarBanco.exibir_relatorio();
 
     return 0;
