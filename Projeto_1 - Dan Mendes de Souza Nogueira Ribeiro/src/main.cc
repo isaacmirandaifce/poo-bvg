@@ -110,18 +110,26 @@ public:
     std::cout << std::endl << "--- RELATÓRIO GERAL ---" << std::endl;
 
     for(int i = 0; i < total_clientes; i++ ){
-        std::cout << std::endl << "ID " << i << " Nome: " << lista_Clientes[i].getNome() << " Saldo:" << lista_clientes[i].getValue() << " Ativo: " << (lista_clientes[i].getStatus() ? "Sim" : "Não") << std::endl;
+        std::cout << std::endl << "ID " << i << " Nome: " << lista_Clientes[i].getNome() << " Saldo:" << lista_Clientes[i].getSaldo() << " Ativo: " << (lista_Clientes[i].getStatus() ? "Sim" : "Não") << std::endl;
     }
 }
 
-}
+};
 
-if __name__ == "__main__":
-#Simulando o uso do sistema
-    cadastrar_cliente("João Silva", 30, 1000.0)
-    cadastrar_cliente("Maria Souza", 25, 500.0)
+int main(){ 
 
-#Operação perigosa que o sistema atual permite:
-    movimentar_conta(0, 1500.0, True) # Deixa o João com saldo de -500.0!
+// Simulando o uso do sistema
+
+    Banco rodarBanco;
+
+   rodarBanco.cadastrar_cliente("João Silva", 30, 1000.0);
+   rodarBanco.cadastrar_cliente("Maria Souza", 25, 500.0);
+
+// A Operação perigosa.
+    rodarBanco.movimentar_conta(0, 1500.0, true); // No sistema atual ela vai ser previnida.
     
-    exibir_relatorio()
+    rodarBanco.exibir_relatorio();
+
+    return 0;
+
+}
