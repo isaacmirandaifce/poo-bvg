@@ -1,46 +1,52 @@
 #include <iostream>
 #include <string>
 
-// criando a classe cliente, onde as informações dos clientes ficaram privadas
+// criando a classe cliente.
 
 class clientes
 {
 private:
+
+    //Definimos os dados do cliente de forma privada.
     std::string nome_cliente;
     int idade_cliente;
     double saldo_cliente;
     bool status_ativo;
 
 public:
-    // Definido os "set" para podemos alterar os dados privados fora da classe
+    
+    // Definido os setters para podemos alterar os dados privados fora da classe.
 
     void setNome(std::string nome) { nome_cliente = nome; };
     void setIdade(int idade) { idade_cliente = idade; };
     void setSaldo(double saldo) { saldo_cliente = saldo; };
     void setStatus(bool status) { status_ativo = status; };
 
-    // Definido os "get" para podermos acessar informações privadas fora da classe
+    // Definido os getters para podermos acessar informações privadas fora da classe.
     std::string getNome() { return nome_cliente; };
     int getIdade() { return idade_cliente; };
     double getSaldo() { return saldo_cliente; };
     bool getStatus() { return status_ativo; };
 
-    // Definido a operação de saque da conta
+    // Definido a operação de saque e deposito das contas.
 
     double saqueConta(double valor) { return saldo_cliente -= valor; };
     double depositoConta(double valor) { return saldo_cliente += valor; };
 };
 
-// Criando a classe Banco
+// Criando a classe Banco.
 
 class Banco
 {
 private:
+
+    // Definimos os dados do Banco de forma privada.
+
     clientes lista_Clientes[100];
     int total_clientes = 0;
 
 public:
-    // A função de cadastrar clientes
+    // A função de cadastrar clientes.
 
     void cadastrar_cliente(std::string nome, int idade, double saldo_inicial)
     {
@@ -53,13 +59,15 @@ public:
             lista_Clientes[total_clientes].setStatus(true);
             total_clientes++;
 
-            std::cout << "Sucesso: Cliente " << nome << " cadastrado com ID " << total_clientes - 1 << std::endl;
+            std::cout << std::endl << "Sucesso: Cliente " << nome << " cadastrado com ID " << total_clientes - 1 << std::endl;
         }
         else
         {
-            std::cout << "Erro Crítico: Limite de memória atingido." << std::endl;
+            std::cout << std::endl << "Erro Crítico: Limite de memória atingido." << std::endl;
         }
     }
+
+    // A função de movimentar o saldo das contas. No código legacy, tem um BUG envolvendo o saque, ele foi corrigido nesse codigo.
 
     void movimentar_conta(int id_cliente, double valor, bool is_saque)
     {
@@ -81,28 +89,29 @@ public:
 
                         lista_Clientes[id_cliente].saqueConta(valor);
 
-                        std::cout << "Saque de R$" << valor << " realizado. Novo saldo: R$" << lista_Clientes[id_cliente].getSaldo() << '\n';
+                        std::cout << std::endl << "Saque de R$" << valor << " realizado. Novo saldo: R$" << lista_Clientes[id_cliente].getSaldo() << std::endl;
                     }
                     else
                     {
-                        std::cout << "Saldo insuficiente para saque." << std::endl;
+                        //Caso o valor for negativo ira aparecer essa mensagem para o cliente.
+                        std::cout << std::endl << "Saldo insuficiente para saque." << std::endl;
                     };
                 }
                 else
                 {
                     lista_Clientes[id_cliente].depositoConta(valor);
 
-                    std::cout << "Saque de R$" << valor << " realizado. Novo saldo: R$" << lista_Clientes[id_cliente].getSaldo() << '\n';
+                    std::cout << std::endl << "Saque de R$" << valor << " realizado. Novo saldo: R$" << lista_Clientes[id_cliente].getSaldo() << std::endl;
                 }
             }
             else
             {
-                std::cout << "Erro: Conta inativa.";
+                std::cout << std::endl << "Erro: Conta inativa.";
             }
         }
         else
         {
-            std::cout << "Erro: Cliente não encontrado no sistema.";
+            std::cout << std::endl << "Erro: Cliente não encontrado no sistema.";
         }
     }
 
