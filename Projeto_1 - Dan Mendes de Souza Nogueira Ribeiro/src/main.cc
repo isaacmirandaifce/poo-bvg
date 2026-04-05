@@ -1,8 +1,36 @@
-nomes_clientes = []
-idades_clientes = []
-saldos_clientes = []
-status_ativo = []
-total_clientes = 0
+#include <iostream>
+#include <string>
+
+//criando a classe cliente, onde as informações dos clientes ficaram privadas
+
+class clientes {
+private:
+    std::string nome_cliente;
+    int idade_cliente;
+    double saldo_cliente;
+    bool status_ativo;
+
+
+    public:
+
+    //Definido os "set" para podemos alterar os dados privados fora da classe
+
+    void setNome(std::string nome) {nome_cliente = nome;};
+    void setIdade(int idade) {idade_cliente = idade;};
+    void setSaldo(double saldo) {saldo_cliente = saldo;};
+    void satStatus(bool status) {status_ativo = status;};
+
+    //Definido os "get" para podermos acessar informações privadas fora da classe
+    std::string getNome() {return nome_cliente;};
+    int getIdade() {return idade_cliente;};
+    double getSaldo() {return saldo_cliente;};
+    bool getStatus() {return status_ativo;};
+
+    //Definido a operação de saque da conta
+    
+    double moverSaldo(double valor) {return saldo_cliente -= valor;};
+    
+}
 
 def cadastrar_cliente(nome, idade, saldo_inicial):
     global total_clientes
