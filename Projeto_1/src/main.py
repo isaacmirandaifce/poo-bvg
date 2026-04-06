@@ -19,7 +19,7 @@ if __name__ == "__main__":
     nome = input("Diga seu nome: ")
     idade = int(input("Diga sua idade: "))
     saldo_ini = float(input("Diga seu saldo: "))
-
+     
     cliente2 = Cliente(nome, idade, saldo_ini)
 
     print("\n--- MOVIMENTAÇÕES ---")
