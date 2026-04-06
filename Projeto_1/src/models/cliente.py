@@ -18,6 +18,9 @@ class  Cliente:
     def ativo(self):
         return self.__ativo
 
+def sacar(self, valor: float):
+    self.__saldo -= valor
+    print(f"Saque realizado. Novo saldo: R${self.__saldo:.2f}")
 
 
             
