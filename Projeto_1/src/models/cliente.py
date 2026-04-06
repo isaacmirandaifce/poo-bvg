@@ -36,5 +36,8 @@ def depositar(self, valor: float):
         self.__saldo -= valor
         print(f"Saque de R${valor:.2f} realizado. Novo saldo: R${self.__saldo:.2f}")
 
+    def exibir_dados(self):
+        print(f"Nome: {self.__nome} | Idade: {self.__idade} | Saldo: R${self.__saldo:.2f} | Ativo: {self.__ativo}")
+
 
             
