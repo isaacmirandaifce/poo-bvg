@@ -19,8 +19,15 @@ class  Cliente:
         return self.__ativo
 
 def sacar(self, valor: float):
-    self.__saldo -= valor
-    print(f"Saque realizado. Novo saldo: R${self.__saldo:.2f}")
+    if valor <= 0:
+        print("Erro: valor inválido.")
+        return
+
+    if valor > self.__saldo:
+        print("Erro: saldo insuficiente. Operação cancelada.")
+    else:
+        self.__saldo -= valor
+        print(f"Saque de R${valor:.2f} realizado. Novo saldo: R${self.__saldo:.2f}")
 
 
             
