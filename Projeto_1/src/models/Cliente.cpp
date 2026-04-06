@@ -26,8 +26,13 @@ void Cliente::saque(double valor){
 
 // Depósito: aumenta o saldo
 void Cliente::deposito(double valor){
+    if(valor < 0){
+        std::cout << "Valor invalido\n";
+    }
+    else{
     saldo +=valor;
     std::cout << "Deposito efetuado com sucesso\n";
+    }
 }
 
 // Retorna nome
