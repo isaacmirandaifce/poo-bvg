@@ -30,4 +30,4 @@ if __name__ == "__main__":
     cliente2.depositar(valor_deposito)
     
     cliente1.exibir_relatorio()
-    cliente2.exibir_relatorio()
+    cliente2.exibir_relatorio()  
