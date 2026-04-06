@@ -25,9 +25,9 @@ if __name__ == "__main__":
     print("\n--- MOVIMENTAÇÕES ---")
     valor_saque = float(input(f"({cliente1.nome}) Digite a quantidade do saque: "))
     cliente1.sacar(valor_saque)
-    
+
     valor_deposito = float(input(f"({cliente2.nome}) Digite a quantidade do deposito: "))
     cliente2.depositar(valor_deposito)
-    
+
     cliente1.exibir_relatorio()
-    cliente2.exibir_relatorio()  
+    cliente2.exibir_relatorio()
