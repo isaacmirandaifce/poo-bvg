@@ -18,7 +18,14 @@ class  Cliente:
     def ativo(self):
         return self.__ativo
 
-def sacar(self, valor: float):
+def depositar(self, valor: float):
+    if valor > 0:
+        self.__saldo += valor
+        print(f"Depósito de R${valor:.2f} realizado. Novo saldo: R${self.__saldo:.2f}")
+    else:
+        print("Erro: valor inválido para depósito.")
+
+    def sacar(self, valor: float):
     if valor <= 0:
         print("Erro: valor inválido.")
         return
