@@ -1,3 +1,7 @@
+"""
+    Classe "Cliente" possui atributos como o nome e o cpf do cliente.
+    o cpf como pedido é um atributo privado.
+"""
 class Cliente:
     def __init__ (self, nome, cpf):
         self.nome = nome
