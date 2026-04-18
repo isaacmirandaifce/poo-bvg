@@ -1,7 +1,8 @@
+#pragma once
 #include <iostream>
 #include <string>
-#include "cliente.cc"
-#include "seguros.cc"
+#include "cliente.hpp"
+#include "seguros.hpp"
 
 void adicionarInformaçõesClientes(std::string nome, std::string cpf, cliente clienteAdici)
 {
