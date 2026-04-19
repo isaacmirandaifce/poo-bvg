@@ -15,7 +15,9 @@ class seguro
 
     void setBase(double baseAdicionar) {base = baseAdicionar;}
 
-    double refatorarBase(double valor) {return base *= valor;}
+    void refatorarBase(double valor) {base *= valor;}
+
+    virtual void calcular_premio() = 0;
 };
 
 class seguroAuto : public seguro
@@ -27,15 +29,7 @@ class seguroAuto : public seguro
 
     public:
         
-    double calcular_premio(){
-
-        if (ano < 2010)
-        {
-            return refatorarBase(1.2);
-        };
-
-        return refatorarBase(1.5);
-    };
+    void calcular_premio(){ano < 2010 ? refatorarBase(1.2) : refatorarBase(1.5);};
 
     int getAno() { return ano < 0 ? -1 : ano;}
 
@@ -55,16 +49,7 @@ private:
     std::string causa = "";
 
 public:
-    double calcular_premio()
-    {
-
-        if (idade > 60)
-        {
-            return refatorarBase(2.0);
-        };
-
-        return refatorarBase(1.1);
-    }
+    void calcular_premio(){idade > 60 ? refatorarBase(2.0) : refatorarBase(1.1);}
 
     int getIdade() {return idade < 0 ? -1 : idade;}
 
@@ -87,16 +72,7 @@ class seguroResidencial : public seguro
 
     public:
         
-        double calcular_premio()
-        {
-
-            if (tipoImovel > "CASA")
-            {
-                return refatorarBase(1.15) ;
-            };
-
-            return refatorarBase(1.05);
-        };
+        void calcular_premio() {tipoImovel == "CASA" ? refatorarBase(1.15) : refatorarBase(1.05);};
 
         std::string getTipoImovel(){return tipoImovel;}
 
