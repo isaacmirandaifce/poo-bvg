@@ -1,0 +1,3 @@
+# Explicação de como o polimorfismo resolveu o código legado
+
+A implementação do polimorfismo eliminou o uso excessivo das  estruturas condicionais (if/else) do código legado, otimizando o fluxo de execução ao reduzir verificações desnecessárias. Tammém faz essa melhora através da separação de responsabilidades, cada seguro passou a gerir suas próprias variáveis e regras de negócio específicas. Além disso, o cálculo dos prêmios foi desacoplado da classe principal, permitindo que a main opere sem conhecer detalhes das instâncias. Por fim, foi facilitado a expansão do sistema para novos tipos de seguros, como Vida e Residencial.
