@@ -7,13 +7,38 @@
 int main() {
 
     cliente usuario;
-    seguro seguros;
+    seguroAuto segAuto;
+    seguroVida segVida;
+    seguroResidencial segRes;
 
-    adicionarInformaçõesClientes("teste", "teste", usuario);
+    adicionarInformaçõesClientes("Fulano", "000.000.000-00", usuario);
 
-    adicionarInformaçõesSegurosGeral(-1, seguros);
+    adicionarInformaçõesSegurosAuto(2013, "NDR-3015", 10, segAuto);
 
-    std::cout << usuario.getNome();
+    adicionarInformaçõesSegurosVida(61, "sofre de 'A'", 10, segVida);
+
+    adicionarInformaçõesSegurosResidencial("CASA", "RUA X NUMERO ZZZZ, NO BAIRRO Y", 10, segRes);
+
+    mostrarcliente(usuario);
+
+    mostrarSeguroAuto(segAuto);
+
+    mostrarSeguroVida(segVida);
+
+    mostrarSeguroResi(segRes);
+
+    processarSeguroGenerico(&segAuto);
+
+    processarSeguroGenerico(&segVida);
+
+    processarSeguroGenerico(&segRes);
+
+    double baseTotal = segAuto.getBase() + segVida.getBase() + segRes.getBase();
+
+    std::cout << std::endl << "Base do Automovel: " << segAuto.getBase() << std::endl;
+    std::cout << std::endl << "Base de Vida: " << segVida.getBase() << std::endl;
+    std::cout << std::endl << "Base Residencial: " << segRes.getBase() << std::endl;
+    std::cout << std::endl << "base Total: " << baseTotal << std::endl;
 
     return 0;
 }
