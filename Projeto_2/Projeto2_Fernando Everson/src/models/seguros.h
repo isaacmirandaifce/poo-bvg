@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 
 class Seguro {
     protected:
@@ -47,7 +48,7 @@ class Seguro_vida : public Seguro {
         }
         }
     };
-    
+
 class Seguro_imovel:
 public Seguro {
     private:
@@ -60,8 +61,12 @@ public Seguro {
             if (imovel == "casa" ) {return valor_base * 1.15;
         }
 
-        else{
+        else if(imovel == "apartamento"){
             return valor_base * 1.05;
+        }
+        else{
+            std::cout << "Tipo de imovel invalido. Aplicando valor base." << std::endl;
+        return valor_base;
         }
         }
 };
