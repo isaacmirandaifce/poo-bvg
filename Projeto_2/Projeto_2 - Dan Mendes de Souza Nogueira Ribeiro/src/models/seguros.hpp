@@ -7,27 +7,24 @@ class seguro
 {
     private:
 
-    double base;
+    double base = -1;
 
     public:
         
-    double getBase() {return base;}
+    double getBase() {return base < 0 ? -1 : base;}
+
     void setBase(double baseAdicionar) {base = baseAdicionar;}
 
-    double refatorarBase(double valor) {
-
-        return base *= valor;
-    }
+    double refatorarBase(double valor) {return base *= valor;}
 };
 
 class seguroAuto : public seguro
 {
     private:
 
-    int ano;
-    std::string placaCarro;
-    double baseTotal;
-    
+    int ano = -1;
+    std::string placaCarro = "";
+
     public:
         
     double calcular_premio(){
@@ -40,7 +37,7 @@ class seguroAuto : public seguro
         return refatorarBase(1.5);
     };
 
-    int getAno() {return ano;}
+    int getAno() { return ano < 0 ? -1 : ano;}
 
     std::string getPlacaCarro(){return placaCarro;}
 
@@ -54,9 +51,8 @@ class seguroVida : public seguro
 
 private:
     
-    int idade;
-    std::string causa;
-    double baseTotal;
+    int idade = -1;
+    std::string causa = "";
 
 public:
     double calcular_premio()
@@ -70,9 +66,10 @@ public:
         return refatorarBase(1.1);
     }
 
-    int getIdade() { return idade; }
+    int getIdade() {return idade < 0 ? -1 : idade;}
 
-    std::string getCausa() { return causa; }
+    std::string getCausa() {return causa;}
+        
 
     void setIdade(int idadeAdicionar) { idade = idadeAdicionar; };
 
@@ -84,7 +81,9 @@ class seguroResidencial : public seguro
 
     private:
         std::string tipoImovel;
+
         std::string endereco;
+    
 
     public:
         
@@ -99,9 +98,9 @@ class seguroResidencial : public seguro
             return refatorarBase(1.05);
         };
 
-        std::string getTipoImovel() { return tipoImovel; }
+        std::string getTipoImovel(){return tipoImovel;}
 
-        std::string getEndereco() { return endereco; }
+        std::string getEndereco() {return endereco;}
 
         void setTipoImovel(std::string tipoImovelAdicionar) { tipoImovel = tipoImovelAdicionar; };
 
