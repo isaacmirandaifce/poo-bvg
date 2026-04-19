@@ -46,4 +46,22 @@ class Seguro_vida : public Seguro {
             return valor_base * 1.1;
         }
         }
+    };
+    
+class Seguro_imovel:
+public Seguro {
+    private:
+     std::string imovel;
+
+    public:
+        Seguro_imovel(std::string t, double v, std::string im) : Seguro(t, v), imovel(im){}
+
+        double calcular_premio() override {
+            if (imovel == "casa" ) {return valor_base * 1.15;
+        }
+
+        else{
+            return valor_base * 1.05;
+        }
+        }
 };
