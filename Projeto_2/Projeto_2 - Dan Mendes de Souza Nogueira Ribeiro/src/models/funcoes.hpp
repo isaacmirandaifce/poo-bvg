@@ -57,12 +57,13 @@ void setarBaseGeral(double valor, seguroAuto &Auto, seguroResidencial &Res, segu
     Res.setBase(valor);
 }
 
-    void processarSeguroGenerico(seguro *seg)
+    
+void processarSeguroGenerico(seguro *seg)
 {
 
-    if (seg->getBase() < 0)
+    if (!seg->testarBaseValida())
     {
-        std::cout << "Erro: Base invalida!" << std::endl;
+        std::cout << "Base invalida!" << std::endl;
         return;
     }
 

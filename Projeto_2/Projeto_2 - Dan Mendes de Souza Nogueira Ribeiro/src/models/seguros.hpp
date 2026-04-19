@@ -17,6 +17,8 @@ class seguro
 
     void refatorarBase(double valor) {base *= valor;}
 
+    bool testarBaseValida(){return base >= 0;}
+
     virtual void calcular_premio() = 0;
 };
 
