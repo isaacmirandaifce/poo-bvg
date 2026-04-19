@@ -9,6 +9,7 @@ int main(){
     std::vector<Seguro*> listaSeguros;
     
     listaSeguros.push_back(new Seguro_auto(c1.getCliente(), 1000.0, 2005));
+    listaSeguros.push_back(new Seguro_vida(c1.getCliente(), 1000.0, 61));
 
     for(Seguro* s : listaSeguros){
         std::cout << "O titular do seguro é: " <<c1.getCliente() << " O valor do premio é: R$ " << s->calcular_premio() <<std::endl;

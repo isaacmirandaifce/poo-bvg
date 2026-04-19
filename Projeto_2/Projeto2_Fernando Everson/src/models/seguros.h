@@ -29,3 +29,21 @@ class Seguro_auto : public Seguro {
         }
         }
 };
+
+
+class Seguro_vida : public Seguro {
+    private:
+    int idade;
+
+    public:
+        Seguro_vida(std::string t, double v, int i) : Seguro(t, v), idade(i){}
+
+        double calcular_premio() override {
+            if (idade>60) {return valor_base *2.0;
+        }
+
+        else{
+            return valor_base * 1.1;
+        }
+        }
+};
