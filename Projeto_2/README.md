@@ -1,107 +1,101 @@
 # Projeto Avaliativo 2 - Paradigma de Orientação a Objetos e UML 
 
-## Exercício 1: Modelagem de Domínio - Seguro de Carro 
-*Descrição do Contexto*
+---
 
-Uma empresa de seguros deseja criar um sistema para gerenciar seguros de carros. Cada seguro envolve informações sobre o cliente e o carro, além de dados específicos do seguro. Com base nas informações abaixo, modele as classes necessárias para esse sistema.
+# Ticket #508: Subsistema de Cálculo de Prêmios e Sinistros
 
-**Classes e Atributos**
+**De:** Tech Lead (Professor)
+**Para:** Desenvolvedor Backend (Aluno)  
+**Projeto:** InsureTech Pro  
+**Status:** `To Do` | **Prioridade:** `Crítica`
 
-- `Carro`: ano, marca, modelo, cor, placa
-- `Modelo` (atributo em Carro): nome
-- `Seguro`: carro, cliente, valor, vigência
-- `Cliente`: nome, cpf
-  
-**Tarefas**
-- a) Crie um diagrama de classes UML para representar as classes, incluindo seus atributos.
-- b) Indique as relações entre as classes (ex: associação ou agregação).
-- c) Identifique e justifique os tipos de relacionamento entre Seguro e Carro e entre Seguro e Cliente.
+## Contexto
+Nossa equipe de negócios fechou novos contratos para seguros de **Vida** e **Residencial**, além do de **Automóveis** que já possuíamos. O problema é que o código atual que calcula o valor do seguro (prêmio) é um método gigantesco cheio de `if/else`, que verifica o tipo de seguro via Strings. Isso viola o princípio de "Aberto/Fechado" e está impossível de testar.
 
-## Exercício 2: Detalhamento de Atributos e Métodos
-*Descrição do Contexto*
+Além disso, precisamos documentar a arquitetura antes de codificar, para garantir que o **Gap Semântico** entre o negócio e o código seja reduzido.
 
-Para ampliar o modelo, adicione métodos e funções nas classes para fornecer operações básicas de um sistema de seguros.
+###  O Código Legado:
 
-Classe `Carro`
+```python
+# Script legado que centraliza toda a lógica (Antipadrão)
+def calcular_valor_seguro(tipo, base, detalhe):
+    if tipo == "CARRO":
+        # Se for carro, o detalhe é o ano
+        if detalhe < 2010:
+            return base * 1.2
+        return base * 1.05
+    elif tipo == "VIDA":
+        # Se for vida, o detalhe é a idade
+        if detalhe > 60:
+            return base * 2.0
+        return base * 1.1
+    elif tipo == "RESIDENCIAL":
+        # Se for residencial, o detalhe é se é apartamento ou casa
+        if detalhe == "CASA":
+            return base * 1.15
+        return base * 1.05
+    else:
+        return base
+```
 
-Atributos: ano, marca, modelo, cor, placa.
+---
 
-Métodos: exibir_detalhes() (exibe as informações do carro), atualizar_cor(nova_cor) (modifica a cor do carro).
+## Critérios de Aceitação
 
-Classe `Cliente`
+### Fase 1: Modelagem Técnica (UML)
+Antes de codificar, você deve entregar um **Diagrama de Classes UML** (pode ser feito em ferramentas como LucidChart, Draw.io ou Mermaid).
+1.  **Herança:** Crie uma classe base abstrata `Seguro` e as subclasses `SeguroAuto`, `SeguroVida` e `SeguroResidencial`.
+2.  **Atributos:** Identifique os atributos comuns (ex: `titular`, `valor_base`) e os específicos de cada subclasse.
+3.  **Relacionamento:** Represente a associação entre `Cliente` e seus `Seguros`.
 
-Atributos: nome, cpf.
+### Fase 2: Implementação
+1.  **Polimorfismo:** Implemente o método `calcular_premio()` em cada classe. O sistema principal não deve saber *qual* seguro está calculando; ele apenas chama o método e o objeto responde com o valor correto.
+2.  **Abstração:** A classe pai `Seguro` não deve permitir instâncias diretas (use o módulo `abc` do Python se souber, ou apenas defina o conceito).
+3.  **Encapsulamento:** Mantenha os dados sensíveis (CPF do cliente, placa do carro) protegidos, conforme as boas práticas do repositório.
 
-Métodos: exibir_informacoes() (exibe o nome e o CPF do cliente).
+---
 
-Classe `Seguro`
+## Estrutura de Arquivos Exigida
 
-Atributos: carro, cliente, valor, vigência.
+Conforme o padrão do repositório `isaacmirandaifce/poo-bvg`, organize assim:
 
-Métodos: calcular_valor(base_valor, taxa) (calcula o valor do seguro com base em um valor base e uma taxa), verificar_vigencia() (retorna se o seguro ainda está válido).
+```text
+Projeto_2/
+│
+├── docs/
+│   └── diagrama_classes.png   # O diagrama UML exportado
+│
+├── src/
+│   ├── models/
+│   │   ├── cliente.py         # Entidade Cliente
+│   │   └── seguros.py         # Hierarquia de Herança (Seguro, SeguroAuto, etc)
+│   │
+│   └── main.py                # Instancia diferentes seguros e mostra o polimorfismo
+└── README.md                  # Explicação de como o polimorfismo resolveu o código legado
+```
 
-**Tarefas**
-- a) Escreva um diagrama de classes UML que inclua os métodos listados.
-- b) Implemente uma estrutura básica de código para cada classe usando os atributos e métodos descritos.
+---
 
-## Exercício 3: Modelagem de Relacionamentos e Associações
-*Descrição do Contexto*
+## Fluxo de Entrega (Git Workflow)
 
-O sistema de seguros agora inclui apólices de seguros para múltiplos carros de um cliente e múltiplos seguros de diferentes clientes. Cada cliente pode ter mais de um carro segurado.
+1. No seu fork local, crie a pasta `Projeto_2`.
+2. Implemente a solução garantindo que o `main.py` crie uma lista de seguros variados e percorra essa lista chamando `.calcular_premio()` (demonstrando o Polimorfismo).
+3. **Docstrings:** Use o padrão de documentação exigido para explicar cada método.
+4. Abra a **Pull Request (PR)** com o título: `Projeto_2 - [Seu Nome Completo]`.
 
-**Tarefas**
-- a) Atualize o diagrama de classes UML para mostrar que a classe Seguro pode ter uma associação com múltiplos objetos da classe Carro.
-- b) Justifique o tipo de relacionamento (agregação ou composição) entre Seguro e Carro.
-- c) Escreva uma breve explicação sobre como você representaria um cliente com múltiplos seguros em seu modelo.
+---
 
-## Exercício 4: Modelagem de Classes com Relações de Herança
-*Descrição do Contexto*
+## Rubrica de Avaliação
 
-A empresa deseja expandir o sistema de seguros para incluir outros tipos de seguros, como seguro de moto, com características específicas.
+| Critério | Descrição |
+| :--- | :--- |
+| **Diagrama UML** | O diagrama usa a simbologia correta para Herança (seta vazia) e Associação? Reflete o código? |
+| **Uso de Herança** | A classe base concentra o código comum e as filhas apenas as especializações? |
+| **Polimorfismo** | O cálculo do prêmio foi implementado de forma que o `main.py` não precise de `if/else` para saber o tipo de seguro? |
+| **Organização** | Seguiu a estrutura de pastas e as diretrizes do `CONTRIBUTING.md`? |
 
-Novas Classes
-
-`SeguroVeiculo`: uma classe base para todos os seguros de veículos.
-
-`SeguroCarro`: herda de SeguroVeiculo e possui atributos específicos de seguro de carro.
-
-`SeguroMoto`: herda de SeguroVeiculo e possui atributos específicos de seguro de moto.
-
-**Tarefas**
-
-- a) Crie um diagrama de classes UML que represente as relações de herança entre SeguroVeiculo, SeguroCarro e SeguroMoto.
-- b) Explique o benefício de usar herança para representar esses diferentes tipos de seguro.
-- c) Dê um exemplo de como um método calcular_valor() poderia ser implementado na classe SeguroVeiculo e sobrescrito nas classes SeguroCarro e SeguroMoto para incluir cálculos específicos.
-
-## Exercício 5: Criação de Diagramas UML de Objetos
-*Descrição do Contexto*
-
-Com o modelo finalizado, deseja-se criar uma representação UML de objetos específicos para ilustrar o funcionamento do sistema com dados reais.
-
-Exemplo de Dados:
-
-`Cliente`: João Silva, CPF 123.456.789-00
-
-`Carro`: Marca Toyota, Modelo Corolla, Ano 2020, Cor Branco, Placa XYZ-1234
-
-`Seguro`: Valor de R$ 1.500,00, Vigência 01/01/2024 a 01/01/2025
-
-**Tarefas**
-
-- a) Desenhe um diagrama de objetos UML que represente a relação entre João Silva, seu Carro, e o Seguro correspondente.
-- b) Identifique no diagrama os valores de atributos para cada objeto.
-- c) Explique como este diagrama ajuda a visualizar a estrutura do sistema para um cliente específico.
-
-## Exercício 6: Exercício de Abstração e Encapsulamento
-*Descrição do Contexto*
-
-A empresa de seguros quer garantir que as informações dos clientes e veículos sejam seguras e somente acessíveis por métodos específicos, usando o conceito de encapsulamento.
-
-**Tarefas**
-
-- a) Em uma implementação fictícia das classes Cliente e Carro, faça uso de encapsulamento, ocultando atributos como cpf e placa e expondo apenas métodos públicos para acessá-los.
-- b) Escreva uma função em pseudocódigo para a classe Seguro que verifique a validade da apólice (por exemplo, se a vigência ainda é válida).
-- c) Explique a importância de encapsular informações sensíveis, como CPF e placa de veículos, em sistemas de seguros.
+---
+> O polimorfismo é uma ferramenta que permite ao sistema crescer. Amanhã, se criarmos o "Seguro de Viagem", basta adicionar uma nova classe sem mexer no código que já funciona!
 
 ## Entrega
 
