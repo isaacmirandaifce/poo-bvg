@@ -4,6 +4,8 @@
 #include "cliente.hpp"
 #include "seguros.hpp"
 
+//funções de adição as classes
+
 void adicionarInformaçõesClientes(std::string nome, std::string cpf, cliente& clienteAdici)
 {
      
@@ -15,7 +17,7 @@ void adicionarInformaçõesSegurosAuto(int ano, std::string placa, double base, 
 {
     if (ano < 0 || base < 0)
     {
-        std::cout << "Erro! Valor Inadequado em ano" << '\n';
+        std::cout << "Erro: Valor inválido para o campo 'Ano'." << '\n';
         return;
     }
     else
@@ -31,7 +33,7 @@ void adicionarInformaçõesSegurosVida(int idade, std::string causa, double base
 {
     if (idade < 0 || base < 0)
     {
-        std::cout << "Erro! Valor Inadequado em idade" << '\n';
+        std::cout << "Erro: Valor inválido para o campo 'idade'." << '\n';
         return;
     }
     else
@@ -50,33 +52,26 @@ void adicionarInformaçõesSegurosResidencial(std::string tipoImovel, std::strin
     seguroSetar.setBase(base);
 };
 
-void setarBaseGeral(double valor, seguroAuto &Auto, seguroResidencial &Res, seguroVida &Vida) {
-
-    Auto.setBase(valor);
-    Vida.setBase(valor);
-    Res.setBase(valor);
-}
-
-    
+// Implementação da função do cálculo de polimorfismo, tirando a necessidade da main saber qual é o tipo de seguro.
 void processarSeguroGenerico(seguro *seg)
 {
 
     if (!seg->testarBaseValida())
     {
-        std::cout << "Base invalida!" << std::endl;
+        std::cout << "Erro: Base invalida!" << std::endl;
         return;
     }
 
     seg->calcular_premio();
 }
 
-
+// Funções de imprimir dados ao sistema
 void mostrarcliente(cliente &clienteAdici)
 {
 
     if (clienteAdici.getNome() == "" && clienteAdici.getCPF() == "")
     {
-        std::cout << std::endl << "O usuário é ainda não foi definido" << std::endl;
+        std::cout << std::endl << "O usuário ainda não foi definido." << std::endl;
 
     } else
     {
@@ -92,7 +87,7 @@ void mostrarSeguroAuto(seguroAuto &Mostra)
 
     if (Mostra.getAno() < 0 && Mostra.getPlacaCarro() == "")
     {
-        std::cout << std::endl << "O seguro do veículo ainda não foi definido" << std::endl;
+        std::cout << std::endl << "O veículo ainda não foi definido ao seguro." << std::endl;
     }
     else
     {
@@ -110,8 +105,8 @@ void mostrarSeguroVida(seguroVida &Mostra)
     }
     else
     {
-        std::cout << std::endl << "A idade do assegurado é " << Mostra.getIdade() << std::endl;
-        std::cout << std::endl << "A causa do assegurado é " << Mostra.getCausa() << std::endl;
+        std::cout << std::endl << "A idade do segurado é " << Mostra.getIdade() << std::endl;
+        std::cout << std::endl << "A causa do segurado é " << Mostra.getCausa() << std::endl;
     }
 }
 
@@ -120,11 +115,11 @@ void mostrarSeguroResi(seguroResidencial &Mostra)
 
     if (Mostra.getEndereco() == "" && Mostra.getTipoImovel() == "")
     {
-        std::cout << std::endl << "O seguro de residencia ainda não foi definido" << std::endl;
+        std::cout << std::endl << "A residência ainda não foi definida ao seguro." << std::endl;
     }
     else
     {
-        std::cout << std::endl << "O endereço é " << Mostra.getEndereco() << std::endl;
-        std::cout << std::endl << "O tipo de imovel é " << Mostra.getTipoImovel() << std::endl;
+        std::cout << std::endl << "O endereço do imovel segurado é " << Mostra.getEndereco() << std::endl;
+        std::cout << std::endl << "O tipo de imovel segurado é " << Mostra.getTipoImovel() << std::endl;
     }
 }
