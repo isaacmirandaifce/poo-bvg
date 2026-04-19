@@ -1,0 +1,1 @@
+O polimorfismo funciona de forma que o objeto é tratado como se fosse generico, mas permite que seja tratado de forma mais expecifica, permitindo que o metodo "calcular_premio()" seja utilizado por todas as classes mas se adapte aos "detalhes" de cada uma. Eliminando de vez a necessidade de uma estrutura de decisão gigantesca  
