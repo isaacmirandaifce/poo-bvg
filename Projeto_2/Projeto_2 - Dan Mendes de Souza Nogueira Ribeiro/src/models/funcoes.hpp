@@ -52,7 +52,10 @@ void adicionarInformaçõesSegurosResidencial(std::string tipoImovel, std::strin
     seguroSetar.setBase(base);
 };
 
-// Implementação da função do cálculo de polimorfismo, tirando a necessidade da main saber qual é o tipo de seguro.
+/*
+Implementação da função atavés do polimorfismo que aponta para o cálculo o seguro, tirando a necessidade da main saber qual é o tipo de seguro.
+Isso é feito a partir de um ponteiro que aponta para o calculo do seguro adequado.
+*/
 void processarSeguroGenerico(seguro *seg)
 {
 
