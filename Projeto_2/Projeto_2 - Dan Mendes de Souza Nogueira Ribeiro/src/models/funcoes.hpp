@@ -11,22 +11,9 @@ void adicionarInformaçõesClientes(std::string nome, std::string cpf, cliente& 
     clienteAdici.setCPF(cpf);
 };
 
-void adicionarInformaçõesSegurosGeral(double base, seguro& seguroSetar)
+void adicionarInformaçõesSegurosAuto(int ano, std::string placa, double base, seguroAuto &seguroSetar)
 {
-    if (base < 0)
-    {
-        std::cout << "Erro! Valor Inadequado" << '\n';
-        return;
-    } else 
-    {
-        seguroSetar.setBase(base);
-        return;
-    }
-};
-
-void adicionarInformaçõesSegurosAuto(int ano, std::string placa, seguroAuto& seguroSetar)
-{
-    if (ano < 0)
+    if (ano < 0 || base < 0)
     {
         std::cout << "Erro! Valor Inadequado em ano" << '\n';
         return;
@@ -35,13 +22,14 @@ void adicionarInformaçõesSegurosAuto(int ano, std::string placa, seguroAuto& s
     {
         seguroSetar.setAno(ano);
         seguroSetar.setPlacaCarro(placa);
+        seguroSetar.setBase(base);
         return;
     }
 };
 
-void adicionarInformaçõesSegurosVida(int idade, std::string causa, seguroVida& seguroSetar)
+void adicionarInformaçõesSegurosVida(int idade, std::string causa, double base, seguroVida &seguroSetar)
 {
-    if (idade < 0)
+    if (idade < 0 || base < 0)
     {
         std::cout << "Erro! Valor Inadequado em idade" << '\n';
         return;
@@ -50,15 +38,37 @@ void adicionarInformaçõesSegurosVida(int idade, std::string causa, seguroVida&
     {
         seguroSetar.setIdade(idade);
         seguroSetar.setCausa(causa);
+        seguroSetar.setBase(base);
         return;
     }
 };
 
-void adicionarInformaçõesSegurosResidencial(std::string tipoImovel, std::string endereco, seguroResidencial& seguroSetar)
+void adicionarInformaçõesSegurosResidencial(std::string tipoImovel, std::string endereco, double base, seguroResidencial &seguroSetar)
 {
     seguroSetar.setTipoImovel(tipoImovel);
     seguroSetar.setEndereco(endereco);
+    seguroSetar.setBase(base);
 };
+
+void setarBaseGeral(double valor, seguroAuto &Auto, seguroResidencial &Res, seguroVida &Vida) {
+
+    Auto.setBase(valor);
+    Vida.setBase(valor);
+    Res.setBase(valor);
+}
+
+    void processarSeguroGenerico(seguro *seg)
+{
+
+    if (seg->getBase() < 0)
+    {
+        std::cout << "Erro: Base invalida!" << std::endl;
+        return;
+    }
+
+    seg->calcular_premio();
+}
+
 
 void mostrarcliente(cliente &clienteAdici)
 {
@@ -71,23 +81,9 @@ void mostrarcliente(cliente &clienteAdici)
     {
         std::cout << std::endl << "O usuário é " << clienteAdici.getNome() << std::endl;
 
-        std::cout << std::endl << "O usuário é " << clienteAdici.getCPF() << std::endl;
+        std::cout << std::endl << "O CPF do usuário " << clienteAdici.getNome() << " é " << clienteAdici.getCPF() << std::endl;
     }
     
-}
-
-
-void mostrarSeguroBase(seguro& Mostra)
-{
-
-    if (Mostra.getBase() < 0)
-    {
-        std::cout << std::endl << "O seguro ainda não foi definido" << std::endl;
-    }
-    else
-    {
-        std::cout << std::endl << "O valor do seguro é " << Mostra.getBase() << std::endl;
-    }
 }
 
 void mostrarSeguroAuto(seguroAuto &Mostra)
