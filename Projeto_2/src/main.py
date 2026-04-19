@@ -32,7 +32,7 @@ if __name__ == "__main__":
         cor_nova = input("Digite a nova cor do carro: ")
         carro.trocar_cor(cor_nova)
 
-    print("--- INFORMAÇÕES DO SISTEMA ---")
+    print("\n--- INFORMAÇÕES DO SISTEMA ---")
     seguro_joao.cliente.exibir_info()
     seguro_joao.carro.exibir_detalhes()
 
