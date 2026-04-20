@@ -1,0 +1,5 @@
+Projeto 02 consiste em um sistema de seguros desenvolvido em python utilizando os princípios da programação orientada a objetos. o sistema permite cadastrar clientes, veículos e seguros, calcular valores e verificar a vigência dos contratos.
+
+Foram criadas as classes cliente, carro e seguro. cliente possui nome e cpf; carro possui ano, marca, modelo, cor e placa; seguro possui cliente, lista de carros, valor e vigência. cada classe possui métodos para exibir informações e realizar operações básicas, como atualizar cor do carro, calcular o valor do seguro e verificar se o seguro ainda está válido.
+
+Há também a implementação de herança com as classes seguroveiculo, segurocarro e seguromoto, permitindo representar diferentes tipos de seguros de forma organizada. o relacionamento entre seguro e carro é de agregação, pois o seguro pode existir sem necessariamente depender do carro. um cliente pode ter múltiplos seguros associados.
