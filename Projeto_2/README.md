@@ -1,103 +1,152 @@
-# Projeto Avaliativo 2 - Paradigma de Orientação a Objetos e UML 
+Projeto 2 - Programação Orientada a Objetos (POO)
+
+📌 Objetivo
+
+Refatorar um sistema legado de cálculo de seguros utilizando conceitos de Programação Orientada a Objetos, eliminando estruturas condicionais complexas ("if/else") e melhorando a organização do código.
 
 ---
 
-# Ticket #508: Subsistema de Cálculo de Prêmios e Sinistros
+❌ Problema (código legado)
 
-**De:** Tech Lead (Professor)
-**Para:** Desenvolvedor Backend (Aluno)  
-**Projeto:** InsureTech Pro  
-**Status:** `To Do` | **Prioridade:** `Crítica`
+O sistema original utilizava diversas estruturas condicionais para calcular o valor do prêmio de diferentes tipos de seguro:
 
-## Contexto
-Nossa equipe de negócios fechou novos contratos para seguros de **Vida** e **Residencial**, além do de **Automóveis** que já possuíamos. O problema é que o código atual que calcula o valor do seguro (prêmio) é um método gigantesco cheio de `if/else`, que verifica o tipo de seguro via Strings. Isso viola o princípio de "Aberto/Fechado" e está impossível de testar.
+if tipo == "auto":
+    ...
+elif tipo == "vida":
+    ...
+elif tipo == "residencial":
+    ...
 
-Além disso, precisamos documentar a arquitetura antes de codificar, para garantir que o **Gap Semântico** entre o negócio e o código seja reduzido.
+Problemas dessa abordagem:
 
-###  O Código Legado:
-
-```python
-# Script legado que centraliza toda a lógica (Antipadrão)
-def calcular_valor_seguro(tipo, base, detalhe):
-    if tipo == "CARRO":
-        # Se for carro, o detalhe é o ano
-        if detalhe < 2010:
-            return base * 1.2
-        return base * 1.05
-    elif tipo == "VIDA":
-        # Se for vida, o detalhe é a idade
-        if detalhe > 60:
-            return base * 2.0
-        return base * 1.1
-    elif tipo == "RESIDENCIAL":
-        # Se for residencial, o detalhe é se é apartamento ou casa
-        if detalhe == "CASA":
-            return base * 1.15
-        return base * 1.05
-    else:
-        return base
-```
+- Código difícil de manter
+- Baixa escalabilidade
+- Alto acoplamento
+- Necessidade de modificar código existente para adicionar novos tipos de seguro
 
 ---
 
-## Critérios de Aceitação
+🚀 Solução aplicada
 
-### Fase 1: Modelagem Técnica (UML)
-Antes de codificar, você deve entregar um **Diagrama de Classes UML** (pode ser feito em ferramentas como LucidChart, Draw.io ou Mermaid).
-1.  **Herança:** Crie uma classe base abstrata `Seguro` e as subclasses `SeguroAuto`, `SeguroVida` e `SeguroResidencial`.
-2.  **Atributos:** Identifique os atributos comuns (ex: `titular`, `valor_base`) e os específicos de cada subclasse.
-3.  **Relacionamento:** Represente a associação entre `Cliente` e seus `Seguros`.
+O sistema foi refatorado utilizando os principais pilares da Programação Orientada a Objetos:
 
-### Fase 2: Implementação
-1.  **Polimorfismo:** Implemente o método `calcular_premio()` em cada classe. O sistema principal não deve saber *qual* seguro está calculando; ele apenas chama o método e o objeto responde com o valor correto.
-2.  **Abstração:** A classe pai `Seguro` não deve permitir instâncias diretas (use o módulo `abc` do Python se souber, ou apenas defina o conceito).
-3.  **Encapsulamento:** Mantenha os dados sensíveis (CPF do cliente, placa do carro) protegidos, conforme as boas práticas do repositório.
+✔ Herança
+
+Foi criada uma classe base "Seguro", da qual derivam:
+
+- "SeguroAuto"
+- "SeguroVida"
+- "SeguroResidencial"
 
 ---
 
-## Estrutura de Arquivos Exigida
+✔ Polimorfismo
 
-Conforme o padrão do repositório `isaacmirandaifce/poo-bvg`, organize assim:
+Cada classe implementa seu próprio comportamento para o método:
 
-```text
+calcular_premio()
+
+Isso permite que o código trate todos os seguros de forma genérica.
+
+---
+
+✔ Encapsulamento
+
+Os atributos foram protegidos utilizando convenções como:
+
+- "_atributo" (protegido)
+
+---
+
+🔥 Como o polimorfismo resolveu o problema
+
+Antes (código legado):
+
+if tipo == "auto":
+    calcular_auto()
+elif tipo == "vida":
+    calcular_vida()
+
+Agora (POO):
+
+for seguro in cliente.listar_seguros():
+    seguro.calcular_premio()
+
+✅ Vantagem:
+
+O código não precisa saber o tipo do seguro.
+
+Cada classe é responsável pela sua própria regra de cálculo.
+
+---
+
+📈 Benefícios da solução
+
+- Eliminação de "if/else" no código principal
+- Código mais limpo e organizado
+- Fácil manutenção
+- Alta escalabilidade
+- Facilidade para adicionar novos tipos de seguro
+
+---
+
+📊 Diagrama UML
+
+O diagrama de classes está disponível em:
+
+docs/diagrama_classes.png
+
+---
+
+📁 Estrutura do Projeto
+
 Projeto_2/
 │
 ├── docs/
-│   └── diagrama_classes.png   # O diagrama UML exportado
+│   └── diagrama_classes.png
 │
 ├── src/
 │   ├── models/
-│   │   ├── cliente.py         # Entidade Cliente
-│   │   └── seguros.py         # Hierarquia de Herança (Seguro, SeguroAuto, etc)
+│   │   ├── cliente.py
+│   │   └── seguros.py
 │   │
-│   └── main.py                # Instancia diferentes seguros e mostra o polimorfismo
-└── README.md                  # Explicação de como o polimorfismo resolveu o código legado
-```
+│   └── main.py
+│
+└── README.md
 
 ---
 
-## Fluxo de Entrega (Git Workflow)
+🧪 Como executar o projeto
 
-1. No seu fork local, crie a pasta `Projeto_2`.
-2. Implemente a solução garantindo que o `main.py` crie uma lista de seguros variados e percorra essa lista chamando `.calcular_premio()` (demonstrando o Polimorfismo).
-3. **Docstrings:** Use o padrão de documentação exigido para explicar cada método.
-4. Abra a **Pull Request (PR)** com o título: `Projeto_2 - [Seu Nome Completo]`.
+1. Acesse a pasta do projeto:
+
+cd Projeto_2
+
+2. Execute o sistema:
+
+python src/main.py
+
+---
+
+🖥️ Exemplo de saída
+
+=== Seguros do Cliente ===
+Prêmio: R$ 1200.0
+Prêmio: R$ 1600.0
+Prêmio: R$ 575.0
 
 ---
 
-## Rubrica de Avaliação
+🎯 Conclusão
 
-| Critério | Descrição |
-| :--- | :--- |
-| **Diagrama UML** | O diagrama usa a simbologia correta para Herança (seta vazia) e Associação? Reflete o código? |
-| **Uso de Herança** | A classe base concentra o código comum e as filhas apenas as especializações? |
-| **Polimorfismo** | O cálculo do prêmio foi implementado de forma que o `main.py` não precise de `if/else` para saber o tipo de seguro? |
-| **Organização** | Seguiu a estrutura de pastas e as diretrizes do `CONTRIBUTING.md`? |
+A utilização de Programação Orientada a Objetos permitiu transformar um código rígido e difícil de manter em uma solução:
+
+- Modular
+- Flexível
+- Reutilizável
+- Alinhada com boas práticas de desenvolvimento
 
 ---
-> O polimorfismo é uma ferramenta que permite ao sistema crescer. Amanhã, se criarmos o "Seguro de Viagem", basta adicionar uma nova classe sem mexer no código que já funciona!
 
-## Entrega
-
-- **Formato**: A entrega deverá ser feita no repositório da turma no GitHub, na pasta `Projeto_2`, com os arquivos desenvolvidos e um código de teste.
-- **Prazo de Entrega**: Sete dias
+👨‍💻 Autor
+Ivamilton Ferreira da Silva Júnior
