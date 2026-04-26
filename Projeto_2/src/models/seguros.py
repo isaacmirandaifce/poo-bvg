@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from models.cliente import Cliente
 
-class Seguro:
+class Seguro(ABC):
     def __init__(self, titular: Cliente, valorBase: float):
         self.__titularCarro = titular
         self.__valorCarro = valorBase
