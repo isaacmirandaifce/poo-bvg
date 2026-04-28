@@ -22,4 +22,4 @@ if __name__ == "__main__":
         nome_titular = seguro.titular.nome
         tipo_seguro = seguro.__class__.__name__
         
-        print(f"Titular: {nome_titular} | Seguro: {tipo_seguro} | Prêmio: R${valor_final:.2f}")
+        print(f"Titular: {nome_titular}\nSeguro: {tipo_seguro}\nPrêmio: R${valor_final:.2f}")
