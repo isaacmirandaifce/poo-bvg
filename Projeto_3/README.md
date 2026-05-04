@@ -1,139 +1,88 @@
 # **Projeto Avaliativo 3: Introdução a C++**
 
 ## **Objetivo**
+
 Este projeto tem como objetivo introduzir conceitos fundamentais da linguagem C++ e reforçar os tópicos abordados em aula, como criação de classes, uso de métodos, containers (`vector`), manipulação de strings, namespaces e estruturação de código.
 
 ---
 
-## **Descrição do Projeto**
+# 🎟️ Ticket #612: Desenvolvimento do Módulo de Contatos B2B (C++)
 
-1. **Classe Pessoa:**
-   - **Atributos:**
-     - `std::string nome`: Nome da pessoa.
-     - `std::string telefone`: Telefone da pessoa.
-   - **Métodos:**
-     - Construtor padrão.
-     - Construtor parametrizado (inicializa os atributos `nome` e `telefone` com valores fornecidos).
-     - Destrutor (exibe uma mensagem indicando a destruição do objeto).
-     - `void imprimirNome()`: Imprime o nome da pessoa.
-     - `void imprimirTelefone()`: Imprime o telefone da pessoa.
-     - Utilizar o ponteiro `this` dentro da classe para demonstrar boas práticas.
+**De:** Arquiteto de Software (Professor)  
+**Para:** Desenvolvedor C++ Júnior (Alunos)  
+**Projeto:** CRM Enterprise (Módulo de Alta Performance)  
+**Status:** `To Do` | **Prioridade:** `Alta`
 
-2. **Função `main`:**
-   - Criar um container `std::vector` para armazenar objetos do tipo `Pessoa`.
-   - Adicionar pelo menos 3 objetos `Pessoa` ao `vector`.
-   - Percorrer o `vector` utilizando um laço e imprimir o nome e telefone de cada pessoa armazenada.
+##  Contexto
+Olá, equipe!
+Como parte da nossa migração de sistemas legados para uma arquitetura de alta performance, estamos reescrevendo o **Módulo de Gestão de Contatos de Clientes (CRM)** utilizando **C++**. 
 
-3. **Modelagem UML:**
-   - Criar um diagrama UML que represente a classe `Pessoa`, seus atributos e métodos.
-
-4. **Estrutura de Arquivos:**
-   - `Pessoa.h`: Declaração da classe.
-   - `Pessoa.cpp`: Implementação da classe.
-   - `main.cpp`: Contém a função principal e manipulação do `vector`.
+Nossa antiga aplicação sofria com vazamentos de memória e uso de arrays de tamanho fixo, o que causava travamentos quando o número de clientes crescia. Sua missão nesta *Sprint* é criar a fundação desse novo módulo utilizando boas práticas de C++: separação de interface e implementação (`.h` e `.cpp`), uso seguro de ponteiros (`this`) e alocação dinâmica com a biblioteca padrão (STL `std::vector`).
 
 ---
 
-## **Requisitos Técnicos**
+## Critérios de Aceitação (Acceptance Criteria)
 
-1. **Classes e Métodos:**
-   - Utilize atributos privados e métodos públicos.
-   - Implementação do destrutor para exibir mensagens de limpeza.
+Para que sua **Pull Request (PR)** seja aprovada no *Code Review*, o código deve cumprir os seguintes requisitos arquiteturais:
 
-2. **Namespaces:**
-   - Utilize `namespace std` para simplificar a escrita do código.
+### Fase 1: Arquitetura da Classe (Header e Source)
+1. **Interface (`Contato.h`):** Declare a classe `Contato` (substituindo a antiga classe genérica 'Pessoa'). Ela deve ter os atributos privados estritamente tipados: `std::string nome` e `std::string telefone`.
+2. **Implementação (`Contato.cpp`):** Implemente os métodos da classe. 
+    * Crie um **construtor parametrizado** que utilize obrigatoriamente o ponteiro `this` para diferenciar os parâmetros dos atributos da classe.
+    * Crie um **destrutor** (`~Contato()`) que imprima no console um log de sistema avisando que o contato foi removido da memória (Ex: `"LOG: Contato [Nome] desalocado da memória."`).
+    * Implemente os métodos `imprimirNome()` e `imprimirTelefone()`.
 
-3. **Manipulação de Containers (`vector`):**
-   - Armazenar e manipular objetos do tipo `Pessoa` usando o container `std::vector`.
+### Fase 2: Motor Principal e Containers (STL)
+1. **Módulo Executável (`main.cpp`):** Não utilizaremos mais arrays fixos em C (ex: `Contato contatos[10]`). Você deve utilizar o container dinâmico **`std::vector<Contato>`**.
+2. **Processamento:** * Instancie pelo menos 3 contatos de clientes corporativos usando o método `push_back()`.
+    * Crie um laço de repetição (iteração) para percorrer o `vector`, imprimindo os dados de cada contato na tela de forma formatada.
 
-4. **Entrada e Saída de Dados:**
-   - Utilize `std::cout` e `std::cin` para manipulação de entrada e saída.
+### Fase 3: Documentação UML
+Assim como no projeto anterior, o *Gap Semântico* deve ser reduzido. Crie o **Diagrama de Classes UML** da classe `Contato`, especificando a visibilidade (público/privado) e os tipos de dados do C++.
 
 ---
 
-## **Estrutura do Código**
+##  Estrutura de Arquivos Exigida (Projeto_3)
 
-### Arquivo `Pessoa.h`
-```cpp
-#ifndef PESSOA_H
-#define PESSOA_H
+Em projetos reais de C++, separar o que é "declaração" do que é "código executável" é lei. Seu repositório deverá ter exatamente esta estrutura:
 
-#include <string>
-#include <iostream>
-
-class Pessoa {
-private:
-
-public:
-
-};
-
-#endif // PESSOA_H
-```
-
-### Arquivo `Pessoa.cpp`
-```cpp
-#include "Pessoa.h"
-
-// Construtor padrão
-
-// Construtor parametrizado
-
-// Destrutor
-
-// Metodo de impressao do nome
-
-// Metodo de impressao do nome
-
-```
-
-### Arquivo `main.cpp`
-```cpp
-#include <iostream>
-#include <vector>
-#include "Pessoa.h"
-
-int main() {
-
-    // Criando objetos Pessoa e adicionando ao vector
-
-    // Percorrendo o vector e exibindo informações
-    for () {
-        
-    }
-
-    return 0;
-}
+```text
+Projeto_3/
+│
+├── docs/
+│   └── Contato_UML.png         # Diagrama de Classes
+│
+├── src/
+│   ├── Contato.h               # Header: Declaração da classe e atributos
+│   ├── Contato.cpp             # Source: Lógica dos construtores, destrutor e métodos
+│   └── main.cpp                # Ponto de entrada: #include "Contato.h" e uso do std::vector
+│
+└── README.md                   # Instruções de como compilar o código (ex: g++ main.cpp Contato.cpp)
 ```
 
 ---
 
-## **Diagrama UML**
-Os alunos devem criar um diagrama UML que represente:
-- A classe `Pessoa` com seus atributos e métodos.
-- Os tipos de dados de cada atributo e o escopo dos métodos (público ou privado).
+## Como Entregar (Fluxo GitHub)
 
-O diagrama deve ser salvo como `Pessoa_UML.png` ou similar e carregado no repositório.
-
----
-
-## **Critérios de Avaliação**
-
-1. **Implementação Técnica (6 pontos):**
-   - Estrutura correta dos arquivos (`.h` e `.cpp`).
-   - Implementação correta dos atributos, métodos, construtores e destrutores.
-
-2. **Uso de Containers (2 pontos):**
-   - Utilização correta de `std::vector` para armazenar e manipular objetos.
-
-3. **Modelagem UML (1 ponto):**
-   - Criação do diagrama UML da classe `Pessoa`.
-
-4. **Organização e Boas Práticas (1 ponto):**
-   - Organização do código e uso adequado de comentários.
+1. No seu fork local, navegue até a pasta `Projeto_3`.
+2. Desenvolva o código garantindo que não haja erros de compilação.
+3. **Dica de Compilação:** Lembre-se que em C++ você precisa compilar os arquivos `.cpp` juntos. Se usar GCC, o comando será algo como: `g++ src/main.cpp src/Contato.cpp -o crm_app`.
+4. Faça o *Push* e abra a **Pull Request (PR)** com o título: `Projeto_3 - [Seu Nome Completo]`.
 
 ---
 
+##  Rubrica de Avaliação (Tech Lead Review)
+
+Sua entrega será avaliada nos seguintes pilares (Total: 10 pontos):
+
+| Critério | Descrição | Pontuação |
+| :--- | :--- | :--- |
+| **Arquitetura C++ (.h e .cpp)** | Os arquivos foram separados corretamente? O `.h` possui as guardas de inclusão (`#ifndef`, `#define`) ou `#pragma once`? | 3.0 pts |
+| **Gerenciamento de Memória** | O construtor usa o `this->` corretamente? O destrutor foi implementado e emite o log quando os objetos saem de escopo? | 2.0 pts |
+| **Domínio da STL (std::vector)** | O `main.cpp` usa a biblioteca `<vector>` de forma correta, populando com `push_back` e iterando sem estourar o limite? | 3.0 pts |
+| **UML e Organização** | O diagrama UML está correto? O código está bem indentado e documentado? | 2.0 pts |
+
+> **Dica:** Prestem muita atenção na importação de bibliotecas padrão como `<iostream>`, `<string>` e `<vector>`. Lembrem-se também do `std::` ou declarem o `using namespace std;` de forma consciente no `main.cpp`. C++ dá muito poder ao desenvolvedor, mas exige grande responsabilidade com a memória. Mostrem o que sabem!
 ## **Entrega**
 
 1. **Repositório GitHub:**
