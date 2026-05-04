@@ -10,13 +10,13 @@ class Contato {
 
     public:
 
-    std::string getNome() {};
+    std::string getNome(){};
 
-    std::string getTelefone() {};
+    std::string getTelefone(){};
 
-    void setTelefone(){};
+    void setTelefone(std::string telefone){};
 
-    void setNome(){};
+    void setNome(std::string nome) {};
 
     Contato(){};
 
