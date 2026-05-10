@@ -1,5 +1,12 @@
-#ifndef contato_h
-#define contato_h
+// Header onde possue a classe contato e seus métodos 
+
+
+// Header Guards: Elas servem como uma "trava de segurança" 
+// que impede que o compilador se confunda 
+// ao encontrar a mesma declaração de classe mais de uma vez no mesmo projeto.
+
+#ifndef contato_h // Verifica se a chave "contato_h" existe, caso não
+#define contato_h // A chave é criada pelo define
 
 #include <iostream>
 #include <string>
@@ -18,4 +25,5 @@ class Contato {
         void imprimirTelefone();
 };
 
+// Fim do bloco de proteção
 #endif
