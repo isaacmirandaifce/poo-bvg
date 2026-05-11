@@ -1,6 +1,6 @@
-#pragma once
 #include <iostream>
 #include <string>
+#pragma once
 
 class Contato {
     private:
@@ -10,22 +10,20 @@ class Contato {
 
     public:
 
-    std::string getNome(){};
+    void setTelefone(std::string telefone);
 
-    std::string getTelefone(){};
+    void setNome(std::string nome);
 
-    void setTelefone(std::string telefone){};
+    Contato();
 
-    void setNome(std::string nome) {};
-
-    Contato(){};
-
-    ~Contato(){};
+    ~Contato();
 
 
     //////
 
-    void imprimirNome(){};
+    void imprimirNome();
 
-    void imprimirTelefone(){};
+    void imprimirTelefone();
 };
+
+Contato AdicionarContatos(std::string nome, std::string telefone);
