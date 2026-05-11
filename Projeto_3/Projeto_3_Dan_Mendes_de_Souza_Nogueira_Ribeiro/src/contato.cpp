@@ -2,17 +2,6 @@
 #include <string>
 #include "contato.h"
 
-
-    std::string Contato::getNome() {
-
-        return this->nome;
-    };
-
-    std::string Contato::getTelefone(){
-        
-        return this->telefone;
-    };
-
     void Contato::setTelefone(std::string telefone){
 
         this->telefone = telefone;
@@ -29,23 +18,27 @@
 
     Contato::~Contato(){
 
-
-        std::string nome = getNome();
-
         std::cout << "O Contato de nome: " << nome << ". Foi apagado com sucesso." << '\n';
     };
 
     void Contato::imprimirNome()
     {
 
-        std::string nome = getNome();
-
-        std::cout << "O nome deste contato é : " << nome << '\n';
+        std::cout << "O nome deste contato é: " << this->nome << '\n';
     };
 
     void Contato::imprimirTelefone() {
 
-        std::string telefone = getTelefone();
 
-        std::cout << "O numero deste contato é : " << telefone << '\n';
+        std::cout << "O numero deste contato é: " << this->telefone << '\n';
     };
+
+    Contato AdicionarContatos(std::string nome, std::string telefone)
+    {
+        Contato novo;
+        novo.setNome(nome);
+        novo.setTelefone(telefone);
+        return novo;
+    }
+    
+    
