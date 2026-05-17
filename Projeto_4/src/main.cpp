@@ -9,14 +9,14 @@ int main() {
     minhaConta.exibirDados();
     std::cout << "------------------------\n\n";
 
-    // TRANSAÇÃO VÁLIDA
+// TRANSAÇÃO VÁLIDA
     std::cout << "Tentativa 1: Comprar uma passagem...\n";
     Transacao t1(450.00, "21/09/2013");
     validarTransacao(minhaConta, t1);
 
     std::cout << "\n";
 
-    // TRANSAÇÃO INVÁLIDA
+// TRANSAÇÃO INVÁLIDA
     std::cout << "Tentativa 2: Comprar um notebook...\n";
     Transacao t2(2000.00, "21/09/2013");
     validarTransacao(minhaConta, t2);
