@@ -47,6 +47,7 @@ double Transacao::getValor()
     return this->valor;
 };
 
+// Implementação da Função Amiga
 void validarTransacao(Transacao &t, contaBancaria &c) {
 
     double valor = t.getValor();
