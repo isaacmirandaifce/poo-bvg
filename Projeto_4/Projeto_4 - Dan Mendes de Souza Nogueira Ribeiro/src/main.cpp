@@ -19,7 +19,11 @@ int main () {
 
     novaTransacao.setCPF("000.000.000-00");
     
-    novaTransacao.setValor(200);
+    novaTransacao.setValor(100);
+
+    validarTransacao(novaTransacao, conta);
+
+    std::cout << '\n' << "o saldo da conta é: " << conta.getSaldo() << "\n";
 
     validarTransacao(novaTransacao, conta);
 
