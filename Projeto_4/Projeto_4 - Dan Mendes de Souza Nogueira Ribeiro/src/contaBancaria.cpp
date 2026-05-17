@@ -11,15 +11,38 @@
     }
 
     void contaBancaria::setTitular(std::string nome){
-        this->titular = nome;
+        if (nome != "")
+        {
+            this->titular = nome;
+        }
+        else
+        {
+            std::cout << "erro no nome" << '\n';
+        }
+        
     };
 
     void contaBancaria::setCPF(std::string cpf){
-        this->cpf = cpf;
+        if (cpf != "")
+        {
+            this->cpf = cpf;
+        }
+        else
+        {
+            std::cout << "Erro no cpf" << '\n';
+        }
     };
 
     void contaBancaria::setSaldo(double saldo) {
-        this->saldo = saldo;
+        if (saldo >= 0)
+        {
+            this->saldo = saldo;
+        }
+        else
+        {
+
+            std::cout << "Erro de valor" << '\n';
+        }
     };
 
     std::string contaBancaria::getTitular(){

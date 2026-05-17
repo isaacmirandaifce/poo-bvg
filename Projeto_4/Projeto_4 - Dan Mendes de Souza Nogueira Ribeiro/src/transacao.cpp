@@ -10,7 +10,7 @@ void Transacao::setCPF(std::string cpf)
     }
     else
     {
-        std::cout << "Erro de valor" << '\n';
+        std::cout << "Erro no cpf" << '\n';
     }
     
 };
