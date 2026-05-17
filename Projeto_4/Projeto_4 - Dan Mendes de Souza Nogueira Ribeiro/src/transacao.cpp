@@ -3,6 +3,16 @@
 #include "transacao.h"
 #include "contaBancaria.h"
 
+Transacao::Transacao()
+{
+    std::cout << "Pedido transação criado." << '\n';
+}
+
+Transacao::~Transacao()
+{
+    std::cout << "O pedido de transação feito pelo cpf: " << titular << ". Foi encerrado." << '\n';
+}
+
 void Transacao::setCPF(std::string cpf)
 {
     if (cpf != "")

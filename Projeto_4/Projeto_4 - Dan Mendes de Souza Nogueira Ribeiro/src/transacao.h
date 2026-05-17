@@ -9,6 +9,10 @@ class Transacao{
         std::string cpf;
 
     public:
+        Transacao();
+
+        ~Transacao();
+
         void setValor(double valor);
 
         void setCPF(std::string cpf);
