@@ -3,11 +3,11 @@
 #include "contaBancaria.h"
 
     contaBancaria::contaBancaria(){
-        std::cout << '\n' << "Contato criado." << '\n';
+        std::cout << '\n' << "Conta criado." << '\n';
     }
 
     contaBancaria::~contaBancaria() {
-        std::cout << '\n' << "O titular de nome: " << titular << ". Foi apagado com sucesso." << '\n';
+        std::cout << '\n' << "O titular da conta de nome: " << titular << ". Foi apagado com sucesso." << '\n';
     }
 
     void contaBancaria::setTitular(std::string nome){

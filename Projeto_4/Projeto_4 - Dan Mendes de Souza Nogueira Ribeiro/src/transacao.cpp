@@ -5,7 +5,7 @@
 
 Transacao::Transacao()
 {
-    std::cout << '\n' << "Pedido transação criado." << '\n';
+    std::cout << '\n' << "Pedido de transação criado." << '\n';
 }
 
 Transacao::~Transacao()
