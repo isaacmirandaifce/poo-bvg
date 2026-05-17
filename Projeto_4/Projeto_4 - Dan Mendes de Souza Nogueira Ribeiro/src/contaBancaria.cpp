@@ -3,11 +3,11 @@
 #include "contaBancaria.h"
 
     contaBancaria::contaBancaria(){
-        std::cout << "Contato criado." << '\n';
+        std::cout << '\n' << "Contato criado." << '\n';
     }
 
     contaBancaria::~contaBancaria() {
-        std::cout << "O titular de nome: " << titular << ". Foi apagado com sucesso." << '\n';
+        std::cout << '\n' << "O titular de nome: " << titular << ". Foi apagado com sucesso." << '\n';
     }
 
     void contaBancaria::setTitular(std::string nome){
@@ -17,7 +17,7 @@
         }
         else
         {
-            std::cout << "erro no nome" << '\n';
+            std::cout << '\n' << "erro no nome" << '\n';
         }
         
     };
@@ -29,7 +29,7 @@
         }
         else
         {
-            std::cout << "Erro no cpf" << '\n';
+            std::cout << '\n' << "Erro no cpf" << '\n';
         }
     };
 
@@ -41,7 +41,7 @@
         else
         {
 
-            std::cout << "Erro de valor" << '\n';
+            std::cout << '\n' << "Erro de valor" << '\n';
         }
     };
 

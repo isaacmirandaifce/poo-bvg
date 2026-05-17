@@ -5,12 +5,12 @@
 
 Transacao::Transacao()
 {
-    std::cout << "Pedido transação criado." << '\n';
+    std::cout << '\n' << "Pedido transação criado." << '\n';
 }
 
 Transacao::~Transacao()
 {
-    std::cout << "O pedido de transação feito pelo cpf: " << cpf << ". Foi encerrado." << '\n';
+    std::cout << '\n' << "O pedido de transação feito pelo cpf: " << cpf << ". Foi encerrado." << '\n';
 }
 
 void Transacao::setCPF(std::string cpf)
@@ -21,7 +21,7 @@ void Transacao::setCPF(std::string cpf)
     }
     else
     {
-        std::cout << "Erro no cpf" << '\n';
+        std::cout << '\n' << "Erro no cpf" << '\n';
     }
     
 };
@@ -33,7 +33,7 @@ void Transacao::setValor(double valor)
         this->valor = valor;
     } else {
 
-        std::cout << "Erro de valor" << '\n';
+        std::cout << '\n' << "Erro de valor" << '\n';
     }
 };
 
@@ -53,7 +53,7 @@ void validarTransacao(Transacao &t, contaBancaria &c) {
 
     if (valor > c.saldo)
     {
-        std::cout << "impossivel realizar a transação" << '\n';
+        std::cout << '\n' << "impossivel realizar a transação" << '\n';
     }
     else
     {
