@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "transacao.h"
+#include "contaBancaria.h"
 
 void Transacao::setCPF(std::string cpf)
 {
@@ -34,4 +35,19 @@ std::string Transacao::getCPF()
 double Transacao::getValor()
 {
     return this->valor;
+};
+
+void validarTransacao(Transacao &t, contaBancaria &c) {
+
+    double valor = t.getValor();
+
+    if (valor > c.saldo)
+    {
+        std::cout << "impossivel realizar a transação" << '\n';
+    }
+    else
+    {
+        c.saldo = c.saldo - valor;
+    }
+    
 };

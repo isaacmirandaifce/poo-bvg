@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "contaBancaria.h"
 #pragma once
 
 class Transacao{
@@ -15,4 +16,7 @@ class Transacao{
         std::string getCPF();
 
         double getValor();
+
+        friend void validarTransacao(Transacao &t, contaBancaria &c);
 };
+
