@@ -1,8 +1,9 @@
+#ifndef Conta_Bancaria
+#define Conta_Bancaria
 #include <iostream>
 #include <string>
-#include "transacao.h"
-#pragma once
 
+class Transacao;
 
 class contaBancaria {
     private:
@@ -33,3 +34,4 @@ class contaBancaria {
 
         friend void validarTransacao(Transacao &t, contaBancaria &c);
 };
+#endif

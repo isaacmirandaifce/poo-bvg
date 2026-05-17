@@ -1,8 +1,9 @@
-#include <iostream>
+#ifndef Trans_h
+#define Trans_h
+#include<iostream>
 #include <string>
-#include "contaBancaria.h"
-#pragma once
 
+class contaBancaria;
 class Transacao{
     private:
         double valor;
@@ -24,3 +25,4 @@ class Transacao{
         friend void validarTransacao(Transacao &t, contaBancaria &c);
 };
 
+#endif
