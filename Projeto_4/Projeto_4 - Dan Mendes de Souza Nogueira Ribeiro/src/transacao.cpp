@@ -10,7 +10,7 @@ Transacao::Transacao()
 
 Transacao::~Transacao()
 {
-    std::cout << "O pedido de transação feito pelo cpf: " << titular << ". Foi encerrado." << '\n';
+    std::cout << "O pedido de transação feito pelo cpf: " << cpf << ". Foi encerrado." << '\n';
 }
 
 void Transacao::setCPF(std::string cpf)
