@@ -14,6 +14,7 @@ int main () {
 
     conta.setSaldo(150);
 
+    std::cout << '\n' << "Conta ---- Titular: " << conta.getTitular() << " | CPF: " << conta.getCPF() << " | Valor escolhido: R$" << conta.getSaldo() << '\n';
 
     Transacao novaTransacao;
 
@@ -21,11 +22,15 @@ int main () {
     
     novaTransacao.setValor(100);
 
-    validarTransacao(novaTransacao, conta);
-
-    std::cout << '\n' << "o saldo da conta é: " << conta.getSaldo() << "\n";
+    std::cout << '\n' << "Transação ---- CPF: " << novaTransacao.getCPF() << " | Saldo: R$" << novaTransacao.getValor() << '\n';
 
     validarTransacao(novaTransacao, conta);
+
+    std::cout << '\n' << "o saldo atual da conta é: R$" << conta.getSaldo() << "\n";
+
+    validarTransacao(novaTransacao, conta);
+
+    std::cout << '\n' << "Conta ---- Titular: " << conta.getTitular() << " | CPF: " << conta.getCPF() << " | Saldo: R$" << conta.getSaldo() << '\n';
 
     return 0;
 }
