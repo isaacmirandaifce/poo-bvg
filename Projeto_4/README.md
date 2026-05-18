@@ -25,10 +25,22 @@ Isso facilita a extensao do sistema bancario, permitindo criar classes derivadas
 - ContaPremium
 
 sem quebrar o encapsulamento total da classe.
+# 🎟️ Ticket #704: Módulo de Auditoria de Transações Bancárias (C++)
+
+**De:** CTO / Arquiteto de Segurança (Professor)
+
+**Para:** Desenvolvedor Backend (Alunos)
+
+**Projeto:** SecureBank Pro
+
+**Status:** `To Do` | **Prioridade:** `Crítica`
+
+##  Contexto
+
+Olá, time! No setor bancário, a integridade dos dados é nossa maior prioridade. Atualmente, temos o desafio de permitir que um sistema externo de **Auditoria** verifique se uma transação financeira é legítima, sem que os detalhes sensíveis da conta do cliente fiquem expostos para o resto do sistema.
+
+Nesta sprint, utilizaremos o conceito de **Funções Amigas (`friend`)** para dar permissão especial de acesso ao módulo de auditoria, e o modificador **`protected`** para organizar nossa hierarquia de contas, garantindo o encapsulamento exigido pelas normas bancárias.
 
 ## Uso da friend function
 
-A funcao validarTransacao foi implementada como friend para permitir acesso controlado aos atributos privados e protegidos das classes ContaBancaria e Transacao.
-
-Dessa forma, o sistema de auditoria consegue validar transacoes sem utilizar getters publicos, aumentando a seguranca e mantendo o encapsulamento.
 
