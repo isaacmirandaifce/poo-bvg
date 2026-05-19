@@ -15,10 +15,6 @@ class Usuario {
     
     virtual void gerarRelatorio() =0;
     
-    /*{
-        std::cout << "Dados do Usuario" << std::endl;
-        std::cout << "Nome" << nome << std::endl;
-        std::cout << "Email" << email << std::endl;
-        std::cout << "Tipo" << tipo << std::endl;
-    };*/
+   
+  
 };
