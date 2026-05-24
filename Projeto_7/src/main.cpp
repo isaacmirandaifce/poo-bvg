@@ -4,6 +4,8 @@
 #include "LogSeguranca.h"
 
 int main() {
+
+// TESTE 1: Pipeline de Transações
     std::cout << "=== ANALISANDO TRANSACOES ===" << std::endl;
     DataFilter<Transacao> filtroTransacoes;
 
@@ -30,6 +32,7 @@ int main() {
 
     std::cout << "\n\n";
 
+// Pipeline de Logs de Segurança
     std::cout << "=== ANALISANDO LOGS DE SEGURANCA ===" << std::endl;
     DataFilter<LogSeguranca> filtroLogs;
 

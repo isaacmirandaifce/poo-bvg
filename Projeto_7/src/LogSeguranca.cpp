@@ -1,5 +1,6 @@
 #include "LogSeguranca.h"
 
+// Constructor
 LogSeguranca::LogSeguranca(std::string timestamp, std::string nivel, std::string mensagem) : timestamp(timestamp), nivel(nivel), mensagem(mensagem) {}
 
 std::string LogSeguranca::getTimestamp() const {
