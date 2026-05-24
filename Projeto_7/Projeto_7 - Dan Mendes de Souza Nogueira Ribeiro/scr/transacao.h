@@ -18,7 +18,7 @@ class Transacao {
     
     int getID();
     double getValor();
-    std::string getTipo(std::string tipo);
+    std::string getTipo();
 };
 
 #endif

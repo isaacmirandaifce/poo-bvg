@@ -36,4 +36,4 @@ void Transacao::setTipo(std::string tipo){
 
 int Transacao::getID(){ return this->id;};
 double Transacao::getValor() { return this->valor; };
-std::string Transacao::getTipo(std::string tipo) { return this->tipo;};
+std::string Transacao::getTipo() { return this->tipo;};
