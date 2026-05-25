@@ -4,6 +4,7 @@
 #include <string>
 #include <functional>
 #include <vector>
+#include <algorithm>
 
 template <typename T>
 class DataFilter {
@@ -17,20 +18,14 @@ class DataFilter {
 
    std::vector<T> filtrar(std::function<bool(const T &)> condicao) {
         std::vector<T> novoVetor;
+
+        std::copy_if(vetor.begin(), vetor.end(), std::back_inserter(novoVetor), condicao);
         
-        for (auto &item : vetor) {
-            if (condicao(item)) {
-                novoVetor.push_back(item);
-            }
-        }
         return vetor = novoVetor;
    };
 
    void processar(std::function<void(const T &)> acao){
-       for (auto &item : vetor)
-       {
-           acao(item);
-       }
+       std::for_each(vetor.begin(), vetor.end(), acao);
    };
 
 };
