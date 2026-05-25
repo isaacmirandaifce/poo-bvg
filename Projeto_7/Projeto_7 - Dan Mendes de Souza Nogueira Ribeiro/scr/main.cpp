@@ -34,21 +34,21 @@ int main() {
 
     criacaologSeguranca(logSeg, 13, "INFO", "men1");
 
-    criacaologSeguranca(logSeg, 14, "INTO", "men2");
+    criacaologSeguranca(logSeg, 14, "INFO", "men2");
 
     criacaologSeguranca(logSeg, 15, "CRITICAL", "men3");
 
-    criacaologSeguranca(logSeg, 16, "INTO", "men4");
+    criacaologSeguranca(logSeg, 16, "INFO", "men4");
 
     criacaologSeguranca(logSeg, 17, "CRITICAL", "men5");
 
-    criacaologSeguranca(logSeg, 18, "INTO", "men6");
+    criacaologSeguranca(logSeg, 18, "INFO", "men6");
 
     criacaologSeguranca(logSeg, 19, "CRITICAL", "men7");
 
     logSeg.filtrar([](const LogSeguranca &lg) {return lg.getNivel() == "CRITICAL";});
 
-    logSeg.processar([](const LogSeguranca &lg) {std::cout << std::endl << "O horario: " << lg.getTimeStamp() << "h \nO nivel: " << lg.getNivel() << " \nA Mensagem: " << lg.getMensagem() << std::endl;});
+    logSeg.processar([](const LogSeguranca &lg) {std::cout << std::endl << "O Horário: " << lg.getTimeStamp() << "h \nO Nível: " << lg.getNivel() << " \nA Mensagem: " << lg.getMensagem() << std::endl;});
 
     return 0;
 }
