@@ -2,7 +2,7 @@
 #include <string>
 #include "logSeguranca.h"
 
-void LogSeguranca::setTimeStamp(double timestamp)
+void LogSeguranca::setTimeStamp(int timestamp)
 {
     if (timestamp >= 0)
     {
@@ -15,7 +15,7 @@ void LogSeguranca::setTimeStamp(double timestamp)
 };
 void LogSeguranca::setNivel(std::string nivel)
 {
-    if (nivel == "")
+    if (nivel != "")
     {
         this->nivel = nivel;
     }
@@ -36,6 +36,6 @@ void LogSeguranca::setMensagem(std::string mensagem)
     }
 };
 
-int LogSeguranca::getTimeStamp() { return this->timestamp; };
-std::string LogSeguranca::getNivel() { return this->nivel; };
-std::string LogSeguranca::getMensagem() { return this->mensagem; };
+int LogSeguranca::getTimeStamp() const { return this->timestamp; };
+std::string LogSeguranca::getNivel() const { return this->nivel; };
+std::string LogSeguranca::getMensagem() const { return this->mensagem; };
