@@ -1,3 +1,5 @@
+#ifndef dataFilter
+#define dataFilter
 #include <iostream>
 #include <string>
 #include <functional>
@@ -6,7 +8,7 @@
 template <typename T>
 class DataFilter {
     private:
-    vector<T> vetor;
+    std::vector<T> vetor;
     public:
 
    void adicionar(T elemento){
@@ -21,7 +23,7 @@ class DataFilter {
                 novoVetor.push_back(item);
             }
         }
-        return novoVetor;
+        return vetor = novoVetor;
    };
 
    void processar(std::function<void(const T &)> acao){
@@ -32,3 +34,5 @@ class DataFilter {
    };
 
 };
+
+#endif
