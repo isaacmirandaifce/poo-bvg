@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 
-
 class Transacao {
     private:
         int id;
@@ -15,10 +14,10 @@ class Transacao {
     void setID(int id);
     void setValor(double valor);
     void setTipo(std::string tipo);
-    
-    int getID();
-    double getValor();
-    std::string getTipo();
+
+    int getID() const;
+    double getValor() const;
+    std::string getTipo() const;
 };
 
 #endif

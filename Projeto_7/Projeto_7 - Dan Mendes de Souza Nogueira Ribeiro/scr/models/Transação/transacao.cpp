@@ -2,7 +2,8 @@
 #include <string>
 #include "transacao.h"
 
-void Transacao::setID(int id){
+void Transacao::setID(int id)
+{
     if (id>0)
     {
         this->id = id;
@@ -10,7 +11,6 @@ void Transacao::setID(int id){
     {
         std::cout << std::endl << "erro no ID" << std::endl;
     }
-    
 };
 void Transacao::setValor(double valor){
     if (valor >= 0)
@@ -34,6 +34,6 @@ void Transacao::setTipo(std::string tipo){
     }
 };
 
-int Transacao::getID(){ return this->id;};
-double Transacao::getValor() { return this->valor; };
-std::string Transacao::getTipo() { return this->tipo;};
+int Transacao::getID() const{ return this->id; };
+double Transacao::getValor() const { return this->valor; };
+std::string Transacao::getTipo() const { return this->tipo; };
