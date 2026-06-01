@@ -94,11 +94,15 @@ Projeto_4/
 
 > **Dica de Segurança:** Embora a `friend function` quebre o encapsulamento, ela é uma ferramenta poderosa para acoplar módulos de forma controlada. Use-a apenas quando um acesso externo "íntimo" for estritamente necessário para a lógica de negócio, como em auditorias ou sobrecarga de operadores.
 
-## **Entrega**
+## Justificação Técnica do uso de 'friend'
 
-1. **Formato:**
-   - Carregue os arquivos no repositório da turma, na subpasta `/Projetos/Projeto_4`.
-   - Inclua o diagrama UML no formato `png` ou `jpg`.
+Neste projeto, a função `validarTransacao` foi declarada como `friend` (amiga) das classes `ContaBancaria` e `Transacao`. 
 
-2. **Prazo:**
-   - A entrega deve ser realizada em sete dias.
+Esta abordagem foi escolhida para garantir a **segurança e o encapsulamento estrito** do sistema bancário:
+1. Evita a criação de métodos *getters* públicos para o `saldo` ou para o `valor` da transação, impedindo que qualquer outra parte do ecossistema aceda a estes dados sensíveis.
+2. Permite que apenas o módulo específico de Auditoria possua um acesso "íntimo" e controlado a estas variáveis para aplicar a regra de validação de dados, mitigando riscos de segurança arquitetural.
+
+## Como Compilar
+```bash
+g++ src/main.cpp src/ContaBancaria.cpp src/Transacao.cpp -o auditoria_app
+./auditoria_app
