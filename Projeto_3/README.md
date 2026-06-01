@@ -95,3 +95,12 @@ Sua entrega será avaliada nos seguintes pilares (Total: 10 pontos):
 3. **Arquivos Necessários:**
    - `Pessoa.h`, `Pessoa.cpp`, `main.cpp` (código-fonte).
    - `Pessoa_UML.png` (diagrama UML).
+
+   ## Como compilar e executar o projeto
+
+Certifique-se de ter o compilador G++ instalado em sua máquina.
+
+1. Abra o terminal na raiz do `Projeto_3`.
+2. Compile os arquivos fonte executando o seguinte comando:
+   ```bash
+   g++ src/main.cpp src/Contato.cpp -o crm_app
