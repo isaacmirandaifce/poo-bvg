@@ -31,7 +31,7 @@ void SensorGPS::transmitirPayload(){
 };
 
 void SensorGPS::transmitirPayload(std::string chaveCripto) {
-        std::cout << std::endl << "Utilizando a chave "<< chaveCripto << " para a transmissção." << std::endl;
+        std::cout << std::endl << "Utilizando a chave "<< chaveCripto << " para a transmissão." << std::endl;
 
 };
 

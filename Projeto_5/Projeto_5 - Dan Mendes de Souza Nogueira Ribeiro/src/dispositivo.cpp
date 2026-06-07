@@ -3,9 +3,9 @@
 #include "dispositivo.h"
 
 Dispositivo::Dispositivo(){
-    std::cout << std::endl << "criação do dispositivo" << std::endl;
+    std::cout << std::endl << "Criação do dispositivo" << std::endl;
 };
 
 Dispositivo::~Dispositivo(){
-    std::cout << std::endl << "remoção do dispositivo" << std::endl;
+    std::cout << std::endl << "Remoção do dispositivo" << std::endl;
 };

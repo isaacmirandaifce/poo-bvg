@@ -1,3 +1,7 @@
+/**
+ * @file main.cpp
+ * @brief Ponto de entrada que simula o comportamento polimórfico do sistema de rastreamento.
+ */
 #include <iostream>
 #include <string>
 #include <vector>
@@ -32,10 +36,9 @@ int main(){
     {
 
         vetorDispositivo[i]->processarDados();
+        std::cout << std::endl;
     }
-
-    std::cout << std::endl;
-
+    
     SensorGPS testeGPS;
 
     testeGPS.transmitirPayload();

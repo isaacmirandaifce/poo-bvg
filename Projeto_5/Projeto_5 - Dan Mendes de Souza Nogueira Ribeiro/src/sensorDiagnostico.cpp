@@ -15,15 +15,15 @@ void SensorDiagnostico::processarDados() {
 
     if (rpmMotor >= 6000 || temperaturaFluido > 105)
     {
-        std::cout << std::endl << "Sistema em estado critico, risco de fusão";
+        std::cout << std::endl << "Sistema em estado crítico, risco de fusão" << std::endl;
     }
     else if (temperaturaFluido > 90 && temperaturaFluido < 105)
     {
-        std::cout << std::endl << "Sistema em estado de alerta, risco de aquecimento";
+        std::cout << std::endl << "Sistema em estado de alerta, risco de aquecimento" << std::endl;
     }
     else
     {
-       std::cout << std::endl << "Sistema em estado estavel";
+       std::cout << std::endl << "Sistema em estado estável" << std::endl;
     }
     
 };
