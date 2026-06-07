@@ -26,8 +26,18 @@ void SensorGPS::processarDados()
     }
 };
 
+void SensorGPS::transmitirPayload(){
+    std::cout << std::endl << "Transmitindo os dados abertos em texto puro." << std::endl;
+};
+
+void SensorGPS::transmitirPayload(std::string chaveCripto) {
+        std::cout << std::endl << "Utilizando a chave "<< chaveCripto << " para a transmissção." << std::endl;
+
+};
+
 void SensorGPS::setLatitude(double newLat){ this->latitude = newLat;};
 void SensorGPS::setLongitude(double newLon) { this->longitude = newLon; };
 
 double SensorGPS::getLatitude() {return this->latitude;};
 double SensorGPS::getLongitude() {return this->longitude;};
+

@@ -18,6 +18,9 @@ class SensorGPS : virtual public Dispositivo{
 
         double getLatitude();
         double getLongitude();
+
+        void transmitirPayload();
+        void transmitirPayload(std::string chaveCripto);
 };
 
 #endif
