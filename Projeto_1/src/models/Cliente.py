@@ -1,9 +1,9 @@
 class Cliente:
     """
     Classe que representa um Cliente no sistema.
-    Reponsabilidadees:
-    - Armarzenar informações de forma segura (encapsulada).
-    - Validar operações dde saque para impedir slado negativo
+    Responsabilidades:
+    - Armazenar informações de forma segura (encapsulada).
+    - Validar operações de saque para impedir saldo negativo
     - Gerenciar movimentações de conta (saque e depósito)
     - Controlar o estado da conta (ativo/inativo)
     
@@ -24,7 +24,7 @@ class Cliente:
         saldo (float): Saldo inicial da conta
         
         Raises:
-        ValeError: Se saldo_inicial for negativo
+        ValueError: Se saldo_inicial for negativo
         """
         if saldo_inicial < 0:
             raise ValueError("O saldo inicial não pode ser negativo")
@@ -33,6 +33,13 @@ class Cliente:
         self.__idade = idade
         self.__saldo = saldo_inicial
         self.__ativo = True
+        
+    def __str__(self):
+        """
+        Retorna uma representação em string legivel do obj Cliente
+        """
+        status = "Ativo" if self.__ativo else "Inativo"
+        return f"Cliente: {self.__nome} | Saldo: R${self.__saldo:.2f} | Status: {status}"
         
 # GETTERS 
     @property
