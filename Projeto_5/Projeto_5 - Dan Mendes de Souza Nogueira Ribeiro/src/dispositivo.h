@@ -1,3 +1,5 @@
+#ifndef dispositivo
+#define dispositivo
 #include <iostream>
 #include <string>
 
@@ -13,3 +15,5 @@ class Dispositivo{
     virtual ~Dispositivo();
     virtual void processarDados() = 0;
 };
+
+#endif
