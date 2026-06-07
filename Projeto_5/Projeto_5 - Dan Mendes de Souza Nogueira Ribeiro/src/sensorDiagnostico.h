@@ -1,18 +1,21 @@
+#ifndef sensorDiagnostico
+#define sensorDiagnostico
 #include <iostream>
 #include <string>
 #include "dispositivo.h"
 
-class SensorDiagnostico : public Dispositivo{
-    private:
-        int rpmMotor;
-        double temperaturaFluido;
-    
-    public:
-        void processarDados();
+class SensorDiagnostico : virtual public Dispositivo {
+private:
+    int rpmMotor;
+    double temperaturaFluido;
 
-        void setRPMMotor(int newRPM);
-        void setTemperaturaFluido(double newTemflu);
+public:
+    void processarDados();
 
-        int getRPMMotor();
-        double gettemperaturaFluido();
+    void setRPMMotor(int newRPM);
+    void setTemperaturaFluido(double newTemflu);
+
+    int getRPMMotor();
+    double gettemperaturaFluido();
 };
+#endif

@@ -1,15 +1,17 @@
+#ifndef sensorGPS
+#define sensorGPS
 #include <iostream>
 #include <string>
 #include "dispositivo.h"
 
-class SensorGPS : public Dispositivo{
+class SensorGPS : virtual public Dispositivo{
     private:
         double latitude;
         double longitude;
         
         public:
 
-        void processarDados(){};
+        void processarDados();
 
         void setLatitude(double newLat);
         void setLongitude(double newLon);
@@ -17,3 +19,5 @@ class SensorGPS : public Dispositivo{
         double getLatitude();
         double getLongitude();
 };
+
+#endif
