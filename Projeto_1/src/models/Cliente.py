@@ -128,9 +128,9 @@ class Cliente:
         print(f"Depósito de R${valor:.2f} realizado. Novo saldo R${self.__saldo:.2f}")
         
     def exibir_dados(self):
-        """Exibe os dados do cliente no console."""
+        """Exibe os dados do cliente alinhados."""
         status = "Sim" if self.__ativo else "Não"
-        print(f"Nome: {self.__nome} | Idade: {self.__idade} | Saldo: R${self.__saldo:.2f} | Ativo: {status}")
+        print(f"Nome: {self.__nome:<15} | Idade: {self.__idade:<5} | Saldo: R${self.__saldo:>8.2f} | Ativo: {status}")
 
     def desativar_conta(self):
         """Desativa a conta do cliente."""
