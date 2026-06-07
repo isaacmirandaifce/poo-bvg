@@ -119,3 +119,13 @@ class Cliente:
             raise ValueError("O valor do depósito deve ser positivo")
         self.__saldo += valor
         print(f"Depósito de R${valor:.2f} realizado. Novo saldo R${self.__saldo:.2f}")
+        
+    def exibir_dados(self):
+        """Exibe os dados do cliente no console."""
+        status = "Sim" if self.__ativo else "Não"
+        print(f"Nome: {self.__nome} | Idade: {self.__idade} | Saldo: R${self.__saldo:.2f} | Ativo: {status}")
+
+    def desativar_conta(self):
+        """Desativa a conta do cliente."""
+        self.__ativo = False
+        print(f"Conta de '{self.__nome}' desativada.")
