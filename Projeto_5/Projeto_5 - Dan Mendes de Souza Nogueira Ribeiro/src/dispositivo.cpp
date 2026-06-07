@@ -7,6 +7,5 @@ Dispositivo::Dispositivo(){
 };
 
 Dispositivo::~Dispositivo(){
-    std::cout << std::endl << "criação do dispositivo" << std::endl;
+    std::cout << std::endl << "remoção do dispositivo" << std::endl;
 };
-
