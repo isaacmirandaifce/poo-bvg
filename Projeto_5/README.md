@@ -1,107 +1,470 @@
-# **Projeto Avaliativo 5: Herança, Polimorfismo, Sobrecarga e Sobrescrita - C++**
+# Projeto Avaliativo 5 - Herança, Polimorfismo, Sobrecarga e Sobrescrita em C++
 
+## Ticket #550: Subsistema de Processamento de Telemetria IoT
 
-# 🎟️ Ticket #550: Subsistema de Processamento de Telemetria IoT (Herança & Polimorfismo)
+## Descrição do Projeto
 
-**De:** Engenheiro de Software Principal / Arquiteto (Professor)
+Este projeto foi desenvolvido como parte do Projeto Avaliativo 5 da disciplina de Programação Orientada a Objetos em C++.
 
-**Para:** Desenvolvedor C++ Backend (Alunos)
+O sistema simula um subsistema de processamento de telemetria IoT utilizado em uma plataforma de gerenciamento de frotas. A aplicação trabalha com diferentes tipos de dispositivos instalados em veículos, como sensores de GPS, sensores de diagnóstico do motor e um rastreador avançado que combina as duas funcionalidades.
 
-**Projeto:** FleetTrack Pro (Módulo Core de Telemetria)
-
-**Status:** `To Do` | **Prioridade:** `Crítica`
-
-##  Contexto
-
-Olá, equipe! Nossa plataforma de gerenciamento de frotas precisa integrar novos tipos de dispositivos de coleta de dados instalados nos veículos (sensores de GPS, diagnóstico de motor OBD-II e câmeras inteligentes).
-
-O código legado foi construído de forma estruturada e processa os dados de maneira centralizada através de uma estrutura genérica de bytes e um `switch-case` massivo. Isso está gerando vazamento de memória e impede a adição de novos sensores sem quebrar o sistema de produção inteiro.
-
-Sua missão nesta sprint é refatorar o subsistema de captura utilizando a infraestrutura de **Herança, Polimorfismo Dinâmico e Sobrecarga de Métodos em C++**. Isso permitirá que nosso motor de processamento receba qualquer tipo de sensor e execute sua lógica sem precisar saber os detalhes de implementação de cada hardware.
+O objetivo principal do projeto é aplicar os conceitos de herança, classe abstrata, polimorfismo dinâmico, sobrescrita de métodos, sobrecarga de métodos, herança múltipla, encapsulamento, modularização em arquivos `.h` e `.cpp`, e gerenciamento de memória com ponteiros.
 
 ---
 
-##  Critérios de Aceitação (Acceptance Criteria)
+## Contexto
 
-### 1. Arquitetura da Hierarquia (Herança e Classes Abstratas)
+A plataforma FleetTrack Pro precisa integrar novos tipos de dispositivos de coleta de dados instalados em veículos. Entre esses dispositivos estão sensores de GPS, sensores de diagnóstico do motor e rastreadores avançados.
 
-Você deve criar um modelo polimórfico rigoroso respeitando a visibilidade e encapsulamento dos atributos:
+O código legado processava os dados de maneira centralizada, dificultando a manutenção e a adição de novos sensores. Para resolver esse problema, o sistema foi refatorado utilizando os princípios da Programação Orientada a Objetos.
 
-* **Classe Base Abstrata `Dispositivo**`:
-* `protected`: Atributos comuns como `std::string idDispositivo` e `int timestamp`.
-* `public`: Construtores e um **Método Virtual Puro** chamado `virtual void processarDados() = 0;` (Esta classe não pode ser instanciada diretamente).
-
-
-* **Classe Derivada `SensorGPS**` (Herança Simples):
-* Atributos privados: `double latitude` e `double longitude`.
-* Sobrescrita (`override`) do método `processarDados()` para exibir e formatar as coordenadas geográficas.
-
-
-* **Classe Derivada `SensorDiagnostico**` (Herança Simples):
-* Atributos privados: `int rpmMotor` e `double temperaturaFluido`.
-* Sobrescrita do método `processarDados()` para avaliar a saúde do motor.
-
-
-
-### 2. Composição por Herança Múltipla
-
-Para coletar dados consolidados de alta performance, precisamos de um hardware combinado:
-
-* **Classe Derivada `RastreadorAvancado**` (Herda publicamente de `SensorGPS` **e** de `SensorDiagnostico`):
-* Deve herdar as capacidades de geolocalização e telemetria de motor de ambas as classes pai.
-* Deve sobrescrever `processarDados()` unificando a saída de diagnóstico e localização.
-
-
-
-### 3. Polimorfismo de Tempo de Execução e Sobrecarga
-
-* **Polimorfismo Dinâmico**: No arquivo `main.cpp`, gerencie uma coleção utilizando um vetor de ponteiros da classe base: **`std::vector<Dispositivo*>`**. Instancie dinamicamente (`new`) objetos de todas as subclasses, armazene-os no vetor e use um laço de repetição para disparar o método `processarDados()` polimorficamente.
-* **Sobrecarga de Métodos (Polimorfismo Estático)**: Na classe `SensorGPS`, implemente uma sobrecarga do método de envio de dados:
-1. `void transmitirPayload()` -> Transmite os dados abertos em texto puro.
-2. `void transmitirPayload(std::string chaveCripto)` -> Simula a transmissão segura utilizando uma assinatura ou criptografia.
-
-
+A solução criada permite que diferentes dispositivos sejam tratados de forma polimórfica, ou seja, o programa pode chamar o mesmo método `processarDados()` para diferentes tipos de sensores, e cada um executa seu próprio comportamento.
 
 ---
 
-##  Estrutura de Arquivos Exigida (Projeto_5)
+## Estrutura de Arquivos
 
-Para garantir o isolamento e modularização de compilação em C++, o projeto deve seguir estritamente o layout corporativo abaixo:
-
-```text
+```txt
 Projeto_5/
 │
 ├── docs/
-│   └── Telemetria_Fleet_UML.png     # Diagrama de Classes UML (Herança múltipla)
+│   └── Telemetria_Fleet_UML.png
 │
 ├── src/
-│   ├── Dispositivo.h / .cpp         # Interface/Classe Abstrata Base
-│   ├── SensorGPS.h / .cpp           # Módulo de Geolocalização
-│   ├── SensorDiagnostico.h / .cpp   # Módulo de Telemetria de Motor
-│   ├── RastreadorAvancado.h / .cpp  # Fusão via Herança Múltipla
-│   └── main.cpp                     # Iteração polimórfica com std::vector de ponteiros
+│   ├── Dispositivo.h
+│   ├── Dispositivo.cpp
+│   ├── SensorGPS.h
+│   ├── SensorGPS.cpp
+│   ├── SensorDiagnostico.h
+│   ├── SensorDiagnostico.cpp
+│   ├── RastreadorAvancado.h
+│   ├── RastreadorAvancado.cpp
+│   └── main.cpp
 │
-└── README.md                        # Documentação de compilação e notas técnicas
-
+└── README.md
 ```
 
 ---
 
-##  Fluxo de Entrega (Git Workflow)
+## Tecnologias Utilizadas
 
-1. **Modelagem UML**: Desenhe o diagrama utilizando as setas vazias apontando para as classes pai para documentar a Herança Simples e a Herança Múltipla. Salve em `docs/`.
-2. **Gerenciamento de Memória**: Como estamos lidando com ponteiros brutos (`Dispositivo*`), lembre-se de criar um **Destrutor Virtual** (`virtual ~Dispositivo()`) na classe base e garantir que o `main.cpp` libere a memória usando `delete` após a execução do laço para evitar *Memory Leaks*.
-3. **Pull Request**: Abra a PR no repositório oficial da disciplina com o título `Projeto_5 - [Seu Nome Completo]`.
+- Linguagem: C++
+- Paradigma: Programação Orientada a Objetos
+- Compilador: g++
+- Versionamento: Git e GitHub
+- Diagramação: Mermaid UML
 
 ---
 
-##  Rubrica de Avaliação (Code Review)
+## Conceitos Aplicados
 
-| Critério | Descrição | Pontuação |
-| --- | --- | --- |
-| **Abstração e Polimorfismo** | A classe base impede a instanciação direta por conter um método virtual puro? O laço no `main.cpp` executa os métodos corretos via ponteiros da classe base? | 3.5 pts |
-| **Herança Múltipla** | A classe `RastreadorAvancado` foi implementada utilizando a sintaxe correta de herança múltipla e resolve os escopos adequadamente? | 2.5 pts |
-| **Sobrecarga de Métodos** | O polimorfismo estático (sobrecarga de assinaturas) foi aplicado corretamente na classe de GPS? | 2.0 pts |
-| **Arquitetura C++ e UML** | O projeto está totalmente modularizado em `.h`/`.cpp`? O diagrama UML descreve precisamente os modificadores de acesso e a estrutura implementada? | 2.0 pts |
+### Classe Abstrata
 
-**Aviso do Tech Lead:** Ao trabalhar com Herança Múltipla em C++, fiquem atentos à ordem de chamada dos construtores na lista de inicialização e garantam que não haja colisões de nomes de atributos. Se o código não compilar ou apresentar ambiguidade não tratada, a PR receberá a flag *`changes requested`*. Mantenham o código limpo, limitem o escopo e boa refatoração!
+A classe `Dispositivo` é uma classe base abstrata. Ela possui atributos comuns a todos os sensores e define o método virtual puro `processarDados()`.
+
+```cpp
+virtual void processarDados() = 0;
+```
+
+Como esse método é virtual puro, a classe `Dispositivo` não pode ser instanciada diretamente.
+
+---
+
+### Encapsulamento
+
+Os atributos comuns `idDispositivo` e `timestamp` foram definidos como `protected`, permitindo que as classes derivadas acessem esses dados, mas evitando acesso direto externo.
+
+```cpp
+protected:
+    std::string idDispositivo;
+    int timestamp;
+```
+
+Nas classes derivadas, os atributos específicos foram definidos como `private`.
+
+---
+
+### Herança Simples
+
+As classes `SensorGPS` e `SensorDiagnostico` herdam da classe base `Dispositivo`.
+
+```cpp
+class SensorGPS : public Dispositivo
+```
+
+```cpp
+class SensorDiagnostico : public Dispositivo
+```
+
+---
+
+### Herança Múltipla
+
+A classe `RastreadorAvancado` utiliza herança múltipla, herdando de `SensorGPS` e `SensorDiagnostico`.
+
+```cpp
+class RastreadorAvancado : public SensorGPS, public SensorDiagnostico
+```
+
+Essa classe representa um dispositivo mais completo, capaz de processar dados de localização e dados de diagnóstico do motor.
+
+---
+
+### Sobrescrita de Métodos
+
+As classes derivadas sobrescrevem o método `processarDados()` da classe base.
+
+```cpp
+void processarDados() override;
+```
+
+Cada classe implementa sua própria lógica de processamento.
+
+---
+
+### Sobrecarga de Métodos
+
+A classe `SensorGPS` possui sobrecarga do método `transmitirPayload()`.
+
+```cpp
+void transmitirPayload();
+void transmitirPayload(std::string chaveCripto);
+```
+
+A primeira versão transmite os dados em texto puro. A segunda versão simula a transmissão segura utilizando uma chave de criptografia.
+
+---
+
+### Polimorfismo Dinâmico
+
+O polimorfismo é aplicado no arquivo `main.cpp` através de um vetor de ponteiros para a classe base `Dispositivo`.
+
+```cpp
+std::vector<Dispositivo*> dispositivos;
+```
+
+Esse vetor armazena objetos de classes derivadas, permitindo que o método `processarDados()` seja chamado de forma polimórfica.
+
+```cpp
+for (Dispositivo* dispositivo : dispositivos) {
+    dispositivo->processarDados();
+}
+```
+
+---
+
+### Gerenciamento de Memória
+
+Como os objetos são criados dinamicamente com `new`, eles são liberados ao final da execução com `delete`.
+
+```cpp
+for (Dispositivo* dispositivo : dispositivos) {
+    delete dispositivo;
+}
+```
+
+A classe base possui destrutor virtual para garantir que os objetos derivados sejam destruídos corretamente.
+
+```cpp
+virtual ~Dispositivo();
+```
+
+---
+
+## Descrição das Classes
+
+### Dispositivo
+
+Classe base abstrata do sistema.
+
+Responsabilidades:
+
+- Armazenar o identificador do dispositivo.
+- Armazenar o timestamp da coleta.
+- Definir o contrato do método `processarDados()`.
+
+Atributos:
+
+```cpp
+std::string idDispositivo;
+int timestamp;
+```
+
+Método principal:
+
+```cpp
+virtual void processarDados() = 0;
+```
+
+---
+
+### SensorGPS
+
+Classe responsável por representar um sensor de localização GPS.
+
+Herda de:
+
+```cpp
+Dispositivo
+```
+
+Atributos:
+
+```cpp
+double latitude;
+double longitude;
+```
+
+Responsabilidades:
+
+- Processar dados de localização.
+- Exibir latitude e longitude.
+- Demonstrar sobrecarga de métodos com `transmitirPayload()`.
+
+Métodos principais:
+
+```cpp
+void processarDados() override;
+void transmitirPayload();
+void transmitirPayload(std::string chaveCripto);
+```
+
+---
+
+### SensorDiagnostico
+
+Classe responsável por representar um sensor de diagnóstico do motor.
+
+Herda de:
+
+```cpp
+Dispositivo
+```
+
+Atributos:
+
+```cpp
+int rpmMotor;
+double temperaturaFluido;
+```
+
+Responsabilidades:
+
+- Processar dados do motor.
+- Exibir RPM.
+- Exibir temperatura do fluido.
+- Informar se a temperatura está normal ou elevada.
+
+Método principal:
+
+```cpp
+void processarDados() override;
+```
+
+---
+
+### RastreadorAvancado
+
+Classe responsável por representar um dispositivo avançado que combina GPS e diagnóstico do motor.
+
+Herda de:
+
+```cpp
+SensorGPS
+SensorDiagnostico
+```
+
+Responsabilidades:
+
+- Demonstrar herança múltipla.
+- Processar dados combinados de localização e diagnóstico.
+- Reutilizar os métodos das classes pai.
+
+Método principal:
+
+```cpp
+void processarDados() override;
+```
+
+---
+
+## Como Compilar
+
+Para compilar o projeto, abra o terminal dentro da pasta `Projeto_5` e execute:
+
+```bash
+g++ src/*.cpp -o telemetria
+```
+
+No Windows, também pode gerar diretamente o `.exe`:
+
+```bash
+g++ src/*.cpp -o telemetria.exe
+```
+
+---
+
+## Como Executar
+
+No Windows:
+
+```bash
+telemetria.exe
+```
+
+ou:
+
+```bash
+.\telemetria.exe
+```
+
+No Linux ou Mac:
+
+```bash
+./telemetria
+```
+
+---
+
+## Saída Esperada
+
+Ao executar o programa, a saída será parecida com esta:
+
+```txt
+=== Teste de Sobrecarga de Metodos ===
+Transmitindo dados GPS em texto puro...
+Transmitindo dados GPS com criptografia.
+Chave utilizada: CHAVE-SEGURA-123
+
+=== Processamento Polimorfico ===
+
+-----------------------------
+Sensor GPS [GPS-001]
+Timestamp: 1001
+Localizacao: Latitude -5.0845, Longitude -39.3703
+
+-----------------------------
+Sensor Diagnostico [DIAG-001]
+Timestamp: 1002
+RPM do motor: 2500
+Temperatura do fluido: 92.5 C
+Status do motor: normal.
+
+=== Heranca Multipla ===
+Rastreador Avancado processando dados combinados...
+Sensor GPS [RAST-001]
+Timestamp: 1004
+Localizacao: Latitude -5.2, Longitude -39.5
+-----------------------------
+Sensor Diagnostico [RAST-001]
+Timestamp: 1004
+RPM do motor: 3100
+Temperatura do fluido: 105.8 C
+Alerta: temperatura elevada no motor!
+```
+
+---
+
+## Diagrama UML
+
+O diagrama UML do projeto está localizado na pasta:
+
+```txt
+docs/Telemetria_Fleet_UML.png
+```
+
+Representação UML em Mermaid:
+
+```mermaid
+classDiagram
+    class Dispositivo {
+        <<abstract>>
+        #string idDispositivo
+        #int timestamp
+        +Dispositivo(string idDispositivo, int timestamp)
+        +~Dispositivo()
+        +string getIdDispositivo()
+        +int getTimestamp()
+        +void processarDados()
+    }
+
+    class SensorGPS {
+        -double latitude
+        -double longitude
+        +SensorGPS(string idDispositivo, int timestamp, double latitude, double longitude)
+        +void processarDados()
+        +void transmitirPayload()
+        +void transmitirPayload(string chaveCripto)
+    }
+
+    class SensorDiagnostico {
+        -int rpmMotor
+        -double temperaturaFluido
+        +SensorDiagnostico(string idDispositivo, int timestamp, int rpmMotor, double temperaturaFluido)
+        +void processarDados()
+    }
+
+    class RastreadorAvancado {
+        +RastreadorAvancado(string idDispositivo, int timestamp, double latitude, double longitude, int rpmMotor, double temperaturaFluido)
+        +void processarDados()
+    }
+
+    Dispositivo <|-- SensorGPS
+    Dispositivo <|-- SensorDiagnostico
+    SensorGPS <|-- RastreadorAvancado
+    SensorDiagnostico <|-- RastreadorAvancado
+```
+
+---
+
+## Fluxo de Execução
+
+1. O programa inicia no arquivo `main.cpp`.
+2. É criado um vetor de ponteiros da classe base `Dispositivo`.
+3. São adicionados objetos das classes `SensorGPS` e `SensorDiagnostico`.
+4. O programa testa a sobrecarga do método `transmitirPayload()`.
+5. O programa percorre o vetor e chama `processarDados()` de forma polimórfica.
+6. Cada objeto executa sua própria versão do método.
+7. É criado um objeto `RastreadorAvancado`.
+8. O rastreador processa dados combinados de GPS e diagnóstico.
+9. Os objetos criados dinamicamente são liberados da memória com `delete`.
+10. O programa encerra.
+
+---
+
+
+## Critérios Atendidos
+
+| Critério | Status |
+|---|---|
+| Classe base abstrata `Dispositivo` | Atendido |
+| Atributos comuns protegidos | Atendido |
+| Método virtual puro `processarDados()` | Atendido |
+| Classe `SensorGPS` com herança simples | Atendido |
+| Classe `SensorDiagnostico` com herança simples | Atendido |
+| Classe `RastreadorAvancado` com herança múltipla | Atendido |
+| Sobrescrita de métodos com `override` | Atendido |
+| Sobrecarga de métodos em `SensorGPS` | Atendido |
+| Polimorfismo com `std::vector<Dispositivo*>` | Atendido |
+| Uso de ponteiros | Atendido |
+| Liberação de memória com `delete` | Atendido |
+| Destrutor virtual | Atendido |
+| Separação em arquivos `.h` e `.cpp` | Atendido |
+| Diagrama UML | Atendido |
+| Documentação no README | Atendido |
+
+---
+
+## Autor
+
+Projeto desenvolvido por:
+
+**Ivamilton Ferreira da Silva Junior**
+
+---
+
+## Observações Finais
+
+Este projeto demonstra a aplicação prática dos principais conceitos de Programação Orientada a Objetos em C++, com foco em herança, polimorfismo, sobrescrita, sobrecarga e herança múltipla.
+
+A arquitetura foi organizada para facilitar manutenção, extensão e entendimento do sistema.
