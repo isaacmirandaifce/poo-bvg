@@ -1,6 +1,8 @@
 #ifndef USUARIO_AUTENTICAVEL_H
 #define USUARIO_AUTENTICAVEL_H
 
+#include <string>
+
 enum class TipoUsuario {
     ADMIN,
     AUDITOR,
