@@ -31,3 +31,16 @@ void Usuario::setUsername(std::string novoUser){
 int Usuario::getID(){ return this->id; };
 
 std::string Usuario::getUsername() { return this -> username; };
+
+UsuarioAutenticavel::UsuarioAutenticavel(){};
+UsuarioAutenticavel::~UsuarioAutenticavel(){};
+
+std::string UsuarioAutenticavel::getSenha() { return this->senhaUser; };
+
+void UsuarioAutenticavel::setSenha(std::string novaSenha){
+    if (!novaSenha.empty())
+    {
+        this->senhaUser = novaSenha;
+        ;
+    };
+};

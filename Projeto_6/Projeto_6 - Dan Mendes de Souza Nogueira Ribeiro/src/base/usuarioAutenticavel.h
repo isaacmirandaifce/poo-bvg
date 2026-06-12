@@ -22,8 +22,18 @@ class Usuario {
 
 class UsuarioAutenticavel : public Usuario {
 
+    protected:
+
+    std::string senhaUser;
+
     public:
-    virtual bool autenticar(std::string senha) = 0;
+        UsuarioAutenticavel();
+        virtual ~UsuarioAutenticavel();
+
+        std::string getSenha();
+        void setSenha(std::string novaSenha);
+
+        virtual bool autenticar(std::string senha) = 0;
 };
 
 
