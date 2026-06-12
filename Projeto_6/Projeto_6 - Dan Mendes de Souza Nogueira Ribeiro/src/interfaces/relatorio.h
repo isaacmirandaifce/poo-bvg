@@ -5,6 +5,9 @@
 
 class Relatorio{
     virtual void gerarRelatorio() const = 0;
+
+    
+    virtual ~Relatorio() {};
 };
 
 #endif
