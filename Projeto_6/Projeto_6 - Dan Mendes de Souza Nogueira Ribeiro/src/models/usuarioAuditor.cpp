@@ -23,5 +23,5 @@ TipoUsuario UsuarioAuditor::getTipoUsuario() const
 
 void UsuarioAuditor::gerarRelatorio() const {
 
-    std::cout << std::endl << "logs de modificações do sistema" << std::endl;
+    std::cout << std::endl << "Relatorio de Auditoria: Chaves de criptografia publicas e escopo de varredura" << std::endl;
 };
