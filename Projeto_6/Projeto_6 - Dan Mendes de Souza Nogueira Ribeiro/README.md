@@ -1,6 +1,6 @@
 # Projeto Avaliativo 6: Classes Abstratas, Interfaces, Classes Enumeradas e Classes Internas
 
-**Nome**: Dan Mendes de Soouza Nogueira Ribeiro
+**Nome**: Dan Mendes de Souza Nogueira Ribeiro     
 **Curso**: ADS - 3º Semestre - 2026
 
 ---
