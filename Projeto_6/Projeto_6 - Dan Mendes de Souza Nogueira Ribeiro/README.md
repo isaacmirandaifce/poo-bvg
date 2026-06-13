@@ -21,7 +21,7 @@
 ### Compilação
 
 ```bash
-g++ -std=c++11 main.cpp base/usuarioAutenticavel.cpp models/usuarioAdmin.cpp models/usuarioAuditor.cpp models/usuarioOperador.cpp -o sistema_acesso
+g++ main.cpp base/usuarioAutenticavel.cpp models/usuarioAdmin.cpp models/usuarioAuditor.cpp models/usuarioOperador.cpp -o sistema_acesso
 
 ```
 
