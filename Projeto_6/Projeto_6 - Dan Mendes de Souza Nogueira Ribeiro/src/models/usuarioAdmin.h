@@ -13,7 +13,9 @@ class usuarioAdmin : public UsuarioAutenticavel, public Relatorio{
     usuarioAdmin(int id, std::string nome, std::string senha);
 
     bool autenticar(std::string senha);
-    
+
+    TipoUsuario getTipoUsuario() const;
+
     void gerarRelatorio() const;
 };
 

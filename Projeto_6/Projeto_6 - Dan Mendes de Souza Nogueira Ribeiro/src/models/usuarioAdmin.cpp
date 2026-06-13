@@ -19,3 +19,8 @@ void usuarioAdmin::gerarRelatorio() const {
 
     std::cout << std::endl << "logs de modificações do sistema" << std::endl;
 };
+
+TipoUsuario usuarioAdmin::getTipoUsuario() const{
+
+    return TipoUsuario::ADMIN;
+};

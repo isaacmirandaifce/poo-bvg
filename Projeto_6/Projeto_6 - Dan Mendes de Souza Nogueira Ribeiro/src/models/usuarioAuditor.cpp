@@ -14,6 +14,13 @@ bool UsuarioAuditor::autenticar(std::string senha) {
 
     return getSenha() == senha;
 };
+
+TipoUsuario UsuarioAuditor::getTipoUsuario() const
+{
+
+    return TipoUsuario::AUDITOR;
+};
+
 void UsuarioAuditor::gerarRelatorio() const {
 
     std::cout << std::endl << "logs de modificações do sistema" << std::endl;

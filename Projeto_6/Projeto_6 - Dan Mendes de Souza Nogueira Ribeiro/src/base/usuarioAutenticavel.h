@@ -20,9 +20,16 @@ class Usuario {
     std::string getUsername();
 };
 
-class UsuarioAutenticavel : public Usuario {
+enum class TipoUsuario{
+    ADMIN,
+    AUDITOR,
+    OPERADOR
+};
 
-    protected:
+class UsuarioAutenticavel : public Usuario
+{
+
+protected:
 
     std::string senhaUser;
 
@@ -34,7 +41,8 @@ class UsuarioAutenticavel : public Usuario {
         void setSenha(std::string novaSenha);
 
         virtual bool autenticar(std::string senha) = 0;
-};
 
+        virtual TipoUsuario getTipoUsuario() const = 0;
+};
 
 #endif

@@ -12,6 +12,8 @@ public:
 
     bool autenticar(std::string senha);
 
+    TipoUsuario getTipoUsuario() const;
+
     void gerarRelatorio() const override;
 };
 

@@ -15,6 +15,12 @@ bool UsuarioOperador::autenticar(std::string senha){
     return getSenha() == senha;
 };
 
+TipoUsuario UsuarioOperador::getTipoUsuario() const
+{
+
+    return TipoUsuario::OPERADOR;
+};
+
 void UsuarioOperador::gerarRelatorio() const{
 
     std::cout << std::endl << "log" << std::endl;
