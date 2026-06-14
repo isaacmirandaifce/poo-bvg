@@ -27,24 +27,3 @@ Para evitar vazamento de dados de navegação e garantir a obrigatoriedade de au
 
 ---
 
-### **Estrutura de Arquivos**
-
-Projeto_6/
-│
-├── src/
-│   ├── interfaces/
-│   │   └── Relatorio.h
-│   ├── base/
-│   │   ├── UsuarioAutenticavel.h
-│   │   └── UsuarioAutenticavel.cpp
-│   ├── models/
-│   │   ├── UsuarioAdmin.h
-│   │   ├── UsuarioAdmin.cpp
-│   │   ├── UsuarioAuditor.h
-│   │   ├── UsuarioAuditor.cpp
-│   │   ├── UsuarioOperador.h
-│   │   └── UsuarioOperador.cpp
-│   └── main.cpp
-│
-└── README.md
-
