@@ -1,99 +1,330 @@
-# **Projeto Avaliativo 6: Classes Abstratas, Interfaces, Classes Enumeradas e Classes Internas**
+# Projeto Avaliativo 6 - SecureBank Pro
 
+## Ticket #602 - Implementação do Core de Autenticação e Auditoria
 
-# 🎟️ Ticket #602: Implementação do Core de Autenticação e Auditoria (IAM)
+Este projeto implementa um sistema simples de gerenciamento de identidades e acessos em C++, simulando o módulo IAM do SecureBank Pro.
 
-**De:** Diretor de Segurança da Informação / CISO (Professor)
+O objetivo é aplicar os conceitos de:
 
-**Para:** Engenheiro de Software Backend C++ (Alunos)
-
-**Projeto:** SecureBank Pro (Módulo de Gestão de Identidades e Acessos)
-
-**Status:** `To Do` | **Prioridade:** `Crítica (Compliance & Security)`
-
-##  Contexto
-
-Olá, time! Para estarmos em conformidade com as normas regulatórias de segurança financeira, precisamos de um sistema unificado que gerencie os perfis de acesso de nossos colaboradores e gere registros rígidos de auditoria.
-
-O código antigo usava structs simples e não isolava dados sensíveis, violando regras básicas de conformidade. Sua tarefa nesta sprint é arquitetar a fundação do nosso ecossistema de segurança em C++, usando **Classes Abstratas** para forçar contratos de login, uma **Interface** para padronizar logs de auditoria, uma **Classe Enumerada** para definir permissões e uma **Classe Interna** altamente encapsulada para registrar as sessões de uso.
+* Classes abstratas
+* Interfaces
+* Classes enumeradas
+* Classes internas
+* Herança
+* Polimorfismo
+* Encapsulamento
 
 ---
 
-##  Critérios de Aceitação (Acceptance Criteria)
+## Estrutura do Projeto
 
-### 1. Contratos Globais (Classes Abstratas e Interfaces)
-
-* **Classe Base `Usuario`:** Deve conter dados globais não sensíveis como `id` (int) e `username` (string).
-* **Classe Abstrata `UsuarioAutenticavel`:** (Herda de `Usuario`). Esta classe **não deve** permitir instanciação direta por possuir um **Método Virtual Puro**: `virtual bool autenticar(std::string senha) = 0;`.
-* **Interface `Relatorio`:** Uma classe puramente abstrata que atua como contrato operacional com o método virtual puro: `virtual void gerarRelatorio() const = 0;`.
-
-### 2. Perfis de Acesso e Classes Concretas
-
-Implemente três tipos de usuários que herdam de `UsuarioAutenticavel` e assinam a interface `Relatorio`:
-
-1. **`UsuarioAdmin`:** Responsável pela TI. Deve sobrescrever o método de autenticação e implementar a geração de relatórios com logs de modificações do sistema.
-2. **`UsuarioAuditor`:** Responsável por checar fraudes. Seu relatório exibe chaves de criptografia públicas e escopo de varredura.
-3. **`UsuarioOperador`:** (Substituindo a classe Aluno). Representa o funcionário do caixa ou retaguarda.
-
-### 3. Categorização por Classes Enumeradas (Enum Class)
-
-* Crie uma `enum class TipoUsuario` contendo os identificadores de escopo: `ADMIN`, `AUDITOR`, `OPERADOR`. Cada classe concreta deve conter e expor seu tipo correspondente para triagem rápida no sistema de mensageria.
-
-### 4. Isolamento Total por Classes Internas (Nested Classes)
-
-Para evitar que dados confidenciais de navegação de um operador vazem na memória, você deve aplicar o conceito de **Classe Interna**:
-
-* Dentro da classe `UsuarioOperador`, declare a classe interna privada `HistoricoAcessos` .
-* A classe interna deve registrar de forma oculta uma lista com: `recursoAcessado` (string), `dataHora` (string) e `statusCodigo` (int).
-* A classe externa (`UsuarioOperador`) gerenciará essa estrutura internamente, expondo os dados apenas no momento do disparo do método polimórfico `gerarRelatorio()`.
-
----
-
-##  Estrutura de Arquivos Exigida (Projeto_6)
-
-Seguindo a política de deploy modularizado da nossa equipe:
-
-```text
+```txt
 Projeto_6/
-│
 ├── docs/
-│   └── Arquitetura_IAM_UML.png          # Diagrama UML com herança de interface e classe oculta
-│
+│   └── Arquitetura_IAM_UML.png
 ├── src/
 │   ├── interfaces/
-│   │   └── Relatorio.h                  # Definição do contrato da interface
-│   │
+│   │   └── Relatorio.h
 │   ├── base/
-│   │   └── UsuarioAutenticavel.h / .cpp # Classes abstratas base
-│   │
+│   │   ├── Usuario.h
+│   │   ├── UsuarioAutenticavel.h
+│   │   └── UsuarioAutenticavel.cpp
 │   ├── models/
-│   │   ├── UsuarioAdmin.h / .cpp        # Implementação concreta Admin
-│   │   ├── UsuarioAuditor.h / .cpp      # Implementação concreta Auditor
-│   │   └── UsuarioOperador.h / .cpp     # Contém a classe interna HistoricoAcessos
-│   │
-│   └── main.cpp                         # Fluxo de simulação, login e loop polimórfico
-└── README.md                            # Relatório de conformidade técnica e build
-
+│   │   ├── TipoUsuario.h
+│   │   ├── UsuarioAdmin.h
+│   │   ├── UsuarioAdmin.cpp
+│   │   ├── UsuarioAuditor.h
+│   │   ├── UsuarioAuditor.cpp
+│   │   ├── UsuarioOperador.h
+│   │   └── UsuarioOperador.cpp
+│   └── main.cpp
+└── README.md
 ```
 
 ---
 
-## Fluxo de Desenvolvimento e Git
+## Classes Principais
 
-1. **Arquitetura UML:** Documente o relacionamento. Indique a interface `Relatorio` com o estereótipo `<<interface>>` e a classe interna dentro do escopo visual de `UsuarioOperador`.
-2. **Separação de Escopo:** Lembre-se de implementar os métodos da classe interna usando a resolução de escopo dupla no arquivo `.cpp`: `UsuarioOperador::HistoricoAcessos::Metodo()`.
-3. **Simulação Polimórfica:** O `main.cpp` deve carregar um `std::vector<Relatorio*>` (ponteiros de interface), validar logins com senhas corretas/incorretas e percorrer o vetor executando `.gerarRelatorio()` em cascata para demonstrar a abstração.
-4. Submeta a PR com o título: `Projeto_6 - [Seu Nome Completo]`.
+### Usuario
+
+A classe `Usuario` é a classe base do sistema.
+
+Ela armazena dados globais não sensíveis dos usuários, como:
+
+* `id`
+* `username`
+
+Esses dados são protegidos e podem ser acessados pelas classes filhas.
 
 ---
 
-## Rubrica de Avaliação (Tech Lead Review)
+### UsuarioAutenticavel
 
-| Critério | Descrição | Pontuação |
-| --- | --- | --- |
-| **Abstração & Interfaces** | `UsuarioAutenticavel` e `Relatorio` foram criados como puramente virtuais? Impedem instanciação direta? | 3.0 pts |
-| **Encapsulamento da Classe Interna** | A classe `HistoricoAcessos` está aninhada corretamente em `UsuarioOperador` e seus métodos de escopo respeitam as boas práticas de C++? | 3.0 pts |
-| **Enumerações e Lógica** | Uso correto de `enum class` para categorizar relatórios no terminal, sem vulnerabilidades de vazamento de senhas? | 2.0 pts |
-| **Enterprise Standard (UML/Pastas)** | Organização das pastas, divisão rigorosa de headers/sources e diagrama UML fiel? | 2.0 pts |
+A classe `UsuarioAutenticavel` herda de `Usuario` e funciona como uma classe abstrata.
 
-> Classes abstratas servem para definir comportamentos previsíveis. Se esquecerem de implementar o método `autenticar` em qualquer uma das três classes filhas, o compilador do C++ acusará erro e a build quebrará imediatamente.
+Ela possui o atributo protegido:
+
+* `senha`
+
+Também define os métodos virtuais puros:
+
+```cpp
+virtual bool autenticar(const std::string& senhaInformada) const = 0;
+virtual std::string getNivelAcesso() const = 0;
+virtual TipoUsuario getTipo() const = 0;
+```
+
+Por possuir métodos virtuais puros, essa classe não pode ser instanciada diretamente.
+
+---
+
+### Relatorio
+
+A classe `Relatorio` funciona como uma interface do sistema.
+
+Ela possui o método virtual puro:
+
+```cpp
+virtual void gerarRelatorio() const = 0;
+```
+
+As classes concretas precisam implementar esse método, garantindo que cada tipo de usuário tenha sua própria forma de gerar relatório.
+
+---
+
+## Enumeração
+
+O projeto utiliza uma classe enumerada chamada `TipoUsuario`.
+
+```cpp
+enum class TipoUsuario {
+    ADMIN,
+    AUDITOR,
+    OPERADOR
+};
+```
+
+Ela é usada para categorizar os usuários do sistema em:
+
+* Administrador
+* Auditor
+* Operador
+
+---
+
+## Usuários Implementados
+
+### UsuarioAdmin
+
+A classe `UsuarioAdmin` representa o administrador do sistema.
+
+Ela herda de `UsuarioAutenticavel` e implementa a interface `Relatorio`.
+
+Responsabilidades:
+
+* autenticar o administrador;
+* retornar o nível de acesso;
+* retornar o tipo `ADMIN`;
+* gerar relatório administrativo;
+* gerenciar usuários.
+
+---
+
+### UsuarioAuditor
+
+A classe `UsuarioAuditor` representa o auditor do sistema.
+
+Ela herda de `UsuarioAutenticavel` e implementa a interface `Relatorio`.
+
+Responsabilidades:
+
+* autenticar o auditor;
+* retornar o nível de acesso;
+* retornar o tipo `AUDITOR`;
+* gerar relatório de auditoria;
+* consultar logs de segurança.
+
+---
+
+### UsuarioOperador
+
+A classe `UsuarioOperador` representa o funcionário operacional do sistema.
+
+Ela herda de `UsuarioAutenticavel` e implementa a interface `Relatorio`.
+
+Responsabilidades:
+
+* autenticar o operador;
+* retornar o nível de acesso;
+* retornar o tipo `OPERADOR`;
+* executar operações;
+* registrar histórico de acessos;
+* gerar relatório operacional.
+
+---
+
+## Classe Interna
+
+Dentro da classe `UsuarioOperador`, foi criada a classe interna privada `HistoricoAcessos`.
+
+Essa classe é responsável por registrar os acessos feitos pelo operador.
+
+Cada registro possui:
+
+* `recursoAcessado`
+* `dataHora`
+* `statusCodigo`
+
+A classe interna fica encapsulada dentro de `UsuarioOperador`, impedindo acesso direto externo aos dados do histórico.
+
+Isso ajuda a proteger informações internas e respeita o princípio de encapsulamento.
+
+---
+
+## Polimorfismo
+
+O polimorfismo é demonstrado no arquivo `main.cpp`.
+
+Foi criado um vetor de ponteiros para a interface `Relatorio`:
+
+```cpp
+std::vector<Relatorio*> relatorios;
+```
+
+Depois, objetos de classes diferentes são adicionados ao mesmo vetor:
+
+```cpp
+relatorios.push_back(&admin);
+relatorios.push_back(&auditor);
+relatorios.push_back(&operador);
+```
+
+Em seguida, o sistema percorre o vetor e chama o método `gerarRelatorio()`:
+
+```cpp
+for (const Relatorio* relatorio : relatorios) {
+    relatorio->gerarRelatorio();
+}
+```
+
+Mesmo usando o mesmo método, cada classe executa sua própria versão de `gerarRelatorio()`.
+
+---
+
+## Diagrama UML
+
+O diagrama UML do sistema está localizado em:
+
+```txt
+docs/Arquitetura_IAM_UML.png
+```
+
+Ele representa a relação entre:
+
+* classe base;
+* classe abstrata;
+* interface;
+* enumeração;
+* classes concretas;
+* classe interna privada.
+
+---
+
+## Como Compilar
+
+No terminal, dentro da pasta do projeto, execute:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -pedantic -I src src/main.cpp src/base/UsuarioAutenticavel.cpp src/models/UsuarioAdmin.cpp src/models/UsuarioAuditor.cpp src/models/UsuarioOperador.cpp -o projeto_6
+```
+
+---
+
+## Como Executar
+
+No MSYS2 ou Git Bash:
+
+```bash
+./projeto_6.exe
+```
+
+No Windows PowerShell:
+
+```powershell
+.\projeto_6.exe
+```
+
+---
+
+## Exemplo de Saída
+
+```txt
+=== TESTE DE AUTENTICACAO ===
+Administrador autenticado com sucesso.
+Auditor autenticado com sucesso.
+Operador autenticado com sucesso.
+
+=== ACOES ESPECIFICAS DOS USUARIOS ===
+admin_master esta gerenciando usuarios do sistema.
+auditor_logs esta consultando logs de seguranca.
+operador_caixa acessou o recurso: Consulta de conta
+operador_caixa acessou o recurso: Atualizacao de cadastro
+
+=== RELATORIOS GERADOS COM POLIMORFISMO ===
+-----------------------------
+Relatorio do Administrador
+ID: 1
+Usuario: admin_master
+Nivel de acesso: Acesso total ao sistema
+-----------------------------
+Relatorio do Auditor
+ID: 2
+Usuario: auditor_logs
+Nivel de acesso: Acesso de auditoria e consulta de logs
+-----------------------------
+Relatorio do Operador
+ID: 3
+Usuario: operador_caixa
+Nivel de acesso: Acesso operacional limitado
+Historico de acessos:
+- Recurso acessado: Consulta de conta
+  Data/Hora: 15/06/2026 01:36:07
+  Status: 200
+- Recurso acessado: Atualizacao de cadastro
+  Data/Hora: 15/06/2026 01:36:07
+  Status: 200
+```
+
+---
+
+## Conceitos Aplicados
+
+### Classes Abstratas
+
+A classe `UsuarioAutenticavel` define comportamentos obrigatórios, mas não pode ser instanciada diretamente.
+
+### Interfaces
+
+A classe `Relatorio` define um contrato para geração de relatórios.
+
+### Enum Class
+
+A enumeração `TipoUsuario` categoriza os perfis de acesso do sistema.
+
+### Classes Internas
+
+A classe `HistoricoAcessos` está dentro de `UsuarioOperador` e registra acessos de forma encapsulada.
+
+### Polimorfismo
+
+O sistema usa ponteiros para `Relatorio` para chamar `gerarRelatorio()` em diferentes tipos de usuários.
+
+### Encapsulamento
+
+Os dados internos do histórico do operador ficam protegidos dentro da classe interna privada.
+
+---
+
+## Autor
+
+Ivamilton Ferreira da Silva Junior
