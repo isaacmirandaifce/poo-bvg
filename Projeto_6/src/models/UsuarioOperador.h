@@ -10,10 +10,21 @@ class UsuarioOperador : public UsuarioAutenticavel, public Relatorio {
 private:
     class HistoricoAcessos {
     private:
-        std::vector<std::string> acessos;
+        struct RegistroAcesso {
+            std::string recursoAcessado;
+            std::string dataHora;
+            int statusCodigo;
+        };
+
+        std::vector<RegistroAcesso> registros;
 
     public:
-        void adicionarAcesso(const std::string& acesso);
+        void adicionarAcesso(
+            const std::string& recursoAcessado,
+            const std::string& dataHora,
+            int statusCodigo
+        );
+
         void exibirHistorico() const;
     };
 
@@ -32,7 +43,7 @@ public:
 
     void executarOperacao(const std::string& operacao);
 
-    void mostrarHistorico() const;
+
 };
 
 #endif
