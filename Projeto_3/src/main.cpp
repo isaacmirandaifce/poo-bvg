@@ -9,9 +9,9 @@ int main() {
     vector<Contato> contatos;
 
     // Instanciando contatos e adicionando ao vector com push_back
-    contatos.push_back(Contato("Ana Souza", "(11) 91234-5678"));
+    contatos.push_back(Contato("Davi Maciel", "(11) 91234-5678"));
     contatos.push_back(Contato("Bruno Lima", "(21) 99876-5432"));
-    contatos.push_back(Contato("Carla Mendes", "(31) 98765-4321"));
+    contatos.push_back(Contato("Nágilla Silva", "(31) 98765-4321"));
 
     cout << "===== Lista de Contatos CRM =====" << endl;
 

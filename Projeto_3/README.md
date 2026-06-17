@@ -1,53 +1,148 @@
-# Projeto Avaliativo 3: Introdução a C++
+# **Projeto Avaliativo 3: Introdução a C++**
 
-## Objetivo
-Este projeto introduz conceitos fundamentais de C++ — criação de classes, uso de métodos,
-containers (`vector`), manipulação de strings, namespaces e estruturação de código — através
-do desenvolvimento do Módulo de Contatos B2B do CRM Enterprise (Ticket #612).
+## **Objetivo**
+Este projeto tem como objetivo introduzir conceitos fundamentais da linguagem C++ e reforçar os tópicos abordados em aula, como criação de classes, uso de métodos, containers (`vector`), manipulação de strings, namespaces e estruturação de código.
 
-## Estrutura de Arquivos
+---
+
+## **Descrição do Projeto**
+
+1. **Classe Pessoa:**
+   - **Atributos:**
+     - `std::string nome`: Nome da pessoa.
+     - `std::string telefone`: Telefone da pessoa.
+   - **Métodos:**
+     - Construtor padrão.
+     - Construtor parametrizado (inicializa os atributos `nome` e `telefone` com valores fornecidos).
+     - Destrutor (exibe uma mensagem indicando a destruição do objeto).
+     - `void imprimirNome()`: Imprime o nome da pessoa.
+     - `void imprimirTelefone()`: Imprime o telefone da pessoa.
+     - Utilizar o ponteiro `this` dentro da classe para demonstrar boas práticas.
+
+2. **Função `main`:**
+   - Criar um container `std::vector` para armazenar objetos do tipo `Pessoa`.
+   - Adicionar pelo menos 3 objetos `Pessoa` ao `vector`.
+   - Percorrer o `vector` utilizando um laço e imprimir o nome e telefone de cada pessoa armazenada.
+
+3. **Modelagem UML:**
+   - Criar um diagrama UML que represente a classe `Pessoa`, seus atributos e métodos.
+
+4. **Estrutura de Arquivos:**
+   - `Pessoa.h`: Declaração da classe.
+   - `Pessoa.cpp`: Implementação da classe.
+   - `main.cpp`: Contém a função principal e manipulação do `vector`.
+
+---
+
+## **Requisitos Técnicos**
+
+1. **Classes e Métodos:**
+   - Utilize atributos privados e métodos públicos.
+   - Implementação do destrutor para exibir mensagens de limpeza.
+
+2. **Namespaces:**
+   - Utilize `namespace std` para simplificar a escrita do código.
+
+3. **Manipulação de Containers (`vector`):**
+   - Armazenar e manipular objetos do tipo `Pessoa` usando o container `std::vector`.
+
+4. **Entrada e Saída de Dados:**
+   - Utilize `std::cout` e `std::cin` para manipulação de entrada e saída.
+
+---
+
+## **Estrutura do Código**
+
+### Arquivo `Pessoa.h`
+```cpp
+#ifndef PESSOA_H
+#define PESSOA_H
+
+#include <string>
+#include <iostream>
+
+class Pessoa {
+private:
+
+public:
+
+};
+
+#endif // PESSOA_H
+```
+
+### Arquivo `Pessoa.cpp`
+```cpp
+#include "Pessoa.h"
+
+// Construtor padrão
+
+// Construtor parametrizado
+
+// Destrutor
+
+// Metodo de impressao do nome
+
+// Metodo de impressao do nome
 
 ```
-Projeto_3/
-│
-├── docs/
-│   └── Contato_UML.png   # Diagrama de Classes
-│
-├── src/
-│   ├── Contato.h         # Header: declaração da classe e atributos
-│   ├── Contato.cpp       # Source: construtores, destrutor e métodos
-│   └── main.cpp          # Ponto de entrada: uso do std::vector<Contato>
-│
-└── README.md
+
+### Arquivo `main.cpp`
+```cpp
+#include <iostream>
+#include <vector>
+#include "Pessoa.h"
+
+int main() {
+
+    // Criando objetos Pessoa e adicionando ao vector
+
+    // Percorrendo o vector e exibindo informações
+    for () {
+        
+    }
+
+    return 0;
+}
 ```
 
-## Classe `Contato`
-- Atributos privados: `std::string nome`, `std::string telefone`.
-- Construtor padrão e construtor parametrizado (usa o ponteiro `this` para diferenciar
-  parâmetros de atributos).
-- Destrutor que imprime um log informando a desalocação do objeto da memória.
-- Métodos `imprimirNome()` e `imprimirTelefone()`.
+---
 
-## `main.cpp`
-Utiliza `std::vector<Contato>` para armazenar pelo menos 3 contatos (adicionados via
-`push_back`) e percorre o vetor em um laço, exibindo nome e telefone de cada um.
+## **Diagrama UML**
+Os alunos devem criar um diagrama UML que represente:
+- A classe `Pessoa` com seus atributos e métodos.
+- Os tipos de dados de cada atributo e o escopo dos métodos (público ou privado).
 
-## Como Compilar e Executar
+O diagrama deve ser salvo como `Pessoa_UML.png` ou similar e carregado no repositório.
 
-Com o GCC (`g++`), a partir da pasta `Projeto_3`:
+---
 
-```bash
-g++ src/main.cpp src/Contato.cpp -o crm_app
-./crm_app
-```
+## **Critérios de Avaliação**
 
-No Windows (PowerShell), o executável gerado terá extensão `.exe`:
+1. **Implementação Técnica (6 pontos):**
+   - Estrutura correta dos arquivos (`.h` e `.cpp`).
+   - Implementação correta dos atributos, métodos, construtores e destrutores.
 
-```powershell
-g++ src/main.cpp src/Contato.cpp -o crm_app.exe
-./crm_app.exe
-```
+2. **Uso de Containers (2 pontos):**
+   - Utilização correta de `std::vector` para armazenar e manipular objetos.
 
-## Diagrama UML
-O diagrama de classes (`docs/Contato_UML.png`) representa a classe `Contato`, seus atributos
-e métodos, com a visibilidade (`-` privado, `+` público) e os tipos de dados em C++.
+3. **Modelagem UML (1 ponto):**
+   - Criação do diagrama UML da classe `Pessoa`.
+
+4. **Organização e Boas Práticas (1 ponto):**
+   - Organização do código e uso adequado de comentários.
+
+---
+
+## **Entrega**
+
+1. **Repositório GitHub:**
+   - Submeta os arquivos no repositório da turma no diretório `/Projetos/Projeto_3`.
+   - Siga as regras de contribuição definidas previamente para o repositório.
+
+2. **Prazo:**
+   - Sete dias
+
+3. **Arquivos Necessários:**
+   - `Pessoa.h`, `Pessoa.cpp`, `main.cpp` (código-fonte).
+   - `Pessoa_UML.png` (diagrama UML).
