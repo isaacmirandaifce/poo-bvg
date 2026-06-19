@@ -1,45 +1,40 @@
 #include <iostream>
-#include <iomanip>
-#include "Aluno.h"
-#include "Disciplina.h"
+#include "ContaBancaria.h"
+#include "Transacao.h"
 
 int main() {
-    // Criando o objeto Aluno com construtor parametrizado
-    Aluno aluno("Carlos Eduardo Silva", "2024001", "Análise e Desenvolvimento de Sistemas");
+    std::cout << "\n======================================\n";
+    std::cout << "   SecureBank Pro — Módulo de Auditoria\n";
+    std::cout << "======================================\n\n";
 
-    // Criando disciplinas com construtor parametrizado
-    Disciplina disciplina1("Programação Orientada a Objetos", 80, 7.5f);
-    Disciplina disciplina2("Banco de Dados", 60, 4.8f);
-    Disciplina disciplina3("Estruturas de Dados", 80, 6.0f);
+    // Criação da conta bancária
+    ContaBancaria conta("Ana Paula Ferreira", "123.456.789-00", 1500.00);
+    conta.exibirDados();
 
-    // Exibindo informações do aluno
-    aluno.exibirInformacoes();
+    // --- Cenário 1: Transação APROVADA ---
+    std::cout << "\n--- Cenário 1: Transação dentro do saldo ---\n";
+    Transacao t1(800.00, "19/06/2025");
+    t1.exibirDados();
+    bool resultado1 = validarTransacao(conta, t1);
+    std::cout << "[SISTEMA] Status final: " << (resultado1 ? "APROVADA" : "REJEITADA") << "\n";
 
-    std::cout << std::endl;
-    std::cout << "==============================" << std::endl;
-    std::cout << "  Resultado por Disciplina" << std::endl;
-    std::cout << "==============================" << std::endl;
+    // --- Cenário 2: Transação REJEITADA por saldo insuficiente ---
+    std::cout << "\n--- Cenário 2: Transação acima do saldo ---\n";
+    Transacao t2(2000.00, "19/06/2025");
+    t2.exibirDados();
+    bool resultado2 = validarTransacao(conta, t2);
+    std::cout << "[SISTEMA] Status final: " << (resultado2 ? "APROVADA" : "REJEITADA") << "\n";
 
-    // Array de disciplinas para percorrer com loop
-    Disciplina disciplinas[3] = {disciplina1, disciplina2, disciplina3};
+    // --- Cenário 3: Transação REJEITADA por valor inválido ---
+    std::cout << "\n--- Cenário 3: Transação com valor inválido ---\n";
+    Transacao t3(-50.00, "19/06/2025");
+    t3.exibirDados();
+    bool resultado3 = validarTransacao(conta, t3);
+    std::cout << "[SISTEMA] Status final: " << (resultado3 ? "APROVADA" : "REJEITADA") << "\n";
 
-    for (int i = 0; i < 3; i++) {
-        std::cout << std::endl;
-        std::cout << "Disciplina:    " << disciplinas[i].getNome() << std::endl;
-        std::cout << "Carga Horária: " << disciplinas[i].getCargaHoraria() << "h" << std::endl;
-        std::cout << std::fixed << std::setprecision(1);
-        std::cout << "Nota:          " << disciplinas[i].getNota() << std::endl;
-
-        // Usando a função amiga para verificar aprovação
-        if (verificarAprovacao(disciplinas[i])) {
-            std::cout << "Situação:      APROVADO ✓" << std::endl;
-        } else {
-            std::cout << "Situação:      REPROVADO ✗" << std::endl;
-        }
-        std::cout << "------------------------------" << std::endl;
-    }
-
-    std::cout << std::endl;
+    std::cout << "\n======================================\n";
+    std::cout << "   Auditoria concluída.\n";
+    std::cout << "======================================\n\n";
 
     return 0;
 }
