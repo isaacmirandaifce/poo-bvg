@@ -1,172 +1,182 @@
-# **Projeto Avaliativo 8: Tratamento de Exceções e Sinais - C++**
+# Projeto Avaliativo 8 - Tratamento de Exceções e Sinais
 
-## **Objetivo**
-Este projeto tem como objetivo aprimorar o sistema acadêmico desenvolvido anteriormente, integrando conceitos avançados de tratamento de exceções e sinais para tornar a aplicação mais robusta e tolerante a falhas. A proposta é implementar o carregamento automático de dados a partir de arquivos externos, garantindo que possíveis erros de leitura, escrita e manipulação de arquivos sejam devidamente tratados. Além disso, o sistema deve ser capaz de responder de maneira adequada a sinais do sistema operacional, como encerramento abrupto e falhas de segmentação.
+## Descrição
 
----
+Este projeto implementa uma camada de persistência resiliente para armazenamento de transações financeiras utilizando C++. O sistema foi desenvolvido para lidar com falhas de leitura e escrita em arquivos através de exceções customizadas e para interceptar sinais do sistema operacional, permitindo o encerramento seguro da aplicação.
 
-## **Tema do Projeto: Gerenciamento Acadêmico Resiliente**
+O objetivo é garantir maior confiabilidade no armazenamento de dados, evitando perda de informações e corrupção de arquivos em situações de erro ou interrupção inesperada do programa.
 
-### **Descrição Geral**
-Os alunos devem modificar o sistema acadêmico para incluir:
-- **Carregamento de dados a partir de arquivos**, garantindo que a aplicação seja capaz de iniciar com dados pré-existentes e salvos anteriormente.
-- **Tratamento de exceções** ao tentar abrir, ler e gravar arquivos de dados.
-- **Mecanismo de resposta a sinais do sistema operacional**, garantindo que falhas inesperadas sejam tratadas e que a aplicação possa continuar funcionando ou encerrar de maneira segura.
+## Funcionalidades
 
----
+### Hierarquia de Exceções
 
-### **Requisitos do Projeto**
+O projeto utiliza uma hierarquia de exceções baseada em `std::exception`:
 
-1. **Tratamento de Exceções em Arquivos:**
-   - Criar um **módulo de persistência** para carregar e salvar automaticamente os dados do sistema em arquivos (`.txt` ou `.csv`).
-   - Implementar um tratamento adequado para os seguintes erros:
-     - Arquivo não encontrado.
-     - Permissão negada para abrir ou gravar o arquivo.
-     - Falhas na conversão de dados lidos do arquivo.
+* `StorageException`: classe base para erros de armazenamento.
+* `FileCorruptedException`: lançada quando o arquivo apresenta dados inválidos ou corrompidos.
+* `DiskWriteException`: lançada quando ocorre falha na gravação de dados.
 
-2. **Uso de Exceções Personalizadas:**
-   - Criar classes de exceção personalizadas para diferentes cenários de erro.
-   - Exemplo: `ArquivoNaoEncontradoException`, `PermissaoNegadaException`.
+### Persistência de Dados
 
-3. **Manipulação de Sinais do Sistema Operacional:**
-   - Implementar um **tratador de sinais** para capturar:
-     - **SIGINT** (Interrupção via Ctrl+C).
-     - **SIGSEGV** (Acesso inválido à memória).
-     - **SIGTERM** (Finalização solicitada pelo SO).
-   - Quando um sinal for capturado:
-     - O sistema deve tentar salvar os dados antes de encerrar (se for seguro fazê-lo).
-     - O programa deve imprimir uma mensagem informando o motivo do encerramento.
+A classe `LedgerPersistence` é responsável por:
 
-4. **Integração com o Sistema Acadêmico:**
-   - O sistema deve carregar automaticamente as listas de:
-     - Alunos.
-     - Professores.
-     - Disciplinas.
-   - Sempre que houver uma modificação relevante (como a inclusão de um novo aluno ou disciplina), o sistema deve salvar os dados automaticamente.
+* Salvar transações no arquivo `ledger.csv`.
+* Carregar transações previamente armazenadas.
+* Detectar falhas de leitura e escrita.
+* Garantir o descarregamento do buffer utilizando `std::flush`.
 
----
+### Tratamento de Sinais
 
-## **Requisitos Técnicos**
+A classe `SignalHandler` intercepta:
 
-1. **Tratamento de Exceções e Salvamento de Dados:**
-   - Criar funções que tentem abrir arquivos e capturem possíveis erros.
-   - Exibir mensagens informativas e opções para o usuário quando erros ocorrerem.
+* `SIGINT` (Ctrl + C)
+* `SIGTERM`
 
-2. **Manipulação de Sinais:**
-   - Usar a biblioteca `<csignal>` para capturar sinais do sistema.
-   - Criar uma função de tratamento global para manipular os sinais.
+Ao receber um sinal:
 
-3. **Estrutura de Arquivos do Projeto:**
-   - Modularizar o código com arquivos `.h` e `.cpp` bem organizados:
-     - `Persistencia.h` e `Persistencia.cpp`: Manipulação de arquivos.
-     - `SinalHandler.h` e `SinalHandler.cpp`: Tratamento de sinais.
-     - `main.cpp`: Integração e testes do sistema.
+1. Exibe uma mensagem de alerta na tela.
+2. Registra o evento em `emergency.log`.
+3. Realiza o encerramento seguro da aplicação.
 
-4. **Modelagem UML:**
-   - Criar um **diagrama UML** com as novas classes e sua integração com as já existentes no sistema.
+## Estrutura do Projeto
 
----
-
-## **Exemplo de Estrutura de Código**
-
-### Arquivo `Persistencia.h`
-```cpp
-#ifndef PERSISTENCIA_H
-#define PERSISTENCIA_H
-
-#include <fstream>
-#include <vector>
-#include "Aluno.h"
-
-class Persistencia {
-public:
-
-};
-
-#endif // PERSISTENCIA_H
+```text
+Projeto_8/
+│
+├── docs/
+│   └── Arquitetura_Resiliencia_UML.png
+│
+├── src/
+│   ├── exceptions/
+│   │   └── StorageException.h
+│   │
+│   ├── infrastructure/
+│   │   ├── LedgerPersistence.h
+│   │   ├── LedgerPersistence.cpp
+│   │   ├── SignalHandler.h
+│   │   └── SignalHandler.cpp
+│   │
+│   └── main.cpp
+│
+└── README.md
 ```
 
-### Arquivo `Persistencia.cpp`
-```cpp
-#include "Persistencia.h"
-#include <iostream>
+## Classes Implementadas
 
+### StorageException
+
+Classe base para todas as exceções relacionadas ao armazenamento de dados.
+
+### FileCorruptedException
+
+Especialização utilizada para indicar arquivos corrompidos ou inconsistentes.
+
+### DiskWriteException
+
+Especialização utilizada para indicar falhas de gravação em disco.
+
+### LedgerPersistence
+
+Classe responsável pela persistência dos dados utilizando arquivos.
+
+Métodos implementados:
+
+* `salvarDados()`
+* `carregarDados()`
+
+### SignalHandler
+
+Classe responsável por registrar e tratar sinais enviados pelo sistema operacional.
+
+Métodos implementados:
+
+* `inicializar()`
+* `tratador()`
+
+## Como Compilar
+
+Utilizando o compilador g++:
+
+```bash
+g++ src/main.cpp src/infrastructure/LedgerPersistence.cpp src/infrastructure/SignalHandler.cpp -o projeto8
 ```
 
-### Arquivo `SinalHandler.h`
-```cpp
-#ifndef SINALHANDLER_H
-#define SINALHANDLER_H
+## Como Executar
 
-#include <csignal>
-#include <iostream>
+Linux:
 
-class SinalHandler {
-public:
-    static void inicializar();
-private:
-    static void tratador(int sinal);
-};
-
-#endif // SINALHANDLER_H
+```bash
+./projeto8
 ```
 
-### Arquivo `SinalHandler.cpp`
-```cpp
-#include "SinalHandler.h"
+Windows:
 
-void SinalHandler::inicializar() {
-
-}
-
-void SinalHandler::tratador(int sinal) {
- 
-    exit(1);
-}
+```bash
+projeto8.exe
 ```
 
-### Arquivo `main.cpp`
-```cpp
-#include <iostream>
-#include "Persistencia.h"
-#include "SinalHandler.h"
+## Testes Realizados
 
-int main() {
-    SinalHandler::inicializar();
+### Teste de Persistência
 
-    try {
-        
-    } catch ( ) {
+* Inicialização do sistema.
+* Carregamento de transações existentes.
+* Inserção de novas transações.
+* Gravação das informações em `ledger.csv`.
 
-    }
+### Teste de Exceções
 
-    return 0;
-}
-```
+Foram realizados testes para:
 
----
+* Falha na leitura de arquivos.
+* Falha na gravação de arquivos.
+* Tratamento das exceções customizadas.
 
-## **Critérios de Avaliação**
+### Teste de Interrupção por Sinal
 
-1. **Implementação Técnica (6 pontos):**
-   - Correta implementação do carregamento de arquivos e manipulação de sinais.
+Procedimento:
 
-2. **Robustez do Sistema (2 pontos):**
-   - Sistema responde bem a falhas inesperadas e erros de arquivo.
+1. Executar a aplicação.
+2. Pressionar `Ctrl + C`.
+3. Verificar a exibição da mensagem de alerta.
+4. Confirmar a criação do arquivo `emergency.log`.
+5. Confirmar o encerramento seguro da aplicação.
 
-3. **Modelagem UML (1 ponto):**
-   - Diagrama UML atualizado, incluindo persistência e tratamento de sinais.
+## Tecnologias Utilizadas
 
-4. **Boas Práticas e Documentação (1 ponto):**
-   - Código modular, comentado e organizado.
+* C++
+* Programação Orientada a Objetos
+* STL (Standard Template Library)
+* `<fstream>`
+* `<vector>`
+* `<string>`
+* `<exception>`
+* `<csignal>`
 
----
+## Objetivos de Aprendizagem
 
-## **Entrega**
+Durante o desenvolvimento deste projeto foram aplicados os seguintes conceitos:
 
-1. **Formato:**
-   - Os arquivos devem ser enviados para o repositório da turma no diretório `/Projetos/Projeto_8`.
-   - O diagrama UML deve ser incluído no formato `.png` ou `.jpg`.
+* Tratamento de exceções customizadas.
+* Herança e polimorfismo.
+* Manipulação de arquivos.
+* Programação orientada a objetos.
+* Tratamento de sinais do sistema operacional.
+* Organização modular de código em arquivos `.h` e `.cpp`.
 
-2. **Prazo:**
-   - O projeto deve ser entregue até **09/03/2025**.
+## Autor
+
+**Gabriel Uaren**
+
+Aluno do **Instituto Federal de Educação, Ciência e Tecnologia do Ceará (IFCE) – Campus Boa Viagem**.
+
+Disciplina: **Programação Orientada a Objetos (POO)**
+
+Projeto desenvolvido como atividade avaliativa da disciplina, com foco na implementação de mecanismos de persistência resiliente, tratamento de exceções e captura de sinais do sistema operacional utilizando a linguagem C++.
+
+**Instituição:** IFCE – Campus Boa Viagem
+**Curso:** ADS
+**Professor:** Isaac
+**Disciplina:** Programação Orientada a Objetos
+**Projeto:** Projeto Avaliativo 8
+**Tema:** Tratamento de Exceções e Sinais em C++
