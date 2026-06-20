@@ -176,7 +176,7 @@ Projeto desenvolvido como atividade avaliativa da disciplina, com foco na implem
 
 **Instituição:** IFCE – Campus Boa Viagem
 **Curso:** ADS
-**Professor:** Isaac
+**Professor:** Isaac Miranda
 **Disciplina:** Programação Orientada a Objetos
 **Projeto:** Projeto Avaliativo 8
 **Tema:** Tratamento de Exceções e Sinais em C++
