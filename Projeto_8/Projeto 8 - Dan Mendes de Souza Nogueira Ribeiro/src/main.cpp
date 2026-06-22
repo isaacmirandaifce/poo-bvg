@@ -5,12 +5,19 @@
 #include "infrastructure/signalHandler.h"
 #include "exceptions/storageException.h"
 
+/**
+ * @brief Ponto de entrada do sistema do Ledger.
+ * * O fluxo de execução envolve:
+ * 1. Inicializar os manipuladores de sinais para desligamento seguro.
+ * 2. Instanciar e carregar os dados antigos do banco de dados (ledger).
+ * 3. Iniciar um loop contínuo de criação e salvamento de novas transações.
+ * * @return int Código de saída do programa. (0 para sucesso, 1 para erro de storage, 2 para erro genérico).
+ */
 int main()
 {
     SignalHandler::inicializar();
 
-    /* 
-    std::ofstream arquivoTeste("ledger.csv");
+    /* std::ofstream arquivoTeste("ledger.csv");
     arquivoTeste << "PIX,100.00\n";
     arquivoTeste << "\n";
     arquivoTeste << "TED,50.00\n";
@@ -20,7 +27,7 @@ int main()
     LedgerPersistence db;
     std::vector<std::string> historico;
 
-    
+    // Tentativa inicial de carregar o estado atual do banco de dados.
     try
     {
         historico = db.carregarDados();
@@ -37,12 +44,14 @@ int main()
         return 2;
     }
 
+    // Inserção de dados em memória
     historico.push_back("PIX,200.00");
     historico.push_back("DEPOSITO,50.00");
     historico.push_back("TED,3150.00");
 
     int contador = historico.size();
 
+    // Loop de simulação infinita do processamento de transações.
     while (true)
     {
         contador++;
@@ -53,6 +62,7 @@ int main()
 
         historico.push_back(novaTransacao);
 
+        // Tentativa de persistir a transação em disco.
         try
         {
             db.salvarDados(historico);
@@ -67,6 +77,7 @@ int main()
             std::cerr << std::endl << "Erro genérico de runtime: " << e.what() << std::endl;
         }
 
+        // Aguarda 2 segundos antes do próximo processamento
         std::this_thread::sleep_for(std::chrono::seconds(2));
     }
 
