@@ -9,7 +9,7 @@ public:
     static void inicializar();
 
 private:
-    static void tratador(int sinal);
+    static void interceptar(int sinal);
 };
 
 #endif
