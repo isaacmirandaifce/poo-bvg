@@ -16,7 +16,7 @@ public:
         dados.push_back(elemento);
     }
 
-    // Filtra os dados com base em uma condição
+    // Filtra os dados com base em uma condição (lambda)
     std::vector<T> filtrar(std::function<bool(const T&)> condicao) {
         std::vector<T> dados_filtrados;
         for (const auto& elemento : dados) {
