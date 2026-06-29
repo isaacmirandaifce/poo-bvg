@@ -1,12 +1,48 @@
 # **Projeto Avaliativo 8: Tratamento de Exceções e Sinais - C++**
 
-## **Tema do Projeto: Gerenciamento Acadêmico Resiliente**
+# 🎟️ Ticket #912: Motor de Persistência Resiliente e Tratador de Sinais do SO
 
-### **Descrição Geral**
-Os alunos devem modificar o sistema acadêmico para incluir:
-- **Carregamento de dados a partir de arquivos**, garantindo que a aplicação seja capaz de iniciar com dados pré-existentes e salvos anteriormente.
-- **Tratamento de exceções** ao tentar abrir, ler e gravar arquivos de dados.
-- **Mecanismo de resposta a sinais do sistema operacional**, garantindo que falhas inesperadas sejam tratadas e que a aplicação possa continuar funcionando ou encerrar de maneira segura.
+**De:** Arquiteto de Infraestrutura / DevOps Principal (Professor)
+
+**Para:** Engenheiro de Concorrência e Core Backend C++ (Alunos)
+
+**Atividade:** Projeto Avaliativo 8
+
+**Contexto:** SecureBank Pro (Subsistema: *Transaction Ledger Storage*)
+
+**Status:** `To Do` | **Prioridade:** `Bloqueante / Crítica`
+
+## Contexto
+
+Olá, time! Atualmente, nosso motor de banco de dados grava as transações em arquivos planos (`.csv`). No entanto, se o disco encher, o arquivo estiver corrompido ou se um administrador encerrar o processo abruptamente via terminal (`kill -9` ou `Ctrl+C`), corremos o risco de gerar *partial writes* (escritas incompletas), corrompendo o histórico financeiro dos clientes.
+
+Nesta sprint, sua missão é implementar uma camada de persistência ultra-resiliente utilizando **Exceções Customizadas** para falhas de arquivos e um **Manipulador de Sinais Estático** para capturar eventos de interrupção do sistema operacional. O sistema deve interceptar a queda, dar *flush* nos buffers e fechar os arquivos de forma limpa antes de encerrar.
+
+---
+
+##  Critérios de Aceitação (Acceptance Criteria)
+
+### 1. Hierarquia de Exceções Customizadas (Robustez)
+
+Não utilize exceções genéricas. Você deve criar uma árvore de exceções herdando de `std::exception` para mapear erros em tempo de execução de forma limpa:
+
+* **`StorageException`** (Classe Base de Erro de Armazenamento): Contém um método `virtual const char* what() const noexcept override`.
+* **`FileCorruptedException`** (Classe Derivada): Disparada caso o arquivo exista, mas suas colunas ou dados estejam em formato inválido ou corrompido.
+* **`DiskWriteException`** (Classe Derivada): Disparada se o fluxo de escrita (`std::ofstream`) falhar ao tentar abrir ou persistir dados por falta de permissão ou espaço.
+
+### 2. Módulo de Persistência (`LedgerPersistence`)
+
+Esta classe será responsável pelo I/O de dados através da biblioteca `<fstream>`.
+
+* **`void salvarDados(const std::vector<std::string>& transacoes)`**: Abre o arquivo `ledger.csv`, itera gravando as strings e força o esvaziamento do buffer (`std::flush`). Caso falhe, dispara `DiskWriteException`.
+* **`std::vector<std::string> carregarDados()`**: Lê o arquivo `ledger.csv`. Se houver inconsistência nos dados (ex: linhas vazias inesperadas ou falha de leitura), dispara `FileCorruptedException`.
+
+### 3. Tratamento de Sinais do Sistema Operacional (`SignalHandler`)
+
+Você deve implementar uma classe estática baseada na biblioteca `<csignal>` para capturar eventos externos do SO:
+
+* **Sinais Obrigatórios:** Interceptar **`SIGINT`** (Interrupção por Ctrl+C) e **`SIGTERM`** (Sinal de encerramento enviado pelo sistema).
+* **Comportamento do Tratador:** Ao receber o sinal, o método tratador estático (`static void interceptar(int sinal)`) deve capturar o ID do sinal, imprimir um alerta crítico na tela, salvar um log emergencial de encerramento e fechar de forma segura qualquer arquivo pendente antes de invocar o `exit(sinal)`.
 
 ---
 
