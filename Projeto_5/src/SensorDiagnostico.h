@@ -3,7 +3,7 @@
 
 #include "Dispositivo.h"
 
-class SensorDiagnostico : public Dispositivo {
+class SensorDiagnostico : virtual public Dispositivo {
 private:
     int rpmMotor;
     double temperaturaFluido;

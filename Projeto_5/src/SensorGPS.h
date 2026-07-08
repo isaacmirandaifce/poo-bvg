@@ -3,7 +3,7 @@
 
 #include "Dispositivo.h"
 
-class SensorGPS : public Dispositivo {
+class SensorGPS : virtual public Dispositivo {
 private:
     double latitude;
     double longitude;
