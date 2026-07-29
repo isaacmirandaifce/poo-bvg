@@ -1,123 +1,54 @@
-# **Projeto Avaliativo 6: Classes Abstratas, Interfaces, Classes Enumeradas e Classes Internas**
+# Projeto 6 - Core de Autenticação e Auditoria (IAM) - SecureBank Pro
 
-## **Objetivo**
+Este repositório contém a implementação do **Projeto Avaliativo 6 / Ticket #602**, focado no desenvolvimento do subsistema de Gestão de Identidades e Acessos em C++.
 
-Ampliar o sistema de gerenciamento acadêmico para incluir conceitos avançados de Programação Orientada a Objetos: Classes Abstratas, Interfaces, Classes Enumeradas e Classes Internas. Este projeto consolida o aprendizado da disciplina, integrando novas funcionalidades úteis para a vivência dos alunos de Análise e Desenvolvimento de Sistemas.
-
----
-
-## **Tema do Projeto: Sistema Avançado de Gestão Acadêmica**
-
-### **Descrição Geral**
-
-Os alunos devem expandir o sistema acadêmico já desenvolvido para incluir funcionalidades como autenticação de usuários e geração de relatórios baseados em tipos de autenticação. Além disso, o sistema deve utilizar conceitos como classes enumeradas para categorizar usuários, classes internas para encapsular lógicas específicas e interfaces para padronizar comportamentos entre classes distintas.
+O sistema implementa conceitos avançados de **Classes Abstratas**, **Interfaces**, **Classes Enumeradas (`enum class`)** e **Classes Internas (Nested Classes)** com isolamento total de dados sensíveis.
 
 ---
 
-### **Requisitos do Projeto**
+## Estrutura do Repositório
 
-1. **Classes Abstratas:**
-   - Criar uma classe abstrata `UsuarioAutenticavel`, que herda de `Usuario` e representa os usuários do sistema que podem realizar login.
-     - Método abstrato: `bool autenticar(std::string senha)`.
+```text
+Projeto_6/
+│
+├── docs/
+│   └── Arquitetura_IAM_UML.png        # Diagrama UML detalhando interfaces, herança e classe interna
+│
+├── src/
+│   ├── interfaces/
+│   │   └── Relatorio.h                # Contrato de interface para relatórios de compliance
+│   ├── base/
+│   │   ├── UsuarioAutenticavel.h      # Classe abstrata base e enum TipoUsuario
+│   │   └── UsuarioAutenticavel.cpp    # Implementação dos dados base
+│   ├── models/
+│   │   ├── UsuarioAdmin.h / .cpp      # Perfil Admin e logs de modificação
+│   │   ├── UsuarioAuditor.h / .cpp    # Perfil Auditor e chaves de segurança
+│   │   └── UsuarioOperador.h / .cpp   # Perfil Operador contendo a classe interna HistoricoAcessos
+│   └── main.cpp                       # Orquestração do fluxo de login e loop polimórfico
+│
+└── README.md                          # Documentação técnica do projeto
 
-2. **Interfaces:**
-   - Criar uma interface `Relatorio` com um método virtual puro `gerarRelatorio()`, que será implementada por classes como `Aluno`, `Professor` e `FuncionarioAdministrativo`.
 
-3. **Classes Enumeradas:**
-   - Criar uma enumeração `TipoUsuario` que define os tipos de usuários no sistema:
-     - `ALUNO`, `PROFESSOR`, `FUNCIONARIO_ADMINISTRATIVO`.
+## Como Compilar e Executar
 
-4. **Classes Internas:**
-   - Adicionar uma classe interna à classe `Aluno` chamada `HistoricoDisciplinar`. 
-     - A classe interna deve conter informações sobre o histórico de disciplinas cursadas, incluindo:
-       - Nome da disciplina, ano cursado e nota.
+1. **Abra o terminal no diretório raiz do Projeto_6:**
+   ```bash
+   cd Projeto_6
+   ```
 
-5. **Funcionalidades do Sistema:**
-   - Implementar autenticação baseada em senha.
-   - Gerar relatórios detalhados para os diferentes tipos de usuários, com base na interface `Relatorio`.
-   - Exibir informações categorizadas utilizando a enumeração `TipoUsuario`.
+2. **Compile todos os arquivos do módulo `src/` utilizando o `g++`:**
+   ```bash
+   g++ src/main.cpp src/base/UsuarioAutenticavel.cpp src/models/UsuarioAdmin.cpp src/models/UsuarioAuditor.cpp src/models/UsuarioOperador.cpp -o iam_app
+   ```
 
----
+3. **Execute o programa gerado:**
 
-## **Requisitos Técnicos**
+   * **Linux / macOS:**
+     ```bash
+     ./iam_app
+     ```
 
-1. **Estrutura de Arquivos:**
-   - Modularizar o projeto em arquivos `.h` e `.cpp`:
-     - `UsuarioAutenticavel.h`, `Relatorio.h`, `Aluno.h`, `Professor.h`, `FuncionarioAdministrativo.h`, etc.
-     - `main.cpp` para a função principal.
-
-2. **Diagrama UML:**
-   - Incluir um diagrama UML detalhando a hierarquia do sistema, os métodos abstratos, a interface e os relacionamentos entre as classes.
-
-3. **Encapsulamento e Segurança:**
-   - Garantir que todos os atributos estejam devidamente encapsulados.
-   - Proteger informações sensíveis como senhas, utilizando boas práticas de segurança no código.
-
----
-
-## **Exemplo de Estrutura de Código**
-
-### Arquivo `UsuarioAutenticavel.h`
-```cpp
-#ifndef USUARIO_AUTENTICAVEL_H
-#define USUARIO_AUTENTICAVEL_H
-
-#include <string>
-
-#endif // USUARIO_AUTENTICAVEL_H
-```
-
-### Arquivo `Relatorio.h`
-```cpp
-#ifndef RELATORIO_H
-#define RELATORIO_H
-
-class Relatorio {
-public:
-    virtual ~Relatorio() = default;
-
-    virtual void gerarRelatorio() const = 0; // Método virtual puro
-};
-
-#endif // RELATORIO_H
-```
-
-### Arquivo `Aluno.h`
-```cpp
-#ifndef ALUNO_H
-#define ALUNO_H
-
-#include <string>
-#include <vector>
-#include "UsuarioAutenticavel.h"
-#include "Relatorio.h"
-
-#endif // ALUNO_H
-```
-
----
-
-## **Critérios de Avaliação**
-
-1. **Implementação Técnica (6 pontos):**
-   - Implementação correta de classes abstratas, interfaces, enums e classes internas.
-
-2. **Uso de Funcionalidades (2 pontos):**
-   - Geração de relatórios, autenticação e uso de categorias com a enumeração.
-
-3. **Modelagem UML (1 ponto):**
-   - Diagrama UML completo e preciso.
-
-4. **Boas Práticas de Programação (1 ponto):**
-   - Código modular e legível, seguindo os padrões de segurança e encapsulamento.
-
----
-
-## **Entrega**
-
-1. **Formato:**
-   - Os arquivos devem ser enviados para o repositório da turma no diretório `/Projetos/Projeto_6`.
-   - O diagrama UML deve ser incluído no formato `.png` ou `.jpg`.
-
-2. **Prazo:**
-   - O projeto deve ser entregue até **26/01/2025**.
+   * **Windows:**
+     ```cmd
+     iam_app.exe
+     ```
