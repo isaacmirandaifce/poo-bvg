@@ -27,6 +27,7 @@ Projeto_5/
 │
 └── README.md                         # Documentação técnica do projeto
 
+
 ## Como Compilar e Executar
 
 1. **Abra o terminal no diretório raiz do Projeto_5:**

@@ -1,172 +1,141 @@
 # **Projeto Avaliativo 8: Tratamento de Exceções e Sinais - C++**
 
-## **Objetivo**
-Este projeto tem como objetivo aprimorar o sistema acadêmico desenvolvido anteriormente, integrando conceitos avançados de tratamento de exceções e sinais para tornar a aplicação mais robusta e tolerante a falhas. A proposta é implementar o carregamento automático de dados a partir de arquivos externos, garantindo que possíveis erros de leitura, escrita e manipulação de arquivos sejam devidamente tratados. Além disso, o sistema deve ser capaz de responder de maneira adequada a sinais do sistema operacional, como encerramento abrupto e falhas de segmentação.
+# 🎟️ Ticket #912: Motor de Persistência Resiliente e Tratador de Sinais do SO
+
+**De:** Arquiteto de Infraestrutura / DevOps Principal (Professor)
+
+**Para:** Engenheiro de Concorrência e Core Backend C++ (Alunos)
+
+**Atividade:** Projeto Avaliativo 8
+
+**Contexto:** SecureBank Pro (Subsistema: *Transaction Ledger Storage*)
+
+**Status:** `To Do` | **Prioridade:** `Bloqueante / Crítica`
+
+## Contexto
+
+Olá, time! Atualmente, nosso motor de banco de dados grava as transações em arquivos planos (`.csv`). No entanto, se o disco encher, o arquivo estiver corrompido ou se um administrador encerrar o processo abruptamente via terminal (`kill -9` ou `Ctrl+C`), corremos o risco de gerar *partial writes* (escritas incompletas), corrompendo o histórico financeiro dos clientes.
+
+Nesta sprint, sua missão é implementar uma camada de persistência ultra-resiliente utilizando **Exceções Customizadas** para falhas de arquivos e um **Manipulador de Sinais Estático** para capturar eventos de interrupção do sistema operacional. O sistema deve interceptar a queda, dar *flush* nos buffers e fechar os arquivos de forma limpa antes de encerrar.
 
 ---
 
-## **Tema do Projeto: Gerenciamento Acadêmico Resiliente**
+##  Critérios de Aceitação (Acceptance Criteria)
 
-### **Descrição Geral**
-Os alunos devem modificar o sistema acadêmico para incluir:
-- **Carregamento de dados a partir de arquivos**, garantindo que a aplicação seja capaz de iniciar com dados pré-existentes e salvos anteriormente.
-- **Tratamento de exceções** ao tentar abrir, ler e gravar arquivos de dados.
-- **Mecanismo de resposta a sinais do sistema operacional**, garantindo que falhas inesperadas sejam tratadas e que a aplicação possa continuar funcionando ou encerrar de maneira segura.
+### 1. Hierarquia de Exceções Customizadas (Robustez)
 
----
+Não utilize exceções genéricas. Você deve criar uma árvore de exceções herdando de `std::exception` para mapear erros em tempo de execução de forma limpa:
 
-### **Requisitos do Projeto**
+* **`StorageException`** (Classe Base de Erro de Armazenamento): Contém um método `virtual const char* what() const noexcept override`.
+* **`FileCorruptedException`** (Classe Derivada): Disparada caso o arquivo exista, mas suas colunas ou dados estejam em formato inválido ou corrompido.
+* **`DiskWriteException`** (Classe Derivada): Disparada se o fluxo de escrita (`std::ofstream`) falhar ao tentar abrir ou persistir dados por falta de permissão ou espaço.
 
-1. **Tratamento de Exceções em Arquivos:**
-   - Criar um **módulo de persistência** para carregar e salvar automaticamente os dados do sistema em arquivos (`.txt` ou `.csv`).
-   - Implementar um tratamento adequado para os seguintes erros:
-     - Arquivo não encontrado.
-     - Permissão negada para abrir ou gravar o arquivo.
-     - Falhas na conversão de dados lidos do arquivo.
+### 2. Módulo de Persistência (`LedgerPersistence`)
 
-2. **Uso de Exceções Personalizadas:**
-   - Criar classes de exceção personalizadas para diferentes cenários de erro.
-   - Exemplo: `ArquivoNaoEncontradoException`, `PermissaoNegadaException`.
+Esta classe será responsável pelo I/O de dados através da biblioteca `<fstream>`.
 
-3. **Manipulação de Sinais do Sistema Operacional:**
-   - Implementar um **tratador de sinais** para capturar:
-     - **SIGINT** (Interrupção via Ctrl+C).
-     - **SIGSEGV** (Acesso inválido à memória).
-     - **SIGTERM** (Finalização solicitada pelo SO).
-   - Quando um sinal for capturado:
-     - O sistema deve tentar salvar os dados antes de encerrar (se for seguro fazê-lo).
-     - O programa deve imprimir uma mensagem informando o motivo do encerramento.
+* **`void salvarDados(const std::vector<std::string>& transacoes)`**: Abre o arquivo `ledger.csv`, itera gravando as strings e força o esvaziamento do buffer (`std::flush`). Caso falhe, dispara `DiskWriteException`.
+* **`std::vector<std::string> carregarDados()`**: Lê o arquivo `ledger.csv`. Se houver inconsistência nos dados (ex: linhas vazias inesperadas ou falha de leitura), dispara `FileCorruptedException`.
 
-4. **Integração com o Sistema Acadêmico:**
-   - O sistema deve carregar automaticamente as listas de:
-     - Alunos.
-     - Professores.
-     - Disciplinas.
-   - Sempre que houver uma modificação relevante (como a inclusão de um novo aluno ou disciplina), o sistema deve salvar os dados automaticamente.
+### 3. Tratamento de Sinais do Sistema Operacional (`SignalHandler`)
+
+Você deve implementar uma classe estática baseada na biblioteca `<csignal>` para capturar eventos externos do SO:
+
+* **Sinais Obrigatórios:** Interceptar **`SIGINT`** (Interrupção por Ctrl+C) e **`SIGTERM`** (Sinal de encerramento enviado pelo sistema).
+* **Comportamento do Tratador:** Ao receber o sinal, o método tratador estático (`static void interceptar(int sinal)`) deve capturar o ID do sinal, imprimir um alerta crítico na tela, salvar um log emergencial de encerramento e fechar de forma segura qualquer arquivo pendente antes de invocar o `exit(sinal)`.
 
 ---
 
-## **Requisitos Técnicos**
+## Estrutura de Arquivos Exigida (Projeto_8)
 
-1. **Tratamento de Exceções e Salvamento de Dados:**
-   - Criar funções que tentem abrir arquivos e capturem possíveis erros.
-   - Exibir mensagens informativas e opções para o usuário quando erros ocorrerem.
+Mantenha a organização estrita padrão do repositório core da disciplina:
 
-2. **Manipulação de Sinais:**
-   - Usar a biblioteca `<csignal>` para capturar sinais do sistema.
-   - Criar uma função de tratamento global para manipular os sinais.
-
-3. **Estrutura de Arquivos do Projeto:**
-   - Modularizar o código com arquivos `.h` e `.cpp` bem organizados:
-     - `Persistencia.h` e `Persistencia.cpp`: Manipulação de arquivos.
-     - `SinalHandler.h` e `SinalHandler.cpp`: Tratamento de sinais.
-     - `main.cpp`: Integração e testes do sistema.
-
-4. **Modelagem UML:**
-   - Criar um **diagrama UML** com as novas classes e sua integração com as já existentes no sistema.
-
----
-
-## **Exemplo de Estrutura de Código**
-
-### Arquivo `Persistencia.h`
-```cpp
-#ifndef PERSISTENCIA_H
-#define PERSISTENCIA_H
-
-#include <fstream>
-#include <vector>
-#include "Aluno.h"
-
-class Persistencia {
-public:
-
-};
-
-#endif // PERSISTENCIA_H
-```
-
-### Arquivo `Persistencia.cpp`
-```cpp
-#include "Persistencia.h"
-#include <iostream>
+```text
+Projeto_8/
+│
+├── docs/
+│   └── Arquitetura_Resiliencia_UML.png # Diagrama UML atualizado com o fluxo de sinais/exceções
+│
+├── src/
+│   ├── exceptions/
+│   │   └── StorageException.h          # Definição das exceções e herança de std::exception
+│   │
+│   ├── infrastructure/
+│   │   ├── LedgerPersistence.h / .cpp  # Manipulação de arquivos (.h/.cpp)
+│   │   └── SignalHandler.h / .cpp      # Configuração de ponteiro de sinal estático (.h/.cpp)
+│   │
+│   └── main.cpp                        # Loop de transações encapsulado por try-catch
+└── README.md                           # Documentação detalhada dos testes de falha estruturados
 
 ```
 
-### Arquivo `SinalHandler.h`
+---
+
+## Fluxo de Implementação e Código Base Sugerido
+
+### Arquivo `infrastructure/SignalHandler.h`
+
 ```cpp
-#ifndef SINALHANDLER_H
-#define SINALHANDLER_H
+#ifndef SIGNALHANDLER_H
+#define SIGNALHANDLER_H
 
 #include <csignal>
 #include <iostream>
 
-class SinalHandler {
+class SignalHandler {
 public:
     static void inicializar();
 private:
     static void tratador(int sinal);
 };
 
-#endif // SINALHANDLER_H
+#endif // SIGNALHANDLER_H
+
 ```
 
-### Arquivo `SinalHandler.cpp`
-```cpp
-#include "SinalHandler.h"
+### Arquivo `main.cpp` (A Orquestração do Engine)
 
-void SinalHandler::inicializar() {
+O arquivo principal deve instanciar o inicializador de sinais e simular cenários de escrita em loop. Caso ocorra uma exceção, ela deve ser capturada isoladamente.
 
-}
-
-void SinalHandler::tratador(int sinal) {
- 
-    exit(1);
-}
-```
-
-### Arquivo `main.cpp`
 ```cpp
 #include <iostream>
-#include "Persistencia.h"
-#include "SinalHandler.h"
+#include "infrastructure/LedgerPersistence.h"
+#include "infrastructure/SignalHandler.h"
+#include "exceptions/StorageException.h"
 
 int main() {
-    SinalHandler::inicializar();
+    SignalHandler::inicializar(); // Registra os hooks de sinal do SO
 
     try {
+        LedgerPersistence db;
+        // 1. Simular carregamento inicial (pode disparar FileCorruptedException)
+        auto historico = db.carregarDados();
         
-    } catch ( ) {
+        // 2. Loop de processamento de transações (simulação)
+        std::cout << "[ENGINE] Sistema operacional e aguardando interceptações..." << std::endl;
+        
+        // CÓDIGO DO ALUNO: Adicione lógica de simulação e persistência aqui...
 
+    } catch (const StorageException& e) {
+        std::cerr << "[CRITICAL ERROR] Falha na camada de armazenamento: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "[UNKNOWN ERROR] Erro genérico de runtime: " << e.what() << std::endl;
     }
 
     return 0;
 }
+
 ```
 
 ---
 
-## **Critérios de Avaliação**
+## Rubrica de Avaliação (Tech Lead Review)
 
-1. **Implementação Técnica (6 pontos):**
-   - Correta implementação do carregamento de arquivos e manipulação de sinais.
+| Critério | Descrição | Pontuação |
+| --- | --- | --- |
+| **Tratamento de Exceções** | Criação correta da hierarquia customizada herdando de `std::exception` com polimorfismo do método `what()`? | 3.0 pts |
+| **Persistência Segura** | Manipulação adequada de fluxos (`ifstream`/`ofstream`), garantindo o isolamento de erros de disco e arquivo com blocos `try-catch` locais? | 3.0 pts |
+| **Captura de Sinais (OS Hooks)** | Implementação correta do tratador estático utilizando `std::signal` para interceptar `SIGINT`/`SIGTERM` e encerrar sem corromper arquivos? | 2.5 pts |
+| **Modelagem e Enterprise Standard** | Arquivos bem modularizados (.h/.cpp), diagrama UML representando as exceções e boas práticas de tratamento de ponteiros? | 1.5 pts |
 
-2. **Robustez do Sistema (2 pontos):**
-   - Sistema responde bem a falhas inesperadas e erros de arquivo.
-
-3. **Modelagem UML (1 ponto):**
-   - Diagrama UML atualizado, incluindo persistência e tratamento de sinais.
-
-4. **Boas Práticas e Documentação (1 ponto):**
-   - Código modular, comentado e organizado.
-
----
-
-## **Entrega**
-
-1. **Formato:**
-   - Os arquivos devem ser enviados para o repositório da turma no diretório `/Projetos/Projeto_8`.
-   - O diagrama UML deve ser incluído no formato `.png` ou `.jpg`.
-
-2. **Prazo:**
-   - O projeto deve ser entregue até **09/03/2025**.
+>  **Nota de Simulação do Ambiente:** Para testar seu tratador de sinais, execute seu programa e envie um comando de interrupção pressionando `Ctrl + C` no terminal. O programa deve interceptar o sinal, exibir a mensagem customizada definida por você no `SignalHandler::tratador` e gravar o estado final antes de fechar de forma limpa. Boa sprint!
