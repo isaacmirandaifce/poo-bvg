@@ -1,126 +1,68 @@
-# **Projeto Avaliativo 4: Modularização, Modificadores de Acesso e Funções Amigas - C++**
+# Projeto Avaliativo 4: Módulo de Auditoria de Transações Bancárias (SecureBank Pro)
 
-## **Objetivo**
+Este repositório contém a implementação do **Projeto Avaliativo 4 / Ticket #704**, focado no desenvolvimento do sistema de segurança para auditoria de transações bancárias em C++.
 
-Desenvolver um projeto prático em C++ que consolide os conhecimentos sobre modularização, modificadores de acesso (public, private, protected) e funções amigas. O tema escolhido terá utilidade prática para a vivência dos alunos de Análise e Desenvolvimento de Sistemas, reforçando conceitos fundamentais e sua aplicação no desenvolvimento de software.
-
----
-
-## **Tema do Projeto: Gerenciamento de Notas de Alunos**
-
-### **Descrição Geral**
-O sistema permite o gerenciamento de notas de alunos para diferentes disciplinas. Os alunos poderão calcular médias, verificar status de aprovação/reprovação e visualizar as informações em um formato organizado.
-
-### **Requisitos**
-
-1. **Classes e Atributos:**
-   - **Classe Aluno:**
-     - Atributos: `nome` (string), `matricula` (string), `curso` (string).
-     - Métodos:
-       - Construtor padrão e parametrizado.
-       - Métodos para exibir informações básicas do aluno (`void exibirInformacoes()`).
-
-   - **Classe Disciplina:**
-     - Atributos: `nome` (string), `cargaHoraria` (int), `nota` (float).
-     - Métodos:
-       - Construtor padrão e parametrizado.
-       - Métodos para configurar e obter as notas (`setNota()` e `getNota()`).
-       - Funções amigas para acessar as notas da disciplina e validar critérios de aprovação.
-
-2. **Funções Amigas:**
-   - Implementar uma função amiga que verifica o status de aprovação do aluno em uma disciplina. (Aprovação com nota >= 6.0).
-
-3. **Função Principal:**
-   - Criar objetos `Aluno` e associar a pelo menos duas disciplinas.
-   - Exibir as informações básicas do aluno.
-   - Utilizar a função amiga para verificar a aprovação do aluno em cada disciplina.
+O objetivo principal é demonstrar o uso controlado de **Funções Amigas (`friend`)**, **Modificadores de Acesso (`private`, `protected`, `public`)** e **Modularização em C++ (`.h` e `.cpp`)**.
 
 ---
 
-## **Requisitos Técnicos**
+## Estrutura do Repositório
 
-1. **Modularização:**
-   - Separe a implementação em diferentes arquivos:
-     - `Aluno.h`, `Aluno.cpp`.
-     - `Disciplina.h`, `Disciplina.cpp`.
-     - `main.cpp`.
-
-2. **Modificadores de Acesso:**
-   - Utilize modificadores adequados para garantir o encapsulamento e segurança dos atributos.
-
-3. **Funções Amigas:**
-   - Use `friend` para implementar a função de verificação de aprovação, acessando diretamente os atributos privados da classe `Disciplina`.
-
-4. **Diagrama UML:**
-   - Inclua o diagrama UML com todas as classes, atributos, métodos e relacionamentos.
-
----
-
-## **Exemplo de Estrutura do Código**
-
-### Arquivo `Aluno.h`
-```cpp
-#ifndef ALUNO_H
-#define ALUNO_H
-
-#endif // ALUNO_H
-```
-
-### Arquivo `Aluno.cpp`
-```cpp
-#include "Aluno.h"
-
-```
-
-### Arquivo `Disciplina.h`
-```cpp
-#ifndef DISCIPLINA_H
-#define DISCIPLINA_H
+```text
+Projeto_4/
+│
+├── docs/
+│   └── Diagrama_Auditoria_UML.png    # Diagrama de Classes e Relação de Amizade
+│
+├── src/
+│   ├── ContaBancaria.h               # Interface da classe ContaBancaria
+│   ├── ContaBancaria.cpp             # Implementação da classe ContaBancaria
+│   ├── Transacao.h                   # Interface da classe Transacao e protótipo friend
+│   ├── Transacao.cpp                 # Implementação da classe Transacao e função amiga
+│   └── main.cpp                      # Orquestração do teste de auditoria
+│
+└── README.md                         # Documentação técnica do projeto
 
 
-#endif // DISCIPLINA_H
-```
+# Projeto 4 - Módulo de Auditoria de Transações Bancárias (C++)
 
-### Arquivo `Disciplina.cpp`
-```cpp
-#include "Disciplina.h"
-
-```
-
-### Arquivo `main.cpp`
-```cpp
-#include <iostream>
-#include "Aluno.h"
-#include "Disciplina.h"
-
-int main() {
-    
-}
-```
+## Descrição do Projeto
+Este projeto implementa o módulo de auditoria do sistema **SecureBank Pro**. O objetivo principal é validar transações bancárias através de uma **Função Amiga (`friend`)**, mantendo o encapsulamento dos dados e utilizando o modificador **`protected`** para permitir a expansão da hierarquia de contas bancárias.
 
 ---
 
-## **Critérios de Avaliação**
+## Justificativa Técnica (Requisito do Ticket #704)
 
-1. **Implementação Técnica (6 pontos):**
-   - Correção da implementação das classes, funções amigas e modularização.
+### 1. Por que usar `friend` (`validarTransacao`)?
+A função de auditoria `validarTransacao` precisa avaliar se o valor da transação ultrapassa o saldo atual da conta. 
 
-2. **Uso de Modificadores de Acesso e Encapsulamento (2 pontos):**
-   - Aplicação correta de modificadores e encapsulamento.
+Em vez de expor o saldo publicamente via métodos `getter`, a declaração `friend` concede permissão pontual e restrita a essa função para ler os atributos privados (`valor`) e protegidos (`saldo`) sem quebrar o encapsulamento para o restante da aplicação.
 
-3. **Modelagem UML (1 ponto):**
-   - Completo e bem representado.
-
-4. **Organização e Boas Práticas (1 ponto):**
-   - Código bem estruturado e claro.
+### 2. Por que usar `protected` no `saldo`?
+O atributo `saldo` da `ContaBancaria` foi definido como `protected` para que o saldo permaneça inacessível para chamadas externas (fora do escopo da classe), mas fique livremente acessível para futuras **subclasses** (como `ContaCorrente`, `ContaInvestimento` ou `ContaPoupanca`).
 
 ---
 
-## **Entrega**
+### Como Compilar e Executar
 
-1. **Formato:**
-   - Carregue os arquivos no repositório da turma, na subpasta `/Projetos/Projeto_4`.
-   - Inclua o diagrama UML no formato `png` ou `jpg`.
+1. **Abra o terminal no diretório raiz do Projeto_4:**
+   ```bash
+   cd Projeto_4
+   ```
 
-2. **Prazo:**
-   - A entrega deve ser realizada até **12/01/2025**.
+2. **Compile todos os arquivos do módulo `src/` utilizando o `g++`:**
+   ```bash
+   g++ src/main.cpp src/ContaBancaria.cpp src/Transacao.cpp -o auditoria_app
+   ```
+
+3. **Execute o programa gerado:**
+
+   * **Linux / macOS:**
+     ```bash
+     ./auditoria_app
+     ```
+
+   * **Windows:**
+     ```cmd
+     auditoria_app.exe
+     ```
