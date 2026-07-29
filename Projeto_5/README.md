@@ -1,122 +1,107 @@
 # **Projeto Avaliativo 5: Herança, Polimorfismo, Sobrecarga e Sobrescrita - C++**
 
-## **Objetivo**
-Desenvolver um projeto prático em C++ que complemente o sistema de gerenciamento de notas de alunos e disciplinas, explorando os conceitos avançados de Herança, Polimorfismo, Sobrecarga, Sobrescrita e Tipos de Sobrescrita. O projeto deve reforçar a compreensão dos alunos sobre a aplicação desses conceitos no desenvolvimento de software organizado e escalável.
+
+# 🎟️ Ticket #550: Subsistema de Processamento de Telemetria IoT (Herança & Polimorfismo)
+
+**De:** Engenheiro de Software Principal / Arquiteto (Professor)
+
+**Para:** Desenvolvedor C++ Backend (Alunos)
+
+**Projeto:** FleetTrack Pro (Módulo Core de Telemetria)
+
+**Status:** `To Do` | **Prioridade:** `Crítica`
+
+##  Contexto
+
+Olá, equipe! Nossa plataforma de gerenciamento de frotas precisa integrar novos tipos de dispositivos de coleta de dados instalados nos veículos (sensores de GPS, diagnóstico de motor OBD-II e câmeras inteligentes).
+
+O código legado foi construído de forma estruturada e processa os dados de maneira centralizada através de uma estrutura genérica de bytes e um `switch-case` massivo. Isso está gerando vazamento de memória e impede a adição de novos sensores sem quebrar o sistema de produção inteiro.
+
+Sua missão nesta sprint é refatorar o subsistema de captura utilizando a infraestrutura de **Herança, Polimorfismo Dinâmico e Sobrecarga de Métodos em C++**. Isso permitirá que nosso motor de processamento receba qualquer tipo de sensor e execute sua lógica sem precisar saber os detalhes de implementação de cada hardware.
 
 ---
 
-## **Tema do Projeto: Gerenciamento Ampliado de Sistema Acadêmico**
+##  Critérios de Aceitação (Acceptance Criteria)
 
-### **Descrição Geral**
-Ampliar o sistema desenvolvido anteriormente para incluir funcionalidades relacionadas ao cadastro de funcionários e à emissão de relatórios. A ideia é criar uma hierarquia de classes para representar diferentes tipos de usuários do sistema (Alunos, Professores e Funcionários Administrativos) e explorar polimorfismo para gerar relatórios diferenciados com base no tipo de usuário.
+### 1. Arquitetura da Hierarquia (Herança e Classes Abstratas)
 
-### **Requisitos**
+Você deve criar um modelo polimórfico rigoroso respeitando a visibilidade e encapsulamento dos atributos:
 
-1. **Classes e Herança:**
-   - **Classe base `Usuario`:**
-     - Atributos: `nome` (string), `email` (string), `tipo` (string).
-     - Métodos: 
-       - Construtor padrão e parametrizado.
-       - Método virtual puro `gerarRelatorio()`: Exibe informações gerais sobre o usuário. Deve ser sobrescrito nas classes derivadas.
+* **Classe Base Abstrata `Dispositivo**`:
+* `protected`: Atributos comuns como `std::string idDispositivo` e `int timestamp`.
+* `public`: Construtores e um **Método Virtual Puro** chamado `virtual void processarDados() = 0;` (Esta classe não pode ser instanciada diretamente).
 
-   - **Classe derivada `Aluno` (herda de `Usuario`):**
-     - Atributos adicionais: `matricula` (string), `curso` (string).
-     - Métodos: 
-       - Construtor e sobrescrita de `gerarRelatorio()` para exibir nome, matrícula, curso e disciplinas cursadas.
 
-   - **Classe derivada `Professor` (herda de `Usuario`):**
-     - Atributos adicionais: `areaDeAtuacao` (string), `disciplinasMinistradas` (vetor de strings).
-     - Métodos:
-       - Construtor e sobrescrita de `gerarRelatorio()` para exibir nome, área de atuação e disciplinas ministradas.
+* **Classe Derivada `SensorGPS**` (Herança Simples):
+* Atributos privados: `double latitude` e `double longitude`.
+* Sobrescrita (`override`) do método `processarDados()` para exibir e formatar as coordenadas geográficas.
 
-   - **Classe derivada `FuncionarioAdministrativo` (herda de `Usuario`):**
-     - Atributos adicionais: `departamento` (string), `cargo` (string).
-     - Métodos:
-       - Construtor e sobrescrita de `gerarRelatorio()` para exibir nome, departamento e cargo.
 
-2. **Herança Múltipla:**
-   - Criar uma classe `Monitor` que herda de `Aluno` e `Professor`. Esta classe deve implementar um método adicional que liste as disciplinas monitoradas pelo aluno.
+* **Classe Derivada `SensorDiagnostico**` (Herança Simples):
+* Atributos privados: `int rpmMotor` e `double temperaturaFluido`.
+* Sobrescrita do método `processarDados()` para avaliar a saúde do motor.
 
-3. **Polimorfismo:**
-   - Utilizar ponteiros ou referências para manipular objetos de diferentes tipos (`Usuario`, `Aluno`, `Professor`, etc.) de forma polimórfica e chamar os métodos sobrescritos.
 
-4. **Sobrecarga e Sobrescrita:**
-   - Implementar um método sobrecarregado na classe `Aluno` para exibir informações detalhadas com e sem notas.
 
----
+### 2. Composição por Herança Múltipla
 
-## **Requisitos Técnicos**
+Para coletar dados consolidados de alta performance, precisamos de um hardware combinado:
 
-1. **Modularização:**
-   - Separe as implementações em arquivos diferentes:
-     - `Usuario.h` e `Usuario.cpp`.
-     - `Aluno.h` e `Aluno.cpp`.
-     - `Professor.h` e `Professor.cpp`.
-     - `FuncionarioAdministrativo.h` e `FuncionarioAdministrativo.cpp`.
-     - `Monitor.h` e `Monitor.cpp`.
-     - `main.cpp`.
+* **Classe Derivada `RastreadorAvancado**` (Herda publicamente de `SensorGPS` **e** de `SensorDiagnostico`):
+* Deve herdar as capacidades de geolocalização e telemetria de motor de ambas as classes pai.
+* Deve sobrescrever `processarDados()` unificando a saída de diagnóstico e localização.
 
-2. **Herança e Polimorfismo:**
-   - Utilize herança para compartilhar atributos e métodos comuns.
-   - Explore polimorfismo com ponteiros/referências.
 
-3. **Sobrecarga e Sobrescrita:**
-   - Implementar os métodos com sobrecarga e sobrescrita, destacando as diferenças.
 
-4. **Diagrama UML:**
-   - Crie um diagrama UML completo que ilustre todas as classes e seus relacionamentos (herança, associação, composição).
+### 3. Polimorfismo de Tempo de Execução e Sobrecarga
+
+* **Polimorfismo Dinâmico**: No arquivo `main.cpp`, gerencie uma coleção utilizando um vetor de ponteiros da classe base: **`std::vector<Dispositivo*>`**. Instancie dinamicamente (`new`) objetos de todas as subclasses, armazene-os no vetor e use um laço de repetição para disparar o método `processarDados()` polimorficamente.
+* **Sobrecarga de Métodos (Polimorfismo Estático)**: Na classe `SensorGPS`, implemente uma sobrecarga do método de envio de dados:
+1. `void transmitirPayload()` -> Transmite os dados abertos em texto puro.
+2. `void transmitirPayload(std::string chaveCripto)` -> Simula a transmissão segura utilizando uma assinatura ou criptografia.
+
+
 
 ---
 
-## **Exemplo de Estrutura do Código**
+##  Estrutura de Arquivos Exigida (Projeto_5)
 
-### Arquivo `Usuario.h`
-```cpp
-#ifndef USUARIO_H
-#define USUARIO_H
+Para garantir o isolamento e modularização de compilação em C++, o projeto deve seguir estritamente o layout corporativo abaixo:
 
+```text
+Projeto_5/
+│
+├── docs/
+│   └── Telemetria_Fleet_UML.png     # Diagrama de Classes UML (Herança múltipla)
+│
+├── src/
+│   ├── Dispositivo.h / .cpp         # Interface/Classe Abstrata Base
+│   ├── SensorGPS.h / .cpp           # Módulo de Geolocalização
+│   ├── SensorDiagnostico.h / .cpp   # Módulo de Telemetria de Motor
+│   ├── RastreadorAvancado.h / .cpp  # Fusão via Herança Múltipla
+│   └── main.cpp                     # Iteração polimórfica com std::vector de ponteiros
+│
+└── README.md                        # Documentação de compilação e notas técnicas
 
-#endif // USUARIO_H
-```
-
-### Arquivo `main.cpp`
-```cpp
-#include <iostream>
-#include <vector>
-#include "Aluno.h"
-#include "Professor.h"
-#include "FuncionarioAdministrativo.h"
-
-int main() {
-
-    return 0;
-}
 ```
 
 ---
 
-## **Critérios de Avaliação**
+##  Fluxo de Entrega (Git Workflow)
 
-1. **Implementação Técnica (6 pontos):**
-   - Correção e organização da hierarquia de classes.
-   - Uso de polimorfismo e herança múltipla.
-
-2. **Utilização de Sobrecarga e Sobrescrita (2 pontos):**
-   - Correta implementação dos métodos solicitados.
-
-3. **Modelagem UML (1 ponto):**
-   - Diagrama UML bem detalhado e claro.
-
-4. **Boas Práticas e Documentação (1 ponto):**
-   - Código legível e com comentários explicativos.
+1. **Modelagem UML**: Desenhe o diagrama utilizando as setas vazias apontando para as classes pai para documentar a Herança Simples e a Herança Múltipla. Salve em `docs/`.
+2. **Gerenciamento de Memória**: Como estamos lidando com ponteiros brutos (`Dispositivo*`), lembre-se de criar um **Destrutor Virtual** (`virtual ~Dispositivo()`) na classe base e garantir que o `main.cpp` libere a memória usando `delete` após a execução do laço para evitar *Memory Leaks*.
+3. **Pull Request**: Abra a PR no repositório oficial da disciplina com o título `Projeto_5 - [Seu Nome Completo]`.
 
 ---
 
-## **Entrega**
+##  Rubrica de Avaliação (Code Review)
 
-1. **Formato:**
-   - Carregue os arquivos no repositório no diretório `/Projetos/Projeto_5`.
-   - Inclua o diagrama UML no formato `png` ou `jpg`.
+| Critério | Descrição | Pontuação |
+| --- | --- | --- |
+| **Abstração e Polimorfismo** | A classe base impede a instanciação direta por conter um método virtual puro? O laço no `main.cpp` executa os métodos corretos via ponteiros da classe base? | 3.5 pts |
+| **Herança Múltipla** | A classe `RastreadorAvancado` foi implementada utilizando a sintaxe correta de herança múltipla e resolve os escopos adequadamente? | 2.5 pts |
+| **Sobrecarga de Métodos** | O polimorfismo estático (sobrecarga de assinaturas) foi aplicado corretamente na classe de GPS? | 2.0 pts |
+| **Arquitetura C++ e UML** | O projeto está totalmente modularizado em `.h`/`.cpp`? O diagrama UML descreve precisamente os modificadores de acesso e a estrutura implementada? | 2.0 pts |
 
-2. **Prazo:**
-   - A entrega deve ser feita até **19/01/2025**.
+**Aviso do Tech Lead:** Ao trabalhar com Herança Múltipla em C++, fiquem atentos à ordem de chamada dos construtores na lista de inicialização e garantam que não haja colisões de nomes de atributos. Se o código não compilar ou apresentar ambiguidade não tratada, a PR receberá a flag *`changes requested`*. Mantenham o código limpo, limitem o escopo e boa refatoração!
