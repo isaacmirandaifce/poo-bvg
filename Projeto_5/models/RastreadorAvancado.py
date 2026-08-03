@@ -7,6 +7,6 @@ class RastreadorAvancado(SensorGPS, SensorDiagnostico):
         SensorDiagnostico.__init__(self, id_dispositivo, timestamp, rpm_motor, temperatura_fluido)
 
     def processarDados(self) -> None:
-        print(f"[FUSÃO AVANÇADA] Processando dados consolidados de {self._idDispositivo}:")
+        print(f"[ RODANDO... ] Processando dados consolidados de {self._idDispositivo}:")
         SensorGPS.processarDados(self)
         SensorDiagnostico.processarDados(self)

@@ -7,7 +7,7 @@ class SensorGPS(Dispositivo):
         self.__longitude = longitude  
 
     def processarDados(self) -> None:
-        print(f"GPS Processando {self._idDispositivo} | Lat: {self.__latitude}, Lon: {self.__longitude}")
+        print(f"[ RODANDO... ] GPS Processando {self._idDispositivo} | Lat: {self.__latitude}, Lon: {self.__longitude}")
 
     def transmitirPayload(self, chave_cripto: str = None) -> None:
         if chave_cripto is None:

@@ -7,4 +7,4 @@ class SensorDiagnostico(Dispositivo):
         self.__temperaturaFluido = temperatura_fluido  
 
     def processarDados(self) -> None:
-        print(f"[OBD-II] Processando {self._idDispositivo} | RPM: {self.__rpmMotor} | Temp: {self.__temperaturaFluido}C")
+        print(f"[ RODANDO... ] Processando {self._idDispositivo} | RPM: {self.__rpmMotor} | Temp: {self.__temperaturaFluido}C")
