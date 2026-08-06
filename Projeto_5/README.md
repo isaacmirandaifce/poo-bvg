@@ -1,122 +1,105 @@
-# **Projeto Avaliativo 5: Herança, Polimorfismo, Sobrecarga e Sobrescrita - C++**
+# FleetTrack Pro — Módulo Core de Telemetria (Projeto_5)
 
-## **Objetivo**
-Desenvolver um projeto prático em C++ que complemente o sistema de gerenciamento de notas de alunos e disciplinas, explorando os conceitos avançados de Herança, Polimorfismo, Sobrecarga, Sobrescrita e Tipos de Sobrescrita. O projeto deve reforçar a compreensão dos alunos sobre a aplicação desses conceitos no desenvolvimento de software organizado e escalável.
+Subsistema de processamento de telemetria IoT refatorado para utilizar
+**Herança**, **Polimorfismo Dinâmico** e **Sobrecarga de Métodos** em C++,
+substituindo o antigo modelo estrutural baseado em `switch-case` e bytes
+genéricos (Ticket #550).
 
----
+## Estrutura do Projeto
 
-## **Tema do Projeto: Gerenciamento Ampliado de Sistema Acadêmico**
-
-### **Descrição Geral**
-Ampliar o sistema desenvolvido anteriormente para incluir funcionalidades relacionadas ao cadastro de funcionários e à emissão de relatórios. A ideia é criar uma hierarquia de classes para representar diferentes tipos de usuários do sistema (Alunos, Professores e Funcionários Administrativos) e explorar polimorfismo para gerar relatórios diferenciados com base no tipo de usuário.
-
-### **Requisitos**
-
-1. **Classes e Herança:**
-   - **Classe base `Usuario`:**
-     - Atributos: `nome` (string), `email` (string), `tipo` (string).
-     - Métodos: 
-       - Construtor padrão e parametrizado.
-       - Método virtual puro `gerarRelatorio()`: Exibe informações gerais sobre o usuário. Deve ser sobrescrito nas classes derivadas.
-
-   - **Classe derivada `Aluno` (herda de `Usuario`):**
-     - Atributos adicionais: `matricula` (string), `curso` (string).
-     - Métodos: 
-       - Construtor e sobrescrita de `gerarRelatorio()` para exibir nome, matrícula, curso e disciplinas cursadas.
-
-   - **Classe derivada `Professor` (herda de `Usuario`):**
-     - Atributos adicionais: `areaDeAtuacao` (string), `disciplinasMinistradas` (vetor de strings).
-     - Métodos:
-       - Construtor e sobrescrita de `gerarRelatorio()` para exibir nome, área de atuação e disciplinas ministradas.
-
-   - **Classe derivada `FuncionarioAdministrativo` (herda de `Usuario`):**
-     - Atributos adicionais: `departamento` (string), `cargo` (string).
-     - Métodos:
-       - Construtor e sobrescrita de `gerarRelatorio()` para exibir nome, departamento e cargo.
-
-2. **Herança Múltipla:**
-   - Criar uma classe `Monitor` que herda de `Aluno` e `Professor`. Esta classe deve implementar um método adicional que liste as disciplinas monitoradas pelo aluno.
-
-3. **Polimorfismo:**
-   - Utilizar ponteiros ou referências para manipular objetos de diferentes tipos (`Usuario`, `Aluno`, `Professor`, etc.) de forma polimórfica e chamar os métodos sobrescritos.
-
-4. **Sobrecarga e Sobrescrita:**
-   - Implementar um método sobrecarregado na classe `Aluno` para exibir informações detalhadas com e sem notas.
-
----
-
-## **Requisitos Técnicos**
-
-1. **Modularização:**
-   - Separe as implementações em arquivos diferentes:
-     - `Usuario.h` e `Usuario.cpp`.
-     - `Aluno.h` e `Aluno.cpp`.
-     - `Professor.h` e `Professor.cpp`.
-     - `FuncionarioAdministrativo.h` e `FuncionarioAdministrativo.cpp`.
-     - `Monitor.h` e `Monitor.cpp`.
-     - `main.cpp`.
-
-2. **Herança e Polimorfismo:**
-   - Utilize herança para compartilhar atributos e métodos comuns.
-   - Explore polimorfismo com ponteiros/referências.
-
-3. **Sobrecarga e Sobrescrita:**
-   - Implementar os métodos com sobrecarga e sobrescrita, destacando as diferenças.
-
-4. **Diagrama UML:**
-   - Crie um diagrama UML completo que ilustre todas as classes e seus relacionamentos (herança, associação, composição).
-
----
-
-## **Exemplo de Estrutura do Código**
-
-### Arquivo `Usuario.h`
-```cpp
-#ifndef USUARIO_H
-#define USUARIO_H
-
-
-#endif // USUARIO_H
+```
+Projeto_5/
+│
+├── docs/
+│   └── Telemetria_Fleet_UML.png   # Diagrama de Classes UML
+│
+├── src/
+│   ├── Dispositivo.h / .cpp          # Classe Abstrata Base
+│   ├── SensorGPS.h / .cpp            # Módulo de Geolocalização
+│   ├── SensorDiagnostico.h / .cpp    # Módulo de Telemetria de Motor
+│   ├── RastreadorAvancado.h / .cpp   # Fusão via Herança Múltipla
+│   └── main.cpp                      # Iteração polimórfica
+│
+└── README.md
 ```
 
-### Arquivo `main.cpp`
-```cpp
-#include <iostream>
-#include <vector>
-#include "Aluno.h"
-#include "Professor.h"
-#include "FuncionarioAdministrativo.h"
+## Como compilar
 
-int main() {
+Requisitos: compilador com suporte a C++17 (g++ ou clang++).
 
-    return 0;
-}
+```bash
+cd src
+g++ -std=c++17 -Wall -Wextra -Wpedantic -Werror -O2 -o fleettrack_pro \
+    Dispositivo.cpp SensorGPS.cpp SensorDiagnostico.cpp RastreadorAvancado.cpp main.cpp
 ```
 
----
+O projeto compila **sem nenhum warning ou erro** sob essas flags estritas.
 
-## **Critérios de Avaliação**
+## Como executar
 
-1. **Implementação Técnica (6 pontos):**
-   - Correção e organização da hierarquia de classes.
-   - Uso de polimorfismo e herança múltipla.
+```bash
+./fleettrack_pro
+```
 
-2. **Utilização de Sobrecarga e Sobrescrita (2 pontos):**
-   - Correta implementação dos métodos solicitados.
+## Arquitetura da Hierarquia
 
-3. **Modelagem UML (1 ponto):**
-   - Diagrama UML bem detalhado e claro.
+- **`Dispositivo`** — classe base abstrata. Possui `virtual void processarDados() = 0`,
+  o que impede sua instanciação direta, e um **destrutor virtual** (`virtual ~Dispositivo()`),
+  obrigatório para que `delete` via ponteiro de classe base libere corretamente o objeto
+  derivado mais específico, evitando vazamento de memória.
+- **`SensorGPS`** e **`SensorDiagnostico`** — herança simples de `Dispositivo`, cada uma
+  sobrescrevendo `processarDados()` com sua própria lógica.
+- **`RastreadorAvancado`** — herança múltipla de `SensorGPS` **e** `SensorDiagnostico`,
+  combinando geolocalização e diagnóstico de motor num único dispositivo.
 
-4. **Boas Práticas e Documentação (1 ponto):**
-   - Código legível e com comentários explicativos.
+## O "Problema do Diamante" e como foi resolvido
 
----
+Como `SensorGPS` e `SensorDiagnostico` herdam de `Dispositivo` de forma **não-virtual**,
+`RastreadorAvancado` acaba contendo **dois subobjetos `Dispositivo` distintos** (um por
+ramo de herança). Isso gera ambiguidade caso se tente acessar membros herdados de
+`Dispositivo` (ou chamar `getId()`) diretamente a partir de `RastreadorAvancado`.
 
-## **Entrega**
+A solução adotada, deliberadamente, **não** usa herança virtual (`virtual public`), e sim:
 
-1. **Formato:**
-   - Carregue os arquivos no repositório no diretório `/Projetos/Projeto_5`.
-   - Inclua o diagrama UML no formato `png` ou `jpg`.
+1. **Resolução de escopo explícita** (`Classe::membro`) — por exemplo,
+   `SensorGPS::getId()` dentro de `RastreadorAvancado::processarDados()`, indicando
+   claramente de qual ramo da hierarquia queremos o dado.
+2. **`static_cast` explícito** — ao armazenar um `RastreadorAvancado*` dentro do
+   `std::vector<Dispositivo*>` em `main.cpp`, a conversão implícita seria ambígua
+   (existem dois caminhos possíveis até `Dispositivo`). Por isso o código escolhe
+   explicitamente um caminho:
 
-2. **Prazo:**
-   - A entrega deve ser feita até **19/01/2025**.
+   ```cpp
+   frota.push_back(static_cast<Dispositivo*>(static_cast<SensorGPS*>(rastreador)));
+   ```
+
+   Como `Dispositivo` possui destrutor virtual, o `delete` feito posteriormente via
+   `Dispositivo*` continua funcionando corretamente — o compilador ajusta o offset do
+   ponteiro automaticamente (mecanismo de *thunk*) para invocar o destrutor mais
+   derivado (`~RastreadorAvancado()`), que por sua vez destrói ambos os subobjetos
+   `Dispositivo` herdados.
+
+## Polimorfismo Dinâmico
+
+Em `main.cpp`, um `std::vector<Dispositivo*>` armazena instâncias de todas as
+subclasses. Um único laço percorre o vetor chamando `d->processarDados()` — o método
+correto é despachado em tempo de execução (v-table) conforme o tipo real de cada objeto.
+
+## Sobrecarga de Métodos (Polimorfismo Estático)
+
+A classe `SensorGPS` define duas versões de `transmitirPayload`:
+
+```cpp
+void transmitirPayload();                              // texto puro
+void transmitirPayload(const std::string& chaveCripto); // transmissão segura
+```
+
+A escolha entre as duas é resolvida em tempo de **compilação**, com base na assinatura
+usada na chamada.
+
+## Gerenciamento de Memória
+
+Todos os objetos são alocados com `new` e liberados com `delete` em `main.cpp` ao final
+da execução, dentro de um laço sobre o mesmo `std::vector<Dispositivo*>`. Graças ao
+destrutor virtual em `Dispositivo`, não há vazamento de memória mesmo com o uso de
+ponteiros brutos e herança múltipla.
