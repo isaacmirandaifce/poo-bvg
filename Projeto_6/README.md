@@ -1,123 +1,121 @@
-# **Projeto Avaliativo 6: Classes Abstratas, Interfaces, Classes Enumeradas e Classes Internas**
+# Projeto 6 — SecureBank Pro: Core de Autenticação e Auditoria (IAM)
 
-## **Objetivo**
+**Ticket:** #602 · **Prioridade:** Crítica (Compliance & Security)
+**Módulo:** Gestão de Identidades e Acessos
 
-Ampliar o sistema de gerenciamento acadêmico para incluir conceitos avançados de Programação Orientada a Objetos: Classes Abstratas, Interfaces, Classes Enumeradas e Classes Internas. Este projeto consolida o aprendizado da disciplina, integrando novas funcionalidades úteis para a vivência dos alunos de Análise e Desenvolvimento de Sistemas.
+## 1. Objetivo
 
----
+Substituir o modelo antigo baseado em `struct` (sem isolamento de dados
+sensíveis) por uma arquitetura orientada a objetos que utiliza **Classes
+Abstratas**, **Interfaces**, **Classes Enumeradas (`enum class`)** e
+**Classes Internas (nested classes)**, atendendo às normas de
+conformidade de segurança financeira.
 
-## **Tema do Projeto: Sistema Avançado de Gestão Acadêmica**
+## 2. Arquitetura
 
-### **Descrição Geral**
-
-Os alunos devem expandir o sistema acadêmico já desenvolvido para incluir funcionalidades como autenticação de usuários e geração de relatórios baseados em tipos de autenticação. Além disso, o sistema deve utilizar conceitos como classes enumeradas para categorizar usuários, classes internas para encapsular lógicas específicas e interfaces para padronizar comportamentos entre classes distintas.
-
----
-
-### **Requisitos do Projeto**
-
-1. **Classes Abstratas:**
-   - Criar uma classe abstrata `UsuarioAutenticavel`, que herda de `Usuario` e representa os usuários do sistema que podem realizar login.
-     - Método abstrato: `bool autenticar(std::string senha)`.
-
-2. **Interfaces:**
-   - Criar uma interface `Relatorio` com um método virtual puro `gerarRelatorio()`, que será implementada por classes como `Aluno`, `Professor` e `FuncionarioAdministrativo`.
-
-3. **Classes Enumeradas:**
-   - Criar uma enumeração `TipoUsuario` que define os tipos de usuários no sistema:
-     - `ALUNO`, `PROFESSOR`, `FUNCIONARIO_ADMINISTRATIVO`.
-
-4. **Classes Internas:**
-   - Adicionar uma classe interna à classe `Aluno` chamada `HistoricoDisciplinar`. 
-     - A classe interna deve conter informações sobre o histórico de disciplinas cursadas, incluindo:
-       - Nome da disciplina, ano cursado e nota.
-
-5. **Funcionalidades do Sistema:**
-   - Implementar autenticação baseada em senha.
-   - Gerar relatórios detalhados para os diferentes tipos de usuários, com base na interface `Relatorio`.
-   - Exibir informações categorizadas utilizando a enumeração `TipoUsuario`.
-
----
-
-## **Requisitos Técnicos**
-
-1. **Estrutura de Arquivos:**
-   - Modularizar o projeto em arquivos `.h` e `.cpp`:
-     - `UsuarioAutenticavel.h`, `Relatorio.h`, `Aluno.h`, `Professor.h`, `FuncionarioAdministrativo.h`, etc.
-     - `main.cpp` para a função principal.
-
-2. **Diagrama UML:**
-   - Incluir um diagrama UML detalhando a hierarquia do sistema, os métodos abstratos, a interface e os relacionamentos entre as classes.
-
-3. **Encapsulamento e Segurança:**
-   - Garantir que todos os atributos estejam devidamente encapsulados.
-   - Proteger informações sensíveis como senhas, utilizando boas práticas de segurança no código.
-
----
-
-## **Exemplo de Estrutura de Código**
-
-### Arquivo `UsuarioAutenticavel.h`
-```cpp
-#ifndef USUARIO_AUTENTICAVEL_H
-#define USUARIO_AUTENTICAVEL_H
-
-#include <string>
-
-#endif // USUARIO_AUTENTICAVEL_H
+```
+Projeto_6/
+│
+├── docs/
+│   ├── Arquitetura_IAM_UML.png   # Diagrama UML (herança + interface + classe aninhada)
+│   └── Arquitetura_IAM_UML.dot   # Fonte editável do diagrama (Graphviz)
+│
+├── src/
+│   ├── interfaces/
+│   │   └── Relatorio.h                  # <<interface>> gerarRelatorio()
+│   │
+│   ├── enums/
+│   │   └── TipoUsuario.h                # enum class ADMIN/AUDITOR/OPERADOR
+│   │
+│   ├── base/
+│   │   ├── Usuario.h                    # Classe base (id, username)
+│   │   ├── UsuarioAutenticavel.h/.cpp   # Classe abstrata (autenticar = 0)
+│   │
+│   ├── models/
+│   │   ├── UsuarioAdmin.h/.cpp          # Perfil TI
+│   │   ├── UsuarioAuditor.h/.cpp        # Perfil fraudes
+│   │   └── UsuarioOperador.h/.cpp       # Perfil caixa/retaguarda + classe interna HistoricoAcessos
+│   │
+│   └── main.cpp                         # Login + loop polimórfico via vector<Relatorio*>
+│
+└── README.md
 ```
 
-### Arquivo `Relatorio.h`
-```cpp
-#ifndef RELATORIO_H
-#define RELATORIO_H
+## 3. Decisões técnicas por critério da rubrica
 
-class Relatorio {
-public:
-    virtual ~Relatorio() = default;
+### 3.1 Abstração & Interfaces (3.0 pts)
 
-    virtual void gerarRelatorio() const = 0; // Método virtual puro
-};
+- `UsuarioAutenticavel` herda de `Usuario` e declara
+  `virtual bool autenticar(std::string senha) = 0;` — um **método
+  virtual puro**. Isso torna a classe abstrata: qualquer tentativa de
+  `UsuarioAutenticavel obj(...)` gera erro de compilação
+  (`cannot declare variable ... to be of abstract type`).
+- `Relatorio` é uma interface pura: só possui `virtual void
+  gerarRelatorio() const = 0;` e um destrutor virtual (nenhum dado,
+  nenhuma implementação concreta).
+- As três classes filhas (`UsuarioAdmin`, `UsuarioAuditor`,
+  `UsuarioOperador`) herdam de `UsuarioAutenticavel` **e** assinam
+  `Relatorio` via herança múltipla, implementando obrigatoriamente
+  `autenticar()` e `gerarRelatorio()`. Se qualquer uma esquecer de
+  implementar `autenticar`, o compilador recusa a build (testado
+  manualmente durante o desenvolvimento).
 
-#endif // RELATORIO_H
-```
+### 3.2 Encapsulamento da Classe Interna (3.0 pts)
 
-### Arquivo `Aluno.h`
-```cpp
-#ifndef ALUNO_H
-#define ALUNO_H
+- `HistoricoAcessos` é declarada como classe **privada e aninhada**
+  dentro de `UsuarioOperador` (`src/models/UsuarioOperador.h`).
+- Todos os seus atributos (`recursoAcessado`, `dataHora`,
+  `statusCodigo`) são privados; só existem getters, sem setters —
+  os registros são imutáveis após criados.
+- A implementação em `.cpp` usa **resolução de escopo dupla**, exatamente
+  como pedido no ticket:
+  ```cpp
+  UsuarioOperador::HistoricoAcessos::HistoricoAcessos(...) { ... }
+  UsuarioOperador::HistoricoAcessos::getRecursoAcessado() const { ... }
+  ```
+- `UsuarioOperador` mantém `std::vector<HistoricoAcessos> historico`
+  como membro **privado**. Não existe getter que devolva o vetor
+  inteiro — o único ponto de escrita é `registrarAcesso(...)` e o
+  único ponto de leitura é o próprio `gerarRelatorio()`, que formata e
+  imprime os dados. Código externo a `UsuarioOperador` não consegue
+  sequer nomear o tipo `HistoricoAcessos` (é privado), muito menos
+  instanciá-lo.
 
-#include <string>
-#include <vector>
-#include "UsuarioAutenticavel.h"
-#include "Relatorio.h"
+### 3.3 Enumerações e Lógica (2.0 pts)
 
-#endif // ALUNO_H
-```
+- `enum class TipoUsuario { ADMIN, AUDITOR, OPERADOR };` evita
+  conversão implícita para `int` e colisão de nomes (diferente de um
+  `enum` tradicional).
+- Cada classe concreta guarda um `tipo` estático correspondente e
+  expõe via `getTipo()`, usado no `main.cpp` para a triagem rápida no
+  sistema de mensageria (seção "Triagem por TipoUsuario").
+- **Sem vazamento de senha:** a senha em texto puro nunca é mantida
+  como estado do objeto. `UsuarioAutenticavel` armazena apenas
+  `senhaHash` (gerado com `std::hash`), e `autenticar()` compara
+  hashes, nunca strings de senha em claro. Nenhum `gerarRelatorio()`
+  imprime senha ou hash.
 
----
+### 3.4 Enterprise Standard — UML/Pastas (2.0 pts)
 
-## **Critérios de Avaliação**
+- Estrutura de pastas segue exatamente `interfaces/`, `base/`,
+  `models/`, `docs/`, com separação rigorosa de `.h` (contratos) e
+  `.cpp` (implementação).
+- `docs/Arquitetura_IAM_UML.png` mostra: `Relatorio` com estereótipo
+  `<<interface>>`, `UsuarioAutenticavel` com `<<abstract>>`,
+  `TipoUsuario` como `<<enumeration>>` e `HistoricoAcessos` destacada
+  visualmente dentro do escopo de `UsuarioOperador`
+  (retângulo tracejado "Escopo visual: UsuarioOperador").
 
-1. **Implementação Técnica (6 pontos):**
-   - Implementação correta de classes abstratas, interfaces, enums e classes internas.
+## 4. Fluxo do `main.cpp`
 
-2. **Uso de Funcionalidades (2 pontos):**
-   - Geração de relatórios, autenticação e uso de categorias com a enumeração.
+1. Instancia um `UsuarioAdmin`, um `UsuarioAuditor` e um
+   `UsuarioOperador`.
+2. Testa `autenticar()` com senha **correta** e **incorreta** para os
+   três perfis.
+3. Monta um `std::vector<Relatorio*>` apontando para os três objetos
+   (usando **ponteiros de interface**) e percorre o vetor chamando
+   `.gerarRelatorio()` em cascata — demonstração de polimorfismo puro:
+   o `main.cpp` não sabe (nem precisa saber) o tipo concreto por trás
+   de cada ponteiro.
+4. Imprime a triagem por `TipoUsuario` de cada usuário.
 
-3. **Modelagem UML (1 ponto):**
-   - Diagrama UML completo e preciso.
-
-4. **Boas Práticas de Programação (1 ponto):**
-   - Código modular e legível, seguindo os padrões de segurança e encapsulamento.
-
----
-
-## **Entrega**
-
-1. **Formato:**
-   - Os arquivos devem ser enviados para o repositório da turma no diretório `/Projetos/Projeto_6`.
-   - O diagrama UML deve ser incluído no formato `.png` ou `.jpg`.
-
-2. **Prazo:**
-   - O projeto deve ser entregue até **26/01/2025**.

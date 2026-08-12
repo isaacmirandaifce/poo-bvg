@@ -1,0 +1,50 @@
+digraph ArquiteturaIAM {
+    rankdir=BT;
+    graph [fontname="Helvetica", bgcolor="white", splines=ortho, nodesep=0.6, ranksep=0.9];
+    node [fontname="Helvetica", shape=record, fontsize=11];
+    edge [fontname="Helvetica", fontsize=9];
+
+    Usuario [label="{Usuario|+ id : int\l+ username : string\l|+ Usuario(id, username)\l+ getId() : int\l+ getUsername() : string\l}"];
+
+    UsuarioAutenticavel [label="{\<\<abstract\>\>\nUsuarioAutenticavel|# senhaHash : string\l|+ UsuarioAutenticavel(id, username, senha)\l+ autenticar(senha) : bool = 0\l# gerarHash(senha) : string\l}", style=filled, fillcolor="#FFF3CD"];
+
+    Relatorio [label="{\<\<interface\>\>\nRelatorio||+ gerarRelatorio() : void = 0\l}", style=filled, fillcolor="#D4EDDA"];
+
+    TipoUsuario [label="{\<\<enumeration\>\>\nTipoUsuario|ADMIN\lAUDITOR\lOPERADOR\l}", style=filled, fillcolor="#E2E3F5"];
+
+    UsuarioAdmin [label="{UsuarioAdmin|- tipo : TipoUsuario\l- logsModificacoes : vector\<string\>\l|+ autenticar(senha) : bool\l+ gerarRelatorio() : void\l+ registrarModificacao(desc)\l+ getTipo() : TipoUsuario\l}"];
+
+    UsuarioAuditor [label="{UsuarioAuditor|- tipo : TipoUsuario\l- chavePublica : string\l- escopoVarredura : string\l|+ autenticar(senha) : bool\l+ gerarRelatorio() : void\l+ getTipo() : TipoUsuario\l}"];
+
+    UsuarioOperador [label="{UsuarioOperador|- tipo : TipoUsuario\l- historico : vector\<HistoricoAcessos\>\l|+ autenticar(senha) : bool\l+ gerarRelatorio() : void\l+ registrarAcesso(recurso, data, status)\l+ getTipo() : TipoUsuario\l}"];
+
+    HistoricoAcessos [label="{\<\<nested / private\>\>\nHistoricoAcessos|- recursoAcessado : string\l- dataHora : string\l- statusCodigo : int\l|+ HistoricoAcessos(recurso, data, status)\l+ getRecursoAcessado() : string\l+ getDataHora() : string\l+ getStatusCodigo() : int\l}", style=filled, fillcolor="#F8D7DA"];
+
+    // Heranca (seta vazia)
+    UsuarioAutenticavel -> Usuario [arrowhead=empty];
+    UsuarioAdmin -> UsuarioAutenticavel [arrowhead=empty];
+    UsuarioAuditor -> UsuarioAutenticavel [arrowhead=empty];
+    UsuarioOperador -> UsuarioAutenticavel [arrowhead=empty];
+
+    // Implementacao de interface (seta vazia tracejada)
+    UsuarioAdmin -> Relatorio [arrowhead=empty, style=dashed];
+    UsuarioAuditor -> Relatorio [arrowhead=empty, style=dashed];
+    UsuarioOperador -> Relatorio [arrowhead=empty, style=dashed];
+
+    // Dependencia do enum (seta tracejada simples)
+    UsuarioAdmin -> TipoUsuario [arrowhead=vee, style=dashed, label="usa"];
+    UsuarioAuditor -> TipoUsuario [arrowhead=vee, style=dashed, label="usa"];
+    UsuarioOperador -> TipoUsuario [arrowhead=vee, style=dashed, label="usa"];
+
+    // Composicao (classe interna pertence a UsuarioOperador)
+    UsuarioOperador -> HistoricoAcessos [arrowhead=diamond, dir=back, label="  1..* (aninhada/nested)"];
+
+    // Agrupar visualmente a classe interna dentro do escopo do Operador
+    subgraph cluster_operador_scope {
+        label = "Escopo visual: UsuarioOperador";
+        style = dashed;
+        color = "#C0392B";
+        fontcolor = "#C0392B";
+        HistoricoAcessos;
+    }
+}
