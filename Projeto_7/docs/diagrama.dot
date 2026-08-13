@@ -1,0 +1,58 @@
+digraph DataFilterUML {
+    graph [engine=neato, splines=line, overlap=true, bgcolor="white", fontname="Helvetica"];
+    node  [fontname="Helvetica", fontsize=11, shape=none];
+    edge  [fontname="Helvetica", fontsize=10];
+
+    /* ---------- Classe Template: DataFilter<T> ---------- */
+    DataFilter [pos="6.0,4.0!", label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+            <TR><TD BGCOLOR="#2C3E50"><FONT COLOR="white"><B>DataFilter&lt;T&gt;</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT">- dados : std::vector&lt;T&gt;</TD></TR>
+            <TR><TD BGCOLOR="black" HEIGHT="1" CELLPADDING="0"></TD></TR>
+            <TR><TD ALIGN="LEFT">+ adicionar(elemento: T) : void</TD></TR>
+            <TR><TD ALIGN="LEFT">+ filtrar(condicao: function&lt;bool(const T&amp;)&gt;) : vector&lt;T&gt;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ processar(acao: function&lt;void(const T&amp;)&gt;) : void</TD></TR>
+            <TR><TD ALIGN="LEFT">+ tamanho() : size_t</TD></TR>
+        </TABLE>
+    >];
+
+    /* Caixa tracejada do parametro de template (canto superior direito) */
+    TParam [pos="8.3,4.98!", shape=box, style=dashed, label="T", width=0.55, height=0.35, fixedsize=true];
+
+    /* ---------- Classes de dominio ---------- */
+    Transacao [pos="2.0,7.6!", label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+            <TR><TD BGCOLOR="#34495E"><FONT COLOR="white"><B>Transacao</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT">- id : int</TD></TR>
+            <TR><TD ALIGN="LEFT">- valor : double</TD></TR>
+            <TR><TD ALIGN="LEFT">- tipo : std::string</TD></TR>
+            <TR><TD BGCOLOR="black" HEIGHT="1" CELLPADDING="0"></TD></TR>
+            <TR><TD ALIGN="LEFT">+ getId() : int</TD></TR>
+            <TR><TD ALIGN="LEFT">+ getValor() : double</TD></TR>
+            <TR><TD ALIGN="LEFT">+ getTipo() : std::string</TD></TR>
+            <TR><TD ALIGN="LEFT">+ toString() : std::string</TD></TR>
+        </TABLE>
+    >];
+
+    LogSeguranca [pos="10.5,7.6!", label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+            <TR><TD BGCOLOR="#34495E"><FONT COLOR="white"><B>LogSeguranca</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT">- timestamp : std::string</TD></TR>
+            <TR><TD ALIGN="LEFT">- nivel : std::string</TD></TR>
+            <TR><TD ALIGN="LEFT">- mensagem : std::string</TD></TR>
+            <TR><TD BGCOLOR="black" HEIGHT="1" CELLPADDING="0"></TD></TR>
+            <TR><TD ALIGN="LEFT">+ getTimestamp() : std::string</TD></TR>
+            <TR><TD ALIGN="LEFT">+ getNivel() : std::string</TD></TR>
+            <TR><TD ALIGN="LEFT">+ getMensagem() : std::string</TD></TR>
+            <TR><TD ALIGN="LEFT">+ toString() : std::string</TD></TR>
+        </TABLE>
+    >];
+
+    /* ---------- Cliente: main.cpp ---------- */
+    Main [pos="6.0,0.8!", shape=note, style="filled", fillcolor="#F4F6F7", label="main.cpp\n(instancia DataFilter<Transacao>\ne DataFilter<LogSeguranca>)"];
+
+    /* ---------- Relacionamentos ---------- */
+    Main -> DataFilter [style=dashed, arrowhead=vee, label="«instantiate»"];
+    DataFilter -> Transacao [style=dashed, arrowhead=vee, label="«bind» T -> Transacao"];
+    DataFilter -> LogSeguranca [style=dashed, arrowhead=vee, label="«bind» T -> LogSeguranca"];
+}

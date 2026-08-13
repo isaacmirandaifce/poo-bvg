@@ -1,124 +1,119 @@
-# **Projeto Avaliativo 7: Métodos e Classes Genéricas - C++**
+# Projeto 7 — Motor Genérico de Filtragem e Processamento (C++ Templates)
 
-## **Objetivo**
+**Ticket:** #815
+**Módulo:** SecureBank Pro — Data Analytics
+**Autor:** Breno
 
-Ampliar o sistema acadêmico existente com a introdução de métodos e classes genéricas, otimizando a manipulação de dados no sistema e reforçando conceitos importantes para o desenvolvimento de sistemas escaláveis e reutilizáveis. Este projeto busca aplicar conceitos fundamentais de generics de forma prática e contextualizada.
+## 1. Objetivo
 
----
+Eliminar a duplicação de lógica presente em `FiltroTransacao`, `FiltroLogAcesso` e
+`FiltroCliente` — todas repetindo o mesmo padrão de "iterar um `vector` e aplicar
+uma regra condicional" — através de uma única **classe genérica** `DataFilter<T>`,
+capaz de armazenar, filtrar e processar qualquer tipo `T`.
 
-## **Tema do Projeto: Sistema Genérico de Filtragem e Relatórios Acadêmicos**
+## 2. Estrutura do Projeto
 
-### **Descrição Geral**
-
-Os alunos devem expandir o sistema acadêmico para incluir um componente genérico que permita filtrar e manipular objetos relacionados ao sistema acadêmico (alunos, disciplinas, relatórios, etc.). Essa nova funcionalidade deve utilizar métodos e classes genéricas para fornecer uma maneira eficiente e reutilizável de realizar operações comuns, como busca, ordenação e filtragem de dados.
-
----
-
-### **Requisitos do Projeto**
-
-1. **Classes Genéricas:**
-   - Criar uma classe genérica `Filtro<T>` que forneça métodos genéricos para manipular coleções de objetos.
-     - Métodos genéricos:
-       - `adicionarElemento(T elemento)`: Adiciona um objeto ao filtro.
-       - `filtrarPorCondicao(std::function<bool(const T&)> condicao)`: Filtra os elementos com base em uma condição.
-       - `imprimirTodos(std::function<void(const T&)> acao)`: Aplica uma ação a cada elemento (como imprimir informações no console).
-
-2. **Aplicação de Métodos Genéricos:**
-   - Implementar métodos genéricos que funcionem sobre as classes do sistema, como `Aluno`, `Professor`, `FuncionarioAdministrativo`, ou até mesmo elementos do histórico disciplinar.
-
-3. **Integração com o Sistema Acadêmico:**
-   - Adicionar funcionalidades que utilizem a classe `Filtro` para:
-     - Filtrar alunos com média acima de 7.0.
-     - Listar professores que ministram uma disciplina específica.
-     - Listar disciplinas cursadas por um aluno em um determinado ano.
-
-4. **Funcionalidades Adicionais:**
-   - Implementar um sistema de ordenação genérica que permita ordenar listas de objetos com base em diferentes critérios (por exemplo, nome ou nota).
-
-5. **Diagrama UML:**
-   - Criar um diagrama UML detalhando as classes existentes, incluindo a classe genérica `Filtro` e suas interações com as classes do sistema.
-
----
-
-## **Requisitos Técnicos**
-
-1. **Classes Genéricas:**
-   - Utilizar templates para criar uma classe genérica que opere com diferentes tipos de dados.
-   - Incorporar o uso de `std::function` para criar métodos altamente configuráveis e reutilizáveis.
-
-2. **Boas Práticas:**
-   - Garantir encapsulamento e modularidade.
-   - Utilizar métodos bem documentados e organizados.
-
-3. **Estrutura de Arquivos:**
-   - Modularizar o código, garantindo que cada classe genérica, método e funcionalidade esteja corretamente estruturada em arquivos `.h` e `.cpp`.
-
-4. **Documentação:**
-   - Adicionar comentários explicando a lógica de implementação e o uso de templates.
-
----
-
-## **Exemplo de Estrutura de Código**
-
-### Arquivo `Filtro.h`
-```cpp
-#ifndef FILTRO_H
-#define FILTRO_H
-
-#include <vector>
-#include <functional>
-#include <algorithm>
-#include <iostream>
-
-template <typename T>
-class Filtro {
-private:
-    
-public:
-    
-};
-
-#endif // FILTRO_H
+```
+Projeto_7/
+├── docs/
+│   ├── diagrama.dot                     # Fonte Graphviz do diagrama
+│   └── Diagrama_DataFilter_UML.png      # Diagrama de classes (notação de template)
+├── src/
+│   ├── DataFilter.h                     # Declaração + implementação do template
+│   ├── Transacao.h / Transacao.cpp      # Domínio 1
+│   ├── LogSeguranca.h / LogSeguranca.cpp# Domínio 2
+│   └── main.cpp                         # Instanciação dos templates e lambdas
+└── README.md
 ```
 
-### Arquivo `main.cpp`
-```cpp
-#include <iostream>
-#include <string>
-#include "Filtro.h"
-#include "Aluno.h" // Supondo que a classe Aluno já está implementada
+## 3. `DataFilter<T>` — decisões técnicas
 
-int main() {
-    Filtro<Aluno> filtroAlunos;
+### 3.1 Por que a implementação inteira vive no `.h`
 
-    return 0;
-}
+Templates em C++ não geram código de fato até serem **instanciados** para um tipo
+concreto (ex.: `DataFilter<Transacao>`). Essa instanciação acontece em tempo de
+compilação, no arquivo que usa o template — no nosso caso, `main.cpp`. Se os
+métodos de `DataFilter<T>` estivessem definidos em um `DataFilter.cpp` separado,
+o compilador, ao compilar `main.cpp`, teria apenas a *declaração* da classe
+disponível (via `#include "DataFilter.h"`) e nenhuma visão do corpo dos métodos
+no momento de gerar o código para `T = Transacao` ou `T = LogSeguranca`. O
+resultado seriam erros de *linkagem* (`undefined reference`).
+
+Por isso, seguindo a recomendação do Tech Lead, toda a implementação de
+`DataFilter<T>` (atributos, `adicionar`, `filtrar`, `processar`, `tamanho`) foi
+escrita dentro da própria declaração da classe em `DataFilter.h`. A alternativa
+correta (instanciação explícita em um `.cpp`) foi descartada de propósito: ela
+fixaria `DataFilter` a uma lista pré-definida de tipos (`template class
+DataFilter<Transacao>;`), o que contradiz o requisito do ticket de ter um
+componente reutilizável para **qualquer** tipo de dado do pipeline.
+
+### 3.2 `std::function` como mecanismo de injeção de regra de negócio
+
+`filtrar` e `processar` não conhecem nenhuma regra de negócio própria — eles
+recebem a regra de fora, como um `std::function<bool(const T&)>` (predicado de
+filtro) ou `std::function<void(const T&)>` (ação a executar). Isso é o que
+permite ao `main.cpp` reaproveitar a mesma classe `DataFilter<T>` tanto para
+"transações acima de R$10.000" quanto para "logs de nível CRITICAL", sem que a
+classe genérica precise saber o que é uma transação suspeita ou um log crítico.
+Na prática, essa injeção é feita com **lambdas modernas do C++**, conforme
+pedido no ticket (ex.: `[](const Transacao& t) { return t.getValor() >
+10000.00; }`), evitando funções soltas.
+
+`filtrar` usa `std::copy_if` (`<algorithm>`) para construir o vetor de
+resultado, e `processar` itera com um `range-based for` aplicando a ação a cada
+elemento — sem nunca modificar o `std::vector<T>` interno (os parâmetros de
+callback e o laço usam `const T&`).
+
+### 3.3 Aderência ao SOLID
+
+- **DRY / Single Responsibility:** toda a lógica de "guardar + filtrar +
+  processar uma coleção" está centralizada em `DataFilter<T>`; as classes de
+  domínio (`Transacao`, `LogSeguranca`) só conhecem seus próprios dados.
+- **Open/Closed:** novas regras de filtragem (ex.: "TED acima de R$20.000") ou
+  novos tipos de domínio (ex.: `Cliente`, `LogAcesso`) podem ser suportados sem
+  alterar uma única linha de `DataFilter.h` — basta escrever a lambda ou
+  instanciar `DataFilter<NovoTipo>`.
+
+## 4. Classes de domínio
+
+| Classe | Atributos | Papel na demonstração |
+|---|---|---|
+| `Transacao` | `id`, `valor`, `tipo` (`"PIX"`/`"TED"`) | Testada com `DataFilter<Transacao>` |
+| `LogSeguranca` | `timestamp`, `nivel` (`"INFO"`/`"CRITICAL"`), `mensagem` | Testada com `DataFilter<LogSeguranca>` |
+
+`main.cpp` popula um `DataFilter<Transacao>` e um `DataFilter<LogSeguranca>`
+independentes e aplica lambdas distintas em cada um, provando que a mesma
+classe template atende aos dois domínios sem nenhuma alteração de código.
+
+## 5. Diagrama UML
+
+`docs/Diagrama_DataFilter_UML.png` (gerado com Graphviz a partir de
+`docs/diagrama.dot`) representa `DataFilter<T>` com a caixa tracejada do
+parâmetro de template `T` no canto superior direito da classe, além das
+relações de *bind* (`T -> Transacao`, `T -> LogSeguranca`) e da instanciação
+feita por `main.cpp`.
+
+Para regerar o diagrama a partir da fonte:
+
+```bash
+neato -Tpng -Gdpi=150 docs/diagrama.dot -o docs/Diagrama_DataFilter_UML.png
 ```
 
----
+## 6. Como compilar e executar
 
-## **Critérios de Avaliação**
+Compilado com flags estritas (sem nenhum warning ou erro):
 
-1. **Implementação Técnica (6 pontos):**
-   - Correta implementação de templates e métodos genéricos.
-   - Integração funcional com o sistema acadêmico.
+```bash
+g++ -std=c++17 -Wall -Wextra -Wpedantic -Werror -O2 \
+    -o projeto7 src/main.cpp src/Transacao.cpp src/LogSeguranca.cpp
+./projeto7
+```
 
-2. **Funcionalidades (2 pontos):**
-   - Uso de filtros e ordenação genéricos em diferentes tipos de objetos.
+## 7. Rubrica — como cada critério foi atendido
 
-3. **Modelagem UML (1 ponto):**
-   - Diagrama UML detalhado e preciso.
-
-4. **Boas Práticas e Documentação (1 ponto):**
-   - Código modular, legível e bem documentado.
-
----
-
-## **Entrega**
-
-1. **Formato:**
-   - Carregue os arquivos no repositório no diretório `/Projeto_7`.
-   - Inclua o diagrama UML no formato `.png` ou `.jpg`.
-
-2. **Prazo:**
-   - O projeto deve ser entregue até **02/02/2025**.
+| Critério | Como foi atendido |
+|---|---|
+| Classes Genéricas (Templates) | `template <typename T> class DataFilter` compila sem erros para `Transacao` e `LogSeguranca`, com implementação completa em `DataFilter.h` |
+| Funções Funcionais (`std::function`) | `filtrar` e `processar` recebem `std::function` e são sempre chamados com lambdas em `main.cpp` |
+| Aplicação de Domínio | `main.cpp` instancia `DataFilter<Transacao>` e `DataFilter<LogSeguranca>`, populando e filtrando ambos de forma coerente com o domínio |
+| Arquitetura e UML | Diagrama com notação de template (caixa tracejada de `T`), código comentado e organizado em `src/`/`docs/` conforme o padrão do repositório |
