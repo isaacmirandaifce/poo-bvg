@@ -1,0 +1,81 @@
+digraph ArquiteturaResiliencia {
+    graph [rankdir=BT, splines=polyline, nodesep=0.7, ranksep=1.0, bgcolor="white", fontname="Helvetica"];
+    node  [fontname="Helvetica", fontsize=11, shape=none];
+    edge  [fontname="Helvetica", fontsize=10];
+
+    /* ================= Hierarquia de Exceções ================= */
+
+    StdException [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" STYLE="DASHED">
+            <TR><TD BGCOLOR="#7F8C8D"><FONT COLOR="white"><B>&#171;std&#187;::exception</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT">+ what() : const char*</TD></TR>
+        </TABLE>
+    >];
+
+    StorageException [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+            <TR><TD BGCOLOR="#2C3E50"><FONT COLOR="white"><B>StorageException</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"># mensagem : std::string</TD></TR>
+            <TR><TD BGCOLOR="black" HEIGHT="1" CELLPADDING="0"></TD></TR>
+            <TR><TD ALIGN="LEFT">+ what() : const char* noexcept override</TD></TR>
+        </TABLE>
+    >];
+
+    FileCorruptedException [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+            <TR><TD BGCOLOR="#943126"><FONT COLOR="white"><B>FileCorruptedException</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT">dados/colunas inválidos ou<BR ALIGN="LEFT"/>linha vazia inesperada</TD></TR>
+        </TABLE>
+    >];
+
+    DiskWriteException [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+            <TR><TD BGCOLOR="#943126"><FONT COLOR="white"><B>DiskWriteException</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT">falha ao abrir/persistir:<BR ALIGN="LEFT"/>permissão ou espaço em disco</TD></TR>
+        </TABLE>
+    >];
+
+    /* ================= Camada de Infraestrutura ================= */
+
+    LedgerPersistence [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+            <TR><TD BGCOLOR="#1B4F72"><FONT COLOR="white"><B>LedgerPersistence</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT">- fluxoSaida : std::ofstream</TD></TR>
+            <TR><TD BGCOLOR="black" HEIGHT="1" CELLPADDING="0"></TD></TR>
+            <TR><TD ALIGN="LEFT">+ salvarDados(transacoes: vector&lt;string&gt;) : void</TD></TR>
+            <TR><TD ALIGN="LEFT">+ carregarDados() : vector&lt;string&gt;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ fecharComSeguranca() : void noexcept</TD></TR>
+        </TABLE>
+    >];
+
+    SignalHandler [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+            <TR><TD BGCOLOR="#1B4F72"><FONT COLOR="white"><B>SignalHandler</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT">- persistenciaAtiva : LedgerPersistence* {static}</TD></TR>
+            <TR><TD BGCOLOR="black" HEIGHT="1" CELLPADDING="0"></TD></TR>
+            <TR><TD ALIGN="LEFT">+ inicializar() : void {static}</TD></TR>
+            <TR><TD ALIGN="LEFT">+ registrarPersistencia(p: LedgerPersistence*) : void {static}</TD></TR>
+            <TR><TD ALIGN="LEFT">- tratador(sinal: int) : void {static}</TD></TR>
+        </TABLE>
+    >];
+
+    Main [shape=note, style="filled", fillcolor="#F4F6F7", label="main.cpp\n(registra SignalHandler,\ninstancia LedgerPersistence,\nloop de transacoes em try/catch)"];
+
+    SO [shape=cds, style="filled", fillcolor="#FDEBD0", label="  SO: SIGINT / SIGTERM  "];
+
+    /* ================= Relacionamentos ================= */
+
+    StorageException -> StdException [arrowhead=onormal, penwidth=1.2];
+    FileCorruptedException -> StorageException [arrowhead=onormal, penwidth=1.2];
+    DiskWriteException -> StorageException [arrowhead=onormal, penwidth=1.2];
+
+    LedgerPersistence -> DiskWriteException [style=dashed, arrowhead=vee, label=" «throws»", constraint=false];
+    LedgerPersistence -> FileCorruptedException [style=dashed, arrowhead=vee, label="«throws» ", constraint=false];
+
+    Main -> LedgerPersistence [arrowhead=vee, label=" «instancia»"];
+    Main -> SignalHandler [arrowhead=vee, label=" «registra e inicializa»"];
+    Main -> StorageException [style=dashed, arrowhead=vee, label=" «captura»", constraint=false];
+
+    SignalHandler -> LedgerPersistence [arrowhead=vee, label=" fecharComSeguranca()", constraint=false];
+    SO -> SignalHandler [arrowhead=vee, style=bold, color="#B9770E", fontcolor="#B9770E", label=" interceptado por tratador(int)"];
+}
