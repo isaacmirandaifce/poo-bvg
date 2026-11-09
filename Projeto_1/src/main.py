@@ -14,7 +14,8 @@ if __name__ == "__main__":
     try:
         joao.sacar(1500)
     except ValueError as erro:
-        print(f"AVISO DO SISTEMA: {erro}")
+        print(f"Operação recusada: {erro}")
+        print(f"Saldo atualizado de João após a tentativa: R${joao.saldo:.2f}")
 
     print(f"\n2 - Tentativa de depósito de R$ 200.00 na conta de {maria.nome}...")
     print(f"Saldo inicial de {maria.nome}: R${maria.saldo:.2f}")
