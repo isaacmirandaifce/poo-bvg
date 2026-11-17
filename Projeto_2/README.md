@@ -101,3 +101,14 @@ Projeto_2/
 
 - **Formato**: A entrega deverá ser feita no repositório da turma no GitHub, na pasta `Projeto_2`, com os arquivos desenvolvidos e um código de teste.
 - **Prazo de Entrega**: Sete dias
+
+
+## Explicação do Código (Diego José)
+
+1. **Abstração e Herança:** Foi criada uma classe base abstrata `Seguro` (utilizando o módulo `abc`), da qual herdam as especializações `SeguroAuto`, `SeguroVida` e `SeguroResidencial`.
+
+2. **Encapsulamento:** Dados sensíveis (como o CPF do cliente e a placa do carro) foram protegidos com modificadores de acesso privados (`__cpf`, `__placa`). O acesso de leitura foi garantido através de decoradores `@property`, e regras de negócio (como impedir idades negativas) foram blindadas com `@setter`.
+
+3. **Polimorfismo:** Cada subclasse implementa a sua própria versão do método abstrato `.calcular_premio()`.
+
+**O Resultado:** O script principal (`main.py`) já não precisa de conhecer as regras de negócio ou fazer testes lógicos. Ele apenas itera sobre uma lista de objetos e invoca a ordem comum, delegando o cálculo matemático à inteligência interna de cada objeto.
