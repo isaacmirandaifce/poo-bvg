@@ -95,3 +95,15 @@ Sua entrega será avaliada nos seguintes pilares (Total: 10 pontos):
 3. **Arquivos Necessários:**
    - `Pessoa.h`, `Pessoa.cpp`, `main.cpp` (código-fonte).
    - `Pessoa_UML.png` (diagrama UML).
+
+# Projeto 3 — Módulo de Gestão de Contatos de Clientes (CRM):
+
+**Separação Interface / Implementação:** Declaração da classe `Contato` em `Contato.h` (protegida com `#ifndef`/`#define`/`#endif`) e lógica isolada em `Contato.cpp`.
+
+* **Encapsulamento:** Atributos `nome` e `telefone` declarados como `private` com tipagem estrita (`std::string`).
+
+* **Ponteiro `this`:** Utilizado no construtor parametrizado para diferenciar explicitamente os atributos do objeto dos parâmetros recebidos.
+
+* **Gerenciamento de Memória (Destrutor):** Implementação de `~Contato()` emitindo log automático no console sempre que uma instância é desalocada da memória.
+
+* **STL (`std::vector`):** Substituição de arrays de tamanho fixo por um container dinâmico populado via `push_back()` e percorrido com segurança usando `.size()`.
