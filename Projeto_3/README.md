@@ -95,3 +95,36 @@ Sua entrega será avaliada nos seguintes pilares (Total: 10 pontos):
 3. **Arquivos Necessários:**
    - `Pessoa.h`, `Pessoa.cpp`, `main.cpp` (código-fonte).
    - `Pessoa_UML.png` (diagrama UML).
+
+
+---
+
+# Entrega – Daniel Lima
+
+## Estrutura
+
+```
+Projeto_3/
+├── docs/
+│   └── Contato_UML.png     # Diagrama UML
+├── src/
+│   ├── Contato.h           # Declaração da classe
+│   ├── Contato.cpp         # Implementação dos métodos
+│   └── main.cpp            # Ponto de entrada, usa std::vector<Contato>
+└── README.md
+```
+
+## Como compilar
+
+Na pasta `Projeto_3`, rode:
+
+```bash
+g++ src/main.cpp src/Contato.cpp -o crm_app
+```
+
+## Como executar
+
+```bash
+./crm_app        # Linux / macOS
+crm_app.exe      # Windows
+```
