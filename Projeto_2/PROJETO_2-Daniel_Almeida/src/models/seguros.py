@@ -77,6 +77,8 @@ class SeguroVida(Seguro):
 class SeguroResidencial(Seguro):
     """Seguro residencial: o prêmio depende do tipo de imóvel."""
 
+    TIPOS_VALIDOS = ("CASA", "APARTAMENTO")
+
     def __init__(self, titular, valor_base, tipo_imovel):
         """Cria um seguro residencial.
 
@@ -84,9 +86,18 @@ class SeguroResidencial(Seguro):
             titular (Cliente): Cliente dono do seguro.
             valor_base (float): Valor base para o cálculo do prêmio.
             tipo_imovel (str): "CASA" ou "APARTAMENTO".
+
+        Raises:
+            ValueError: Se o tipo de imóvel não for "CASA" nem "APARTAMENTO".
         """
+        tipo = str(tipo_imovel).strip().upper()
+        if tipo not in self.TIPOS_VALIDOS:
+            raise ValueError(
+                f"Tipo de imóvel inválido: {tipo_imovel!r}. "
+                f"Use um destes: {', '.join(self.TIPOS_VALIDOS)}."
+            )
         super().__init__(titular, valor_base)
-        self.tipo_imovel = tipo_imovel
+        self.tipo_imovel = tipo
 
     def calcular_premio(self):
         """Casas pagam 15% a mais; apartamentos, 5%."""
