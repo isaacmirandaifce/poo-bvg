@@ -1,8 +1,7 @@
 #include "Contato.h"
 #include <iostream>
 
-// Construtor parametrizado: usa 'this' para diferenciar
-// os parâmetros dos atributos da classe.
+// Construtor parametrizado: usa 'this' para diferenciar os parâmetros dos atributos da classe.
 Contato::Contato(std::string nome, std::string telefone) {
     this->nome = nome;
     this->telefone = telefone;
