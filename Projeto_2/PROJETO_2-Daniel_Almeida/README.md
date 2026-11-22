@@ -18,6 +18,8 @@ PROJETO_2-Daniel_Almeida/
 │   │   ├── cliente.py         # Entidade Cliente
 │   │   └── seguros.py         # Seguro (abstrata) e suas subclasses
 │   └── main.py                # Demonstração do polimorfismo
+├── tests/
+│   └── test_seguros.py        # Testes automatizados
 └── README.md
 ```
 
@@ -83,6 +85,40 @@ Os fatores são exatamente os do código legado; mudou apenas onde a regra mora.
 
 ![Diagrama de classes](docs/diagrama_classes.png)
 
+```mermaid
+classDiagram
+    class Cliente {
+        +nome: str
+        -cpf: str
+        -seguros: list
+        +adicionar_seguro(seguro: Seguro)
+    }
+    class Seguro {
+        <<abstract>>
+        +titular: Cliente
+        +valor_base: float
+        +calcular_premio()* float
+    }
+    class SeguroAuto {
+        +modelo: str
+        +ano: int
+        -placa: str
+        +calcular_premio() float
+    }
+    class SeguroVida {
+        +idade: int
+        +calcular_premio() float
+    }
+    class SeguroResidencial {
+        +tipo_imovel: str
+        +calcular_premio() float
+    }
+    Seguro <|-- SeguroAuto
+    Seguro <|-- SeguroVida
+    Seguro <|-- SeguroResidencial
+    Cliente "1" --> "0..*" Seguro : possui
+```
+
 - Seta de ponta vazia: herança das subclasses para `Seguro`.
 - Seta simples com `1` e `0..*`: um cliente possui zero ou mais seguros.
 - `+` indica atributo público e `-` indica atributo privado.
@@ -94,6 +130,7 @@ Os fatores são exatamente os do código legado; mudou apenas onde a regra mora.
 Requisito: Python 3. Dentro da pasta `PROJETO_2-Daniel_Almeida`:
 
 ```bash
+cd Projeto_2/PROJETO_2-Daniel_Almeida
 python src/main.py
 ```
 
@@ -144,6 +181,37 @@ class SeguroViagem(Seguro):
 ```
 
 Esta classe é apenas um exemplo de extensão e não faz parte da entrega.
+
+## Testes automatizados
+
+Os testes ficam em `tests/test_seguros.py` e verificam os casos de fronteira
+de cada regra (ano 2009/2010, idade 60/61, casa/apartamento), a validação do
+tipo de imóvel, a abstração de `Seguro`, a associação com o cliente e o CPF
+mascarado.
+
+Dentro da pasta `Projeto_2/PROJETO_2-Daniel_Almeida`:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+Resultado: 14 testes executados, todos aprovados.
+
+## Validação de entrada
+
+`SeguroResidencial` aceita apenas "CASA" ou "APARTAMENTO", sem diferenciar
+maiúsculas e minúsculas. Qualquer outro valor gera `ValueError`, em vez de
+receber silenciosamente a regra de apartamento. A validação acontece antes
+de o seguro ser associado ao cliente, para que um seguro inválido não fique
+registrado.
+
+## Limite do encapsulamento
+
+Os atributos com `__` (como `__cpf` e `__placa`) usam o mecanismo de
+*name mangling* do Python: ficam escondidos do acesso direto, mas não são uma
+proteção de segurança. Neste projeto servem para demonstrar o encapsulamento.
+Em um sistema real, dados sensíveis também precisariam de criptografia no
+armazenamento e controle de acesso.
 
 ## Decisões de projeto
 
