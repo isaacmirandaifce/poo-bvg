@@ -3,12 +3,11 @@
 
 #include <string>
 
-/* Classe Contato
--> Representa um contato de cliente corporativo (B2B) do módulo CRM. */
+/* a classe Contato representa um contato de cliente corporativo (B2B) do módulo CRM. */
 class Contato {
 
 private:
-    std::string nome;      // Nome do contato / empresa
+    std::string nome;      // Nome do contato
     std::string telefone;  // Telefone de contato
 
 public:
@@ -23,4 +22,4 @@ public:
     void imprimirTelefone() const;
 };
 
-#endif // CONTATO_H
+#endif
